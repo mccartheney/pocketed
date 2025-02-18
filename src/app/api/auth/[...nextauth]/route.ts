@@ -1,12 +1,16 @@
-import NextAuth from "next-auth"
-import Github from "next-auth/providers/github"
-import Google from "next-auth/providers/google"
+import { PrismaClient } from "@prisma/client";
+import NextAuth, { User } from "next-auth";
+import Github from "next-auth/providers/github";
+import Google from "next-auth/providers/google";
+import { JWT } from "next-auth/jwt";
+
+const prisma = new PrismaClient();
 
 const handler = NextAuth({
-    providers : [
+    providers: [
         Github({
             clientId: process.env.GITHUB_CLIENT!,
-            clientSecret: process.env.GITHUB_CLIENTSECRET!
+            clientSecret: process.env.GITHUB_CLIENTSECRET!,
         }),
         Google({
             clientId: process.env.GOOGLE_CLIENT!,
@@ -15,17 +19,38 @@ const handler = NextAuth({
                 params: {
                     prompt: "consent",
                     access_type: "offline",
-                    response_type: "code"
-                }
-            }
-        })
+                    response_type: "code",
+                },
+            },
+        }),
     ],
 
-    // callbacks : {
-    //     async jwt ( {} ) {
+    callbacks: {
+        async jwt(
+            {token, user, account} : {token : JWT, user : User, account?:any}
+        ) {
+            if (user) {
+                const userExists = await prisma.user.findUnique({
+                    where : {email : user.email!}
+                })
+                
+                const authMethod = account.provider
+                
+                if (!userExists) {
+                    const newUser = await prisma.user.create({
+                        data : {
+                            name: user.name!,
+                            email: user.email!,
+                            image: user.image!,
+                            authMethod,
+                        }
+                    })
 
-    //     }
-    // }
-})
+                }
+            }
+            return token;
+        },
+    },
+});
 
-export { handler as GET, handler as POST }
+export { handler as GET, handler as POST };
