@@ -1,6 +1,6 @@
 "use client"
 
-import Dashboard from "@/components/dashboardPage/Dashboard"
+import Dashboard from "@/components/dashboardPage"
 import Drawer from "@/components/drawer/Drawer"
 import LoadingPage from "@/components/LoadingPage"
 import axios from "axios"

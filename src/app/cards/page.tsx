@@ -1,7 +1,6 @@
 "use client"
 
-import Cards from "@/components/cardsPage/CardsPage"
-import Dashboard from "@/components/dashboardPage/Dashboard"
+import CardPage from "@/components/cardsPage"
 import Drawer from "@/components/drawer/Drawer"
 import LoadingPage from "@/components/LoadingPage"
 import axios from "axios"
@@ -23,7 +22,7 @@ const Page = () => {
     if (!session) return <LoadingPage />
 
     return (
-        <Drawer PageContent={Cards} userInfo={{ name: session!.user?.name!, imgUrl: session!.user?.image! }} />
+        <Drawer PageContent={CardPage} userInfo={{ name: session!.user?.name!, imgUrl: session!.user?.image! }} />
     );
 };
 

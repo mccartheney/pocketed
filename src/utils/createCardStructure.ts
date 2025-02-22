@@ -48,3 +48,5 @@ for (let i = 0; i <= date.getMonth(); i++) {
 const getCardStructure = () : cardType => {
     return cardExtruture
 }
+
+export default getCardStructure
