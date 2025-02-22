@@ -1,5 +1,6 @@
 "use client"
 
+import Cards from "@/components/cardsPage/CardsPage"
 import Dashboard from "@/components/dashboardPage/Dashboard"
 import Drawer from "@/components/drawer/Drawer"
 import LoadingPage from "@/components/LoadingPage"
@@ -12,17 +13,17 @@ import { useEffect, useState } from "react"
 const Page = () => {
     const router = useRouter();
     const { data: session, status } = useSession();
-
+    
     if (status === "loading") return <LoadingPage />;
     if (status === "unauthenticated") {
         router.push("/");
-        return null; 
+        return null;
     }
 
-    if(!session) return <LoadingPage/>
+    if (!session) return <LoadingPage />
 
     return (
-        <Drawer PageContent={Dashboard} userInfo={{name:session!.user?.name!, imgUrl : session!.user?.image!}}/>
+        <Drawer PageContent={Cards} userInfo={{ name: session!.user?.name!, imgUrl: session!.user?.image! }} />
     );
 };
 

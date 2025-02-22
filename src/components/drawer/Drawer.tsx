@@ -6,6 +6,7 @@ import { MdDashboard, MdCreditCard, MdAttachMoney, MdSettings } from "react-icon
 import { signOut } from "next-auth/react";
 import DrawerLink from "./DrawerLink";
 import DrawerDivider from "./DrawerDivider";
+import { FaChevronUp, FaChevronDown } from "react-icons/fa";
 
 const Drawer = ({ PageContent, userInfo }: { PageContent: ElementType; userInfo: { name: string; imgUrl: string } }) => {
     return (
@@ -31,8 +32,8 @@ const Drawer = ({ PageContent, userInfo }: { PageContent: ElementType; userInfo:
                     <DrawerLink LinkContent={<><MdDashboard /> Dashboard</>} url="/" />
                     <DrawerLink LinkContent={<><MdCreditCard /> Cards</>} url="/cards" />
                     <DrawerDivider marginPosition="y" />
-                    <DrawerLink LinkContent={<><MdAttachMoney /> Incomes</>} url="/incomes"/>
-                    <DrawerLink LinkContent={<><MdAttachMoney /> Expenses</>} url="/expenses" />
+                    <DrawerLink LinkContent={<><FaChevronUp /> Incomes</>} url="/incomes"/>
+                    <DrawerLink LinkContent={<><FaChevronDown /> Expenses</>} url="/expenses" />
                     <DrawerDivider marginPosition="y" />
                     <DrawerLink LinkContent={<><MdAttachMoney /> Economies</>} url="/economies" />
                     <DrawerLink LinkContent={<><MdSettings /> Settings</>} url="/settings" />

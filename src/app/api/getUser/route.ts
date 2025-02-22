@@ -7,10 +7,9 @@ const GET = async (
     req:NextRequest
 ) => {
     const params = req.nextUrl.searchParams
-    console.log(params)
     const email = params.get("email")!
 
-    const user = await prisma.user.findUnique({
+    const user : userApiType = await prisma.user.findUnique({
         where :{email}
     })
 

@@ -15,4 +15,15 @@ model User {
   image         String? 
   authMethod    String
   createdAt     DateTime @default(now())
+  cards         Card[]
+}
+
+model Card {
+  id        Int     @id @default(autoincrement())
+  name     String
+  totalAmount   Int
+  createdAt DateTime @default(now())
+  userId    Int
+  expenses  Json
+  user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
