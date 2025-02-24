@@ -5,12 +5,17 @@ type expenseType = {
 type weekExpensesType = {
     [key: string]: expenseType[] | []
 }
+
+type weekNameExpensesType = {
+    [key:string] : weekExpensesType | {}
+}
+
 type mensalExpensesType = expenseType[]
 
 type monthExpensesType = {
     [key: string]: {
         mensal: mensalExpensesType | null,
-        unique: weekExpensesType | null
+        unique: weekNameExpensesType | null
     }
 }
 type cardType = {
@@ -19,5 +24,5 @@ type cardType = {
 
 
 export type {
-    expenseType, weekExpensesType, mensalExpensesType, monthExpensesType, cardType
+    expenseType, weekExpensesType, mensalExpensesType, weekNameExpensesType, monthExpensesType, cardType
 }
