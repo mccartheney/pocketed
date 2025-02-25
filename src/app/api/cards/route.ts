@@ -31,6 +31,38 @@ const GET = async (
 
 }
 
+const PUT = async (req : NextRequest) => {
+    const {email, cardName, newCardName} = await req.json()
+
+    // get user by email
+    const user = await getUser(email)
+    if (!user) return NextResponse.json({ status: 404, message: "User not found" })
+
+    // get card by user
+    const cardToRename = await prisma.card.findFirst({
+        where: { userId: user.id }
+    })
+    if (!cardToRename) return NextResponse.json({ status: 404, message: "Card to Rename not found" })
+
+    // verify if card with new name exists
+    const cardWithNewNameExists = await prisma.card.findFirst({
+        where : {userId : user.id, name : newCardName}
+    })
+    if (cardWithNewNameExists) return NextResponse.json({ status: 409, message: "Card with new name already exists" }) 
+
+    // update card name
+    try {
+        await prisma.card.update({
+            where: { id: cardToRename.id },
+            data: { name: newCardName } 
+        })
+        return NextResponse.json({ status: 200, message: "Card renamed" })
+    } catch (error) {
+        return NextResponse.json({ status: 500, message: "Problem renaming card" })
+    }
+    
+}
+
 const DELETE = async (req: NextRequest) => {
     const { email } = await req.json()
 
@@ -85,4 +117,4 @@ const POST = async (req: NextRequest) => {
     }
 }
 
-export { GET, DELETE, POST }
+export { GET, DELETE, POST, PUT }
