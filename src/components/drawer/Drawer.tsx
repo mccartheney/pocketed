@@ -1,4 +1,4 @@
-import { ElementType } from "react";
+import { ElementType, ReactNode } from "react";
 import { motion } from "framer-motion";
 import PocketedLogo from "../Logo";
 import { CiLogout } from "react-icons/ci";
@@ -8,7 +8,7 @@ import DrawerLink from "./DrawerLink";
 import DrawerDivider from "./DrawerDivider";
 import { FaChevronUp, FaChevronDown } from "react-icons/fa";
 
-const Drawer = ({ PageContent, userInfo }: { PageContent: ElementType; userInfo: { name: string; imgUrl: string } }) => {
+const Drawer = ({ PageContent, userInfo }: { PageContent: ReactNode; userInfo: { name: string; imgUrl: string } }) => {
     return (
         <div className="drawer lg:drawer-open">
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -16,7 +16,7 @@ const Drawer = ({ PageContent, userInfo }: { PageContent: ElementType; userInfo:
                 <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden">
                     Open drawer
                 </label>
-                <PageContent />
+                {PageContent}
             </div>
 
             <motion.div
@@ -29,14 +29,14 @@ const Drawer = ({ PageContent, userInfo }: { PageContent: ElementType; userInfo:
                 <ul className="menu flex flex-col bg-base-200 h-[100%] text-base-content min-h-full w-80 p-4">
                     <PocketedLogo />
                     <DrawerDivider marginPosition="b" />
-                    <DrawerLink LinkContent={<><MdDashboard /> Dashboard</>} url="/" />
-                    <DrawerLink LinkContent={<><MdCreditCard /> Cards</>} url="/cards" />
+                    <DrawerLink LinkContent={<><MdDashboard /> Dashboard</>} url="/app" />
+                    <DrawerLink LinkContent={<><MdCreditCard /> Cards</>} url="/app/cards" />
                     <DrawerDivider marginPosition="y" />
-                    <DrawerLink LinkContent={<><FaChevronUp /> Incomes</>} url="/incomes"/>
-                    <DrawerLink LinkContent={<><FaChevronDown /> Expenses</>} url="/expenses" />
+                    <DrawerLink LinkContent={<><FaChevronUp /> Incomes</>} url="/app/incomes"/>
+                    <DrawerLink LinkContent={<><FaChevronDown /> Expenses</>} url="/app/expenses" />
                     <DrawerDivider marginPosition="y" />
-                    <DrawerLink LinkContent={<><MdAttachMoney /> Economies</>} url="/economies" />
-                    <DrawerLink LinkContent={<><MdSettings /> Settings</>} url="/settings" />
+                    <DrawerLink LinkContent={<><MdAttachMoney /> Economies</>} url="/app/economies" />
+                    <DrawerLink LinkContent={<><MdSettings /> Settings</>} url="/app/settings" />
 
                     <li className="flex-grow flex justify-end">
                         <motion.div
