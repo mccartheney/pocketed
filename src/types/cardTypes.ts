@@ -1,12 +1,12 @@
 import { cardType } from "./expensesType"
 
-type cardDbType = {
-    name: string;
+type cardApiType = {
     id: number;
-    createdAt: Date;
+    name: string;
     totalAmount: number;
+    createdAt: Date;
     userId: number;
     expenses: JSON;
-} | null
+}
 
-export type {cardDbType}
+export type { cardApiType }

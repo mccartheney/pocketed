@@ -2,10 +2,9 @@
 
 import Drawer from "@/components/drawer/Drawer"
 import LoadingPage from "@/components/LoadingPage"
-import axios from "axios"
-import { signOut, useSession } from "next-auth/react"
+import {  useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
+import { Toaster } from "react-hot-toast"
 
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
@@ -15,7 +14,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
 
     if (status === "loading") return <LoadingPage />;
     if (status === "unauthenticated") {
-        router.push("/app/");
+        router.push("/");
         return null;
     }
 
@@ -23,7 +22,10 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
 
 
     return (
-        <Drawer PageContent={children} userInfo={{ name: session!.user?.name!, imgUrl: session!.user?.image! }} />
+        <div className="">
+            <Toaster />
+            <Drawer userInfo={{ name: session!.user?.name!, imgUrl: session!.user?.image! }}>{children}</Drawer>
+        </div>
 
     );
 }
