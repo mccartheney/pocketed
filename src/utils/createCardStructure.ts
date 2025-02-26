@@ -7,16 +7,13 @@ import {cardType, mensalExpensesType, monthExpensesType, weekExpensesType, weekN
 const date = new Date()
 
 const year : number = date.getFullYear()
-const month : string = months[date.getMonth()]
-const weekDay : string = WeekDays[date.getDay() -1]
-const day : number = date.getDate()
 
 // get the number of weeks on a month
 const weekPerMonth : number [] = []
 for (let i = 0; i < 5; i++) weekPerMonth.push(i)
 
 // create a empty card
-let cardExtruture: cardType = {}
+const cardExtruture: cardType = {}
 
 // create a empty week expenses
 const weekExpensesNameExtruture : weekNameExpensesType = {}

@@ -11,9 +11,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const theme = localStorage.getItem("pocketedTheme")
+  if (!theme) {
+    localStorage.setItem("pocketedTheme", "dark")
+  }
+
   return (
-    
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" data-theme={localStorage.getItem("pocketedTheme")} suppressHydrationWarning>
       <body
         className={` antialiased`}
       >

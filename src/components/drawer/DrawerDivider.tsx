@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 
 const DrawerDivider = (
     {marginPosition} : {marginPosition : string}

@@ -1,5 +1,3 @@
-import { cardType } from "./expensesType"
-
 type cardApiType = {
     id: number;
     name: string;

@@ -8,7 +8,6 @@ import { Toaster } from "react-hot-toast"
 
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
-
     const router = useRouter();
     const { data: session, status } = useSession();
 

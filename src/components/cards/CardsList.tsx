@@ -6,7 +6,6 @@ import { useSession } from "next-auth/react"
 import axios from "axios"
 import { cardApiType } from "@/types/cardTypes"
 import CardItem from "./CardItem"
-import {motion} from "framer-motion"
 import Card404 from "./Card404"
 
 const CardsList = (

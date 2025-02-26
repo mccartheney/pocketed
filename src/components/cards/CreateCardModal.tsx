@@ -1,7 +1,6 @@
 "use client"
 
 import { cardApiType } from "@/types/cardTypes";
-import getAllCards from "@/utils/getCard";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { Dispatch, SetStateAction, useRef } from "react";

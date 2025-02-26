@@ -1,6 +1,5 @@
 
-import { ElementType, ReactNode } from "react";
-import { motion } from "framer-motion";
+import { ReactNode } from "react";
 import PocketedLogo from "../Logo";
 import { CiLogout } from "react-icons/ci";
 import { MdDashboard, MdCreditCard, MdAttachMoney, MdSettings } from "react-icons/md";
