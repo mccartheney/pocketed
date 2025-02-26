@@ -10,8 +10,8 @@ const ThemeConfig = () => {
 
     return (
         <>
-            <div className="flex justify-between items-center">
-                <h1 className="text-xl">
+            <div className="flex justify-between items-center px-2">
+                <h1 className="text-2xl font-bold">
                     Theme
                 </h1>
 

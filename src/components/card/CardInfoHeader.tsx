@@ -8,6 +8,7 @@ import { useSession } from "next-auth/react"
 import { cardApiType } from "@/types/cardTypes"
 import toast from "react-hot-toast"
 import { useRouter } from "next/navigation"
+import LoadingPage from "../LoadingPage"
 
 const CardInfoHeader = (
     { card, setCard }: { card: cardApiType, setCard: Dispatch<SetStateAction<cardApiType | undefined>> }
@@ -29,6 +30,8 @@ const CardInfoHeader = (
             cardToRename.current!.focus()
         }
     }, [editing])
+
+    if (!card) return <LoadingPage/>
     
     const handleEditCardName = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
