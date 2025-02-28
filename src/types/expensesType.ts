@@ -7,7 +7,7 @@ type weekExpensesType = {
 }
 
 type weekNameExpensesType = {
-    [key:string] : weekExpensesType | {}
+    [key:string] : weekExpensesType 
 }
 
 type mensalExpensesType = expenseType[]

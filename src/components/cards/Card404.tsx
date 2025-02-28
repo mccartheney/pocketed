@@ -1,4 +1,4 @@
-import { motion } from "framer-motion"
+
 const Card404 = () => {
     return (
         <div

@@ -59,7 +59,7 @@ const POST = async (req: NextRequest) => {
 
         // update the card with the updated expenses
         try {
-            const updatedCard = await prisma.card.update({
+            await prisma.card.update({
                 where: {
                     id: card.id!
                 },
@@ -69,7 +69,10 @@ const POST = async (req: NextRequest) => {
             })
 
             return NextResponse.json({ status: 200, message: "Expense added" })
-        } catch (error) { return NextResponse.json({ status: 500, message: "Error adding expense" }) }
+        } catch (error) {
+            console.error(error)
+            return NextResponse.json({ status: 500, message: "Error adding expense" }) 
+        }
 
     }
     // add unique expense
@@ -93,7 +96,7 @@ const POST = async (req: NextRequest) => {
 
         // update card
         try {
-            const updatedCard = await prisma.card.update({
+            await prisma.card.update({
                 where : {
                     id : card.id!
                 },
@@ -104,6 +107,7 @@ const POST = async (req: NextRequest) => {
 
             return NextResponse.json({status : 200, message : "Expense added"})
         } catch (error) {
+            console.error(error)
             return NextResponse.json({status : 200, message : "Error adding expense"})
         }
     }

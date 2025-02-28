@@ -11,7 +11,8 @@ const CreateCardModel = (
 ) => {
     // get user email
     const session = useSession ()
-    const userEmail = session.data?.user?.email!
+
+    const userEmail = session.data?.user?.email || ""
 
     // refs for inputs
     const cardNameInputRef = useRef<HTMLInputElement>(null)

@@ -1,7 +1,6 @@
 import { cardApiType } from '@/types/cardTypes';
 import React from 'react';
 import { FaArrowRight } from "react-icons/fa";
-import { Dispatch, SetStateAction } from "react"
 import Link from 'next/link';
 
 const CardItem = (

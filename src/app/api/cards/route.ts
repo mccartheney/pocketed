@@ -30,6 +30,7 @@ const GET = async (
             return NextResponse.json({ status: 404, message: "this Card Dont Exists" });
 
         } catch (error) {
+            console.error(error)
             return NextResponse.json({ status: 500, message: "Problem getting card" });
         }
     }
@@ -41,13 +42,14 @@ const GET = async (
 
         return NextResponse.json({ status: 200, message: cards })
     } catch (error) {
+        console.error(error)
         return NextResponse.json({ status: 500, message: "Problem getting cards" });
     }
 
 }
 
 const PUT = async (req : NextRequest) => {
-    const {email, cardName, newCardName} = await req.json()
+    const {email, newCardName} = await req.json()
 
     // get user by email
     const user = await getUser(email)
@@ -73,6 +75,7 @@ const PUT = async (req : NextRequest) => {
         })
         return NextResponse.json({ status: 200, message: updatedCard })
     } catch (error) {
+        console.error(error)
         return NextResponse.json({ status: 500, message: "Problem renaming card" })
     }
     
@@ -98,6 +101,7 @@ const DELETE = async (req: NextRequest) => {
         })
         return NextResponse.json({ status: 200, message: "Card deleted" })
     } catch (error) {
+        console.error(error)
         return NextResponse.json({ status: 500, message: "Problem deleting card" })
     }
 }
@@ -117,7 +121,7 @@ const POST = async (req: NextRequest) => {
 
     // create card
     try {
-        const newCard = await prisma.card.create({
+        await prisma.card.create({
             data: {
                 name: cardName,
                 totalAmount: initialValue,
@@ -128,6 +132,8 @@ const POST = async (req: NextRequest) => {
 
         return NextResponse.json({ status: 200, message: "Card Created" })
     } catch (error) {
+        console.error(error)
+
         return NextResponse.json({ status: 500, message: "Problem creating card" })
     }
 }

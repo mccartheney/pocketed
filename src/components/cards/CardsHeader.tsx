@@ -1,5 +1,4 @@
-"use client"
-import { motion } from "framer-motion"
+
 import { FaPlus } from "react-icons/fa"
 
 const CardsHeader = () => {

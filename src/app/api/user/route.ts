@@ -23,6 +23,7 @@ const GET = async (req: NextRequest) => {
         const allUsers = await prisma.user.findMany ()
         return NextResponse.json({status : 200, message:allUsers})
     } catch (error) {
+        console.error(error)
         return NextResponse.json({ status: 500, message: "Error getting users" })
     }
 
@@ -41,25 +42,28 @@ const PUT = async (req : NextRequest) => {
     // if want to change image
     if (NewImageSrc) {
         try {
-            await prisma.user.update({
+            const updatedUser = await prisma.user.update({
                 where: { email: email },
                 data: { image: NewImageSrc }
             })
 
-            return NextResponse.json({ status: 200, message: "User profile picture updated" })
+            return NextResponse.json({ status: 200, message: "User profile picture updated", UUser: updatedUser })
         } catch (error) {
+            console.error(error)
             return NextResponse.json({ status: 500, message: "Error updating profile pic" })
         }
     }else if (newUserName) { // if want to change username
         try {
-            await prisma.user.update({
+            const updateUser = await prisma.user.update({
                 where: { email: email },
-                data: { image: NewImageSrc }
+                data: { name: newUserName }
             })
 
-            return NextResponse.json({ status: 200, message: "User profile picture updated" })
+            return NextResponse.json({ status: 200, message: "User Name updated", UUser : updateUser })
         } catch (error) {
-            return NextResponse.json({ status: 500, message: "Error updating profile pic" })
+            console.error(error)
+
+            return NextResponse.json({ status: 500, message: "Error updating user name" })
         }
     }
 
@@ -67,13 +71,14 @@ const PUT = async (req : NextRequest) => {
     try {
         const profilePicImagePh = "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541"
 
-        await prisma.user.update ({
+        const updatedUser = await prisma.user.update ({
             where : {email : email},
             data: { image: profilePicImagePh }
         })
 
-        return NextResponse.json({ status: 200, message: "User profile picture Removed" })
+        return NextResponse.json({ status: 200, message: "User profile picture Removed", UUser : updatedUser })
     } catch (error) {
+        console.error(error)
         return NextResponse.json({ status: 500, message: "Error updating profile pic" })
     }
 

@@ -2,13 +2,12 @@
 
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react"
 import { FaAngleLeft, FaEdit, FaTrash } from "react-icons/fa"
-import { motion } from "framer-motion"
-import axios from "axios"
 import { useSession } from "next-auth/react"
 import { cardApiType } from "@/types/cardTypes"
 import toast from "react-hot-toast"
 import { useRouter } from "next/navigation"
 import LoadingPage from "../LoadingPage"
+import axios from "axios"
 
 const CardInfoHeader = (
     { card, setCard }: { card: cardApiType, setCard: Dispatch<SetStateAction<cardApiType | undefined>> }
@@ -40,7 +39,7 @@ const CardInfoHeader = (
         axios.put ("/api/cards", {
             email : userEmail,
             cardName : card.name, 
-            newCardName : cardToRename.current?.value!
+            newCardName : cardToRename.current?.value! || ""
         }) .then (response => {
             if (response.data.status == 200) {
                 setCard(response.data.message)

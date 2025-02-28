@@ -27,6 +27,7 @@ const handler = NextAuth({
 
     callbacks: {
         async jwt(
+
             {token, user, account} : {token : JWT, user : User, account?:any}
         ) {
             if (user) {

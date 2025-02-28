@@ -14,8 +14,8 @@ const CardsList = (
 
     // get user name
     const session = useSession()
-    const userEmail = session.data?.user?.email!
-    const userName = session.data?.user?.name!
+    const userEmail = session.data?.user?.email! || ""
+    const userName = session.data?.user?.name! || ""
 
     // define states
     const [loading, setLoading] = useState<boolean>(true)
