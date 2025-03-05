@@ -1,6 +1,7 @@
 "use client"
 
 import CardDeleteModel from '@/components/card/CardDeleteModel';
+import CardGrid from '@/components/card/CardContent';
 import CardInfoHeader from '@/components/card/CardInfoHeader';
 import LoadingPage from '@/components/LoadingPage';
 import { cardApiType } from '@/types/cardTypes';
@@ -8,6 +9,7 @@ import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import CardContent from '@/components/card/CardContent';
 
 const Page = () => {
     // get user email
@@ -16,7 +18,7 @@ const Page = () => {
 
     // get params by url
     const params = useParams();
-    const cardNameFromParam = params.card;
+    const cardNameFromParam : string  = String(params.card!).replaceAll("%20", " ");
 
     // states for loading and card
     const [card, setCard] = useState <cardApiType>()
@@ -36,10 +38,13 @@ const Page = () => {
 
     if (loading) return <LoadingPage/>
 
+    console.log(cardNameFromParam)
+
     return (
         <>
             <CardInfoHeader card={card!} setCard={setCard} />
             <CardDeleteModel cardName={card!.name} />
+            <CardContent/>
         </>
     );
 }

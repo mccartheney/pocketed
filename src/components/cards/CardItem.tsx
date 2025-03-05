@@ -10,10 +10,12 @@ const CardItem = (
     const month = date.getMonth() + 1
     const year = date.getFullYear()
 
-    return (
-        <div className="w-full h-52 m-auto bg-base-200 rounded-xl relative text-white shadow-2xl transition-transform transform ">
+    let cardName = card.name.replaceAll(" ", "%20")
 
-            <Link href={`/app/cards/${card.name}`}>
+    return (
+        <div className="w-full h-52 m-auto bg-base-200 rounded-xl relative shadow-2xl transition-transform transform ">
+
+            <Link href={`/app/cards/${cardName}`}>
                 <button className="btn btn-xs text-xs btn-primary absolute top-4 right-4">
                     <FaArrowRight />
                 </button>
