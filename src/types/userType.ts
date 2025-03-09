@@ -5,7 +5,7 @@ type userType = {
     name : string
     email : string
     imgUrl : string
-    friensds : userType[]
+    friends : userType[]
     cards : cardType[]
 }
 
