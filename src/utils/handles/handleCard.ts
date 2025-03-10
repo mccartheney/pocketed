@@ -6,7 +6,7 @@ import { PrismaClient } from "@prisma/client"
 
 const prisma = new PrismaClient()
 
-class handleCard {
+class HandleCard {
     async createCard (email : string, cardName : string, balance : number ) {
         const user : userType | null = await CheckUserExists(email)
 
@@ -104,4 +104,4 @@ class handleCard {
 
 }
 
-export default handleCard
+export default HandleCard
