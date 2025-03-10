@@ -4,7 +4,7 @@ import userType from "@/types/userType";
 
 const prisma = new PrismaClient()
 
-class handleUser {
+class HandleUser {
     async createUser(
         name: string, email: string, imgUrl: string
     ) {
@@ -26,7 +26,7 @@ class handleUser {
 
         return null
     }
-
+        
     async getUser(email: string) {
         const user: userType | null = await CheckUserExists(email)
 
@@ -122,5 +122,16 @@ class handleUser {
 
         return updatedUser
     }
-        
+    
+    async getCards (email : string) {
+        const user : userType | null = await CheckUserExists(email)
+
+        if (! user) {
+            return null
+        }
+
+        return user.cards
+    }   
 }
+
+export default HandleUser
