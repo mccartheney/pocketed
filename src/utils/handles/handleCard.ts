@@ -8,24 +8,30 @@ const prisma = new PrismaClient()
 
 class HandleCard {
     async createCard (email : string, cardName : string, balance : number ) {
-        const user : userType | null = await CheckUserExists(email)
+        const user  = await CheckUserExists(email)
 
         if (! user) {
             return "User dont exists"
         }
 
         const handleUser = new HandleUser()
-        const userCards : cardType[] | null = await handleUser.getCards(email)
+        const userCards= await handleUser.getCards(email)
 
         if (! userCards) {
-            const card : cardType = await prisma.card.create({
-                data : {
-                    name : cardName,
-                    creator : user,
-                    owners : [user],
-                    expenses : [],
-                    balance : balance,
-                    economies : []
+            const card  = await prisma.card.create({
+                data: {
+                    name: cardName,
+                    creator: { connect: { id: user.id } },
+                    owners: { connect: [{ id: user.id }] },
+                    expenses: { create: [] },
+                    balance: balance,
+                    economies: { create: [] }
+                },
+                include: {
+                    creator: true,
+                    owners: true,
+                    expenses: true,
+                    economies: true
                 }
             })
             return card
@@ -34,37 +40,54 @@ class HandleCard {
             return "Card already exists"
         }
 
-        const card : cardType = await prisma.card.create({
+        const card = await prisma.card.create({
             data: {
                 name: cardName,
-                creator: user,
-                owners: [user],
-                expenses: [],
+                creator: { connect: { id: user.id } },
+                owners: { connect: [{ id: user.id }] },
+                expenses: { create: [] },
                 balance: balance,
-                economies: []
+                economies: { create: [] }
+            },
+            include: {
+                creator: true,
+                owners: true,
+                expenses: true,
+                economies: true
             }
         })
         return card
     }
 
-    async getCard(cardId : number) {
-        const card : cardType | null = await prisma.card.findUnique({
-            where : {
-                id : cardId
+    async getCard(cardId: number) {
+        const card = await prisma.card.findUnique({
+            where: { id: cardId },
+            include: {
+                creator: true,
+                owners: true,
+                expenses: {
+                    include: {
+                        yearExpenses: {
+                            include: {
+                                AllExpenses: true
+                            }
+                        }
+                    }
+                },
+                economies: true
             }
         })
-
         return card
     }
 
     async getOwners(email : string, cardId : number) {
-        const user : userType | null = await CheckUserExists(email)
+        const user  = await CheckUserExists(email)
 
         if (! user) {
             return "user dont exists"
         }
 
-        const card : cardType | null = await this.getCard(cardId)
+        const card = await this.getCard(cardId)
 
         if (! card) {
             return "card dont exists"
@@ -74,7 +97,7 @@ class HandleCard {
     }
 
     async getBalance(cardId : number) {
-        const card : cardType | null = await this.getCard(cardId)
+        const card = await this.getCard(cardId)
 
         if (! card) {
             return "card dont exists"
@@ -84,7 +107,7 @@ class HandleCard {
     }   
 
     async updateBalance(cardId : number, balance : number) {
-        const card : cardType | null = await this.getCard(cardId)
+        const card = await this.getCard(cardId)
 
         if (! card) {
             return "card dont exists"

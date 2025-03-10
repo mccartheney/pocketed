@@ -8,16 +8,21 @@ class HandleUser {
     async createUser(
         name: string, email: string, imgUrl: string
     ) {
-        const userExists: userType | null = await CheckUserExists(email)
+        const userExists = await CheckUserExists(email)
 
         if (!userExists) {
-            const user: userType = await prisma.user.create({
+            const user = await prisma.user.create({
                 data: {
                     name: name,
                     email: email,
                     imgUrl: imgUrl,
-                    friensds: [],
-                    cards: []
+                    authMethod: "email",
+                    theme: "dark"
+                },
+                include: {
+                    friends: true,
+                    friendOf: true,
+                    cards: true
                 }
             })
 
@@ -28,7 +33,7 @@ class HandleUser {
     }
         
     async getUser(email: string) {
-        const user: userType | null = await CheckUserExists(email)
+        const user = await CheckUserExists(email)
 
         if (!user) {
             return null
@@ -38,7 +43,7 @@ class HandleUser {
     }
 
     async getAllUsers() {
-        const users: userType[] = await prisma.user.findMany()
+        const users= await prisma.user.findMany()
 
         return users
     }
@@ -46,7 +51,7 @@ class HandleUser {
     async updateUser(
         email: string, updateKey: "name" | "email" | "imgUrl", keyValue: string
     ) {
-        const user: userType | null = await CheckUserExists(email)
+        const user = await CheckUserExists(email)
 
         if (!user) {
             return null
@@ -61,7 +66,7 @@ class HandleUser {
     }
 
     async deleteUser(email: string) {
-        const user: userType | null = await CheckUserExists(email)
+        const user= await CheckUserExists(email)
 
         if (!user) {
             return null
@@ -76,7 +81,7 @@ class HandleUser {
 
 
     async getFriends(email: string) {
-        const user: userType | null = await CheckUserExists(email)
+        const user = await CheckUserExists(email)
 
         if (!user) {
             return null
@@ -86,8 +91,8 @@ class HandleUser {
     }
 
     async addFriend(email: string, friendEmail: string) {
-        const user: userType | null = await CheckUserExists(email)
-        const friend: userType | null = await CheckUserExists(friendEmail)
+        const user = await CheckUserExists(email)
+        const friend = await CheckUserExists(friendEmail)
 
         if (!user || !friend) {
             return null
@@ -100,38 +105,53 @@ class HandleUser {
         }
 
         await prisma.user.update({
-            where : { email : email },
-            data : { friends : [...user.friends, friend] }
+            where: { email: email },
+            data: { friends: { connect: { email: friendEmail } } }
         })
 
         return user
     }
     
-    async deleteFriend (email : string, friendEmail : string) {
-        const user : userType | null = await CheckUserExists(email)
-        const friend : userType | null = await CheckUserExists(friendEmail)
+    async deleteFriend(email: string, friendEmail: string) {
+        const user = await CheckUserExists(email)
+        const friend = await CheckUserExists(friendEmail)
 
-        if (! user || ! friend) {
+        if (!user || !friend) {
             return null
         }
 
         const updatedUser = await prisma.user.update({
-            where : { email : email },
-            data : { friends : user.friends.filter(friendParam => friendParam.email !== friendEmail) }
+            where: { email: email },
+            data: { friends: { disconnect: { email: friendEmail } } }
         })
 
         return updatedUser
     }
     
     async getCards (email : string) {
-        const user : userType | null = await CheckUserExists(email)
+        const user  = await CheckUserExists(email)
 
         if (! user) {
             return null
         }
 
         return user.cards
-    }   
+    }
+
+    async changeTheme(email : string, theme : string) {
+        const user = await CheckUserExists(email)
+
+        if (! user) {
+            return null
+        }   
+
+        await prisma.user.update({
+            where : { email : email },
+            data : { theme : theme }
+        })
+
+        return user        
+    }
 }
 
 export default HandleUser

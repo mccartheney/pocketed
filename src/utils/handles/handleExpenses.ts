@@ -23,16 +23,16 @@ class HandleExpenses {
         searchType : "unique" | "mensal" | "all"
     ) {
         const handleCard = new HandleCard()
-        const card : cardType | null = await handleCard.getCard(cardId)
+        const card = await handleCard.getCard(cardId)
 
         if (!card) return "card dont exist"
 
-        const SelectedYearExpenses :expensesType[] = card.expenses.filter((expense : expensesType) => expense.yearExpenses.filter((yearExpense : yearExpensesType) => yearExpense.year === year))
+        const SelectedYearExpenses = card.expenses.filter((expense) => expense.yearExpenses.filter((yearExpense) => yearExpense.year === year))
         
         if (SelectedYearExpenses.length === 0) return "no expenses in this year"
         
-        const yearAllExpenses: expenseType[] = SelectedYearExpenses[0].yearExpenses[0].AllExpenses
-        const searchTypeExpenses : expenseType[] = yearAllExpenses.filter((expense : expenseType) => expense.timeTypeExpense === searchType)
+        const yearAllExpenses = SelectedYearExpenses[0].yearExpenses[0].AllExpenses
+        const searchTypeExpenses = yearAllExpenses.filter((expense) => expense.timeTypeExpense === searchType)
         
         return searchTypeExpenses
 
@@ -45,19 +45,19 @@ class HandleExpenses {
         dateValue : { year : number, month? : monthType, week? : 1|2|3|4|5, day? : number}        
     ){
         const handleCard = new HandleCard()
-        const card : cardType | null = await handleCard.getCard(cardId)
+        const card  = await handleCard.getCard(cardId)
 
         if (!card) return "card dont exist"
         
-        const SelectedYearExpenses :expensesType[] = card.expenses.filter((expense : expensesType) => expense.yearExpenses.filter((yearExpense : yearExpensesType) => yearExpense.year === dateValue.year))
+        const SelectedYearExpenses  = card.expenses.filter((expense : any) => expense.yearExpenses.filter((yearExpense : yearExpensesType) => yearExpense.year === dateValue.year))
 
         if (SelectedYearExpenses.length === 0) return "no expenses in this year"
 
-        const selectedYearExpenses: expenseType[] = SelectedYearExpenses[0].yearExpenses[0].AllExpenses
+        const selectedYearExpenses = SelectedYearExpenses[0].yearExpenses[0].AllExpenses
 
         if (dateType === "year") return selectedYearExpenses
         if(dateValue.month) {
-            const monthExpenses : expenseType[] = selectedYearExpenses.filter((expense : expenseType) => expense.month === dateValue.month)
+            const monthExpenses  = selectedYearExpenses.filter((expense : any) => expense.month === dateValue.month)
             if (dateType === "month") return monthExpenses
             else if (dateType === "week") {
                 let startDayWeek : number = 1
@@ -84,11 +84,11 @@ class HandleExpenses {
                     endDayWeek = 31
                 }
 
-                const dayExpenses : expenseType[] = monthExpenses.filter((expense : expenseType) => expense.day >= startDayWeek && expense.day <= endDayWeek)
+                const dayExpenses  = monthExpenses.filter((expense) => expense.day >= startDayWeek && expense.day <= endDayWeek)
                 return dayExpenses
             }
             else if (dateType === "day") {
-                const dayExpenses: expenseType[] = monthExpenses.filter((expense: expenseType) => expense.day === dateValue.day)
+                const dayExpenses = monthExpenses.filter((expense) => expense.day === dateValue.day)
                 return dayExpenses
             }
             
@@ -98,12 +98,12 @@ class HandleExpenses {
 
     async deleteExpense(expenseId : number, cardId : number ) {
         const handleCard = new HandleCard()
-        const card : cardType | null = await handleCard.getCard(cardId)
+        const card  = await handleCard.getCard(cardId)
 
         if (!card) return "card dont exist"
 
-        const expense : expenseType = await prisma.expense.findFirst({
-            where :{id : expenseId}
+        const expense = await prisma.expense.findFirst({
+            where: {id: expenseId}
         })
 
         if (!expense) return "expense dont exist"
@@ -123,11 +123,11 @@ class HandleExpenses {
         expenseInfo : expenseInfoType
     ){
         const handleCard = new HandleCard()
-        const card : cardType | null = await handleCard.getCard(cardId)
+        const card  = await handleCard.getCard(cardId)
 
         if (!card) return "card dont exist"
         
-        const expenseWithSameName : expenseType[] = await prisma.expense.findMany({
+        const expenseWithSameName = await prisma.expense.findMany({
             where : {
                 name : expenseInfo.name,
             }
@@ -136,8 +136,9 @@ class HandleExpenses {
         if (expenseWithSameName.length > 0) expenseInfo.visibleName = `${expenseInfo.name} (${expenseWithSameName.length + 1})`
 
         try{
-            const newExpense : expenseType = await prisma.expense.create({
+            const newExpense = await prisma.expense.create({
                 data : {
+                    yearExpensesId: card.expenses[0].yearExpenses[0].id,
                     ...expenseInfo
                 }
             })
@@ -154,14 +155,14 @@ class HandleExpenses {
         updateKey : "value" | "name",
         updateValue : string | number
     ){
-        const expense : expenseType | null = await prisma.expense.findFirst({
+        const expense  = await prisma.expense.findFirst({
             where : {id : expenseId}
         })
 
         if (!expense) return "expense dont exist"
         
         try{
-            const updatedExpense : expenseType = await prisma.expense.update({
+            const updatedExpense = await prisma.expense.update({
                 where : {id : expenseId},
                 data : {
                     [updateKey] : updateValue

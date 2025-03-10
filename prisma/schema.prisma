@@ -1,0 +1,85 @@
+// prisma/schema.prisma
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgres"
+    url      = env("DATABASE_URL")
+}
+
+model User {
+    id         Int        @id @default(autoincrement())
+    name       String
+    email      String     @unique
+    imgUrl     String?
+    authMethod String
+    theme      String
+    friends    User[]     @relation("UserFriends")
+    friendOf   User[]     @relation("UserFriends")
+    cards      Card[]     @relation("CreatedCards")
+    ownedCards Card[]     @relation("CardOwners")
+    historic   Historic[]
+}
+
+model Card {
+    id          Int        @id @default(autoincrement())
+    name        String
+    creator     User       @relation("CreatedCards", fields: [creatorId], references: [id], onDelete: Cascade)
+    creatorId   Int
+    owners      User[]     @relation("CardOwners")
+    balance     Int
+    expenses    Expenses[]
+    economies   Economy[]
+    createdAt   DateTime   @default(now())
+}
+
+model Expenses {
+    id           Int             @id @default(autoincrement())
+    card         Card            @relation(fields: [cardId], references: [id], onDelete: Cascade)
+    cardId       Int
+    yearExpenses YearExpenses[]
+}
+
+model YearExpenses {
+    id          Int        @id @default(autoincrement())
+    year        Int
+    expenses    Expenses   @relation(fields: [expensesId], references: [id], onDelete: Cascade)
+    expensesId  Int
+    AllExpenses Expense[]
+}
+
+model Expense {
+    id              Int           @id @default(autoincrement())
+    value           Int
+    visibleName     String
+    name            String
+    timeTypeExpense String        // "unique" | "mensal"
+    month           String        // Month names
+    day            Int
+    dayOfWeek      String        // Week day names
+    yearExpenses   YearExpenses  @relation(fields: [yearExpensesId], references: [id], onDelete: Cascade)
+    yearExpensesId Int
+}
+
+model Economy {
+    id          Int        @id @default(autoincrement())
+    description String
+    goal        Int
+    balance     Int
+    imgUrl      String
+    card        Card       @relation(fields: [cardId], references: [id], onDelete: Cascade)
+    cardId      Int
+    historic    Historic[]
+}
+
+model Historic {
+    id        Int      @id @default(autoincrement())
+    date      DateTime
+    value     Int
+    tType     String   // "expense" | "income"
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId    Int
+    economy   Economy  @relation(fields: [economyId], references: [id], onDelete: Cascade)
+    economyId Int
+}

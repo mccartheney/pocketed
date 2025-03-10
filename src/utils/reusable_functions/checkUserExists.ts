@@ -1,14 +1,18 @@
-import userType from "@/types/userType";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client"
+import userType from "@/types/userType"
 
 const prisma = new PrismaClient()
 
-const CheckUserExists = async (email: string): Promise<userType | null> =>  {
-    const user : userType = await prisma.user.findFirst({
-        where: { email: email }       
+async function CheckUserExists(email: string) {
+    const user = await prisma.user.findUnique({
+        where: { email: email },
+        include: {
+            friends: true,
+            friendOf: true,
+            cards: true
+        }
     })
-
     return user
 }
 
-export default CheckUserExists;
+export default CheckUserExists
