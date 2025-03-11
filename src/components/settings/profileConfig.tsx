@@ -81,9 +81,6 @@ const ProfileConfig = () => {
         <div className="p-3">
             <NewProfilePicModel/>
             <div className="p-2">
-                <h1 className="text-2xl font-bold mb-6">
-                    Profile Settings
-                </h1>
 
                 <div className="profileImage flex items-center mb-8">
                     <div className="avatar relative">

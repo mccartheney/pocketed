@@ -1,8 +1,7 @@
 "use client"
 
 import { useSession } from "next-auth/react"
-import { useParams, usePathname, useRouter } from "next/navigation"
-import { Toaster } from "react-hot-toast"
+import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { UserProvider } from "@/context/userContext"
 import userType from "@/types/userType"
@@ -10,6 +9,7 @@ import axios from "axios"
 import LoadingPage from "@/components/LoadingPage"
 import Sidebar from "@/components/sideBar/Sidebar"
 import Dock from "@/components/dock/Dock"
+import LayoutTitle from "@/components/layoutTitle";
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
     const router = useRouter();
@@ -55,7 +55,8 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
         <UserProvider value= {{ user, setUser }}>
             <div className="flex" > 
                 {screenWidth > 768 ? <Sidebar /> : <Dock />}
-                <div className="w-full">
+                <div className="w-full md:max-h-screen">
+                    <LayoutTitle/>
                     { children }
                 </div>
             </div>
