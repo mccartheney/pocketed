@@ -52,12 +52,14 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
     if (!user) return <LoadingPage />;
 
     return (
-        <UserProvider value= {{ user, setUser }}>
-            <div className="flex" > 
+        <UserProvider value={{ user, setUser }}>
+            <div className="flex h-screen"> 
                 {screenWidth > 768 ? <Sidebar /> : <Dock />}
-                <div className="w-full md:max-h-screen">
+                <div className="flex flex-col flex-1">
                     <LayoutTitle/>
-                    { children }
+                    <main className="md:flex-1 lg:flex-1">
+                        {children}
+                    </main>
                 </div>
             </div>
         </UserProvider>
