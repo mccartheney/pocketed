@@ -34,7 +34,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
                 .then(response => setUser(response.data.message))
         }
     }, [session.status])
-    // update on resize
+
     useEffect(() => {
         const handleResize = () => {
             setScreenWidth(window.innerWidth);
@@ -44,18 +44,20 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
         return () => window.removeEventListener("resize", handleResize);
     }, []);
 
-    if (session.status === "loading" || !user) return <LoadingPage/>;
+    if (session.status === "loading") return <LoadingPage />;
     if (session.status === "unauthenticated") {
         router.push("/");
         return null;
     }
-
+    if (!user) return <LoadingPage />;
 
     return (
         <UserProvider value= {{ user, setUser }}>
             <div className="flex" > 
                 {screenWidth > 768 ? <Sidebar /> : <Dock />}
-                { children }
+                <div className="w-full">
+                    { children }
+                </div>
             </div>
         </UserProvider>
     );

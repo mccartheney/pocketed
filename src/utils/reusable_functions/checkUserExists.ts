@@ -1,9 +1,11 @@
 import { PrismaClient } from "@prisma/client"
-import userType from "@/types/userType"
 
+//  init prisma client
 const prisma = new PrismaClient()
 
+//  check if user exists
 async function CheckUserExists(email: string) {
+    // get user from database
     const user = await prisma.user.findUnique({
         where: { email: email },
         include: {
@@ -12,6 +14,7 @@ async function CheckUserExists(email: string) {
             cards: true
         }
     })
+    // return user
     return user
 }
 
