@@ -1,37 +1,62 @@
 import HandleUser from "@/utils/handles/handleUser"
 import { PrismaClient } from "@prisma/client"
 import { NextRequest, NextResponse } from "next/server"
-
-const prisma = new PrismaClient()
+import userType from "@/types/userType"
 
 const GET = async (req:NextRequest) => {
     const { searchParams } = new URL(req.url)
     const email = searchParams.get("email")
-    console.log(email)
+    const handleUser = new HandleUser()
+    const connection = searchParams.get("connection")
 
     if (!email) {
-        return NextResponse.json({ error: "Email is required" }, { status: 400 })
+        const users = await handleUser.getAllUsers()
+        return NextResponse.json({ message: users })
     }
 
-    const user = await prisma.user.findFirst({
-        where: { email }
-    })
+    if (connection == "none") {
+        const users = await handleUser.usersWithoutConnectionWithUser(email)
+
+        console.log(users)
+
+        return NextResponse.json({ message: users })
+    }
+
+    const user = await handleUser.getUser(email)
 
     return NextResponse.json({ message: user })
 }
 
 const PUT = async (req:NextRequest) => {
-    const { updateKey, keyValue, email } = await req.json()
-    
+    const { updateKey, keyValue, email, addFriend} 
+    : {
+        updateKey: "name" | "email" | "imgUrl",
+        keyValue: string,
+        email: string,
+        addFriend: {
+            userSendingRequest: userType,
+            userReceivingRequest: userType
+        }
+    } = await req.json()
     if (!email) {
         return NextResponse.json({status: 400, message: "Email is required"})
     }
     
     const handleUser = new HandleUser()
     const user = await handleUser.updateUser(email, updateKey, keyValue)
-    
+
     if (!user) {
         return NextResponse.json({status: 400, message: "User not found"})
+    }
+
+    if(addFriend) {
+        try {
+            const newFriend = await handleUser.addFriend(addFriend.userSendingRequest.email, addFriend.userReceivingRequest.email)
+            
+            return NextResponse.json({status: 200, message: "Friend added"})
+        } catch (error) {
+            return NextResponse.json({status: 400, message: "Error adding friend"})
+        }
     }
 
     if (!updateKey || !keyValue) {

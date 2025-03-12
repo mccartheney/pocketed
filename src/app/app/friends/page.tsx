@@ -1,7 +1,7 @@
 import AddedFriends from "@/components/friends/addedFriends/AddedFriends"
 import FriendsStats from "@/components/friends/addedFriends/FriendsStats"
-import FriendListHeader from "@/components/friends/friendsLIst/FriendListHeader"
-import FriendsList from "@/components/friends/friendsLIst/FriendsList"
+import FriendListHeader from "@/components/friends/userList/UsersListHeader"
+import FriendsList from "@/components/friends/userList/UsersList"
 
 const Page = () => {
     return (

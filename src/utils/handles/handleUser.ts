@@ -34,7 +34,8 @@ class HandleUser {
             // return user
             return user
         }
-        
+
+        await prisma.$disconnect()
         // if user exists, return null
         return null
     }
@@ -56,8 +57,14 @@ class HandleUser {
     // method to get all users
     async getAllUsers() {
         // get all users
-        const users= await prisma.user.findMany()
+        const users= await prisma.user.findMany({
+            include : {
+                friends: true,
+                friendOf: true
+            }
+        })
 
+        await prisma.$disconnect()
         // return users
         return users
     }
@@ -80,6 +87,7 @@ class HandleUser {
             data: { [updateKey]: keyValue }
         })
 
+        await prisma.$disconnect()
         // return updated user
         return updatedUser
     }
@@ -99,6 +107,7 @@ class HandleUser {
             where: { email: email }
         })
 
+        await prisma.$disconnect()
         // return user
         return user
     }
@@ -144,8 +153,153 @@ class HandleUser {
             data: { friends: { connect: { email: friendEmail } } }
         })
 
+        await prisma.$disconnect()
         // return user
         return user
+    }
+
+    async sendFriendRequest(email: string, friendEmail: string) {
+        // check if user exists
+        const user = await CheckUserExists(email)
+
+        // check if friend exists
+        const friend = await CheckUserExists(friendEmail)
+
+        // if user or friend to send request dont exists, return null
+        if (!user || !friend) {
+            return "user or friend dont exists"
+        }
+
+        // check if user is already friend
+        const isFriend = user.friends.some(friendParam => friendParam.email === friendEmail)
+
+        const isFriendRequest = user.friendOf.some(friendParam => friendParam.email === friendEmail)
+
+        // if user is already friend, return null
+        if (isFriend || isFriendRequest) {
+            return "User already friend or request already sent"
+        }
+
+        // send friend request
+        await prisma.user.update({
+            where: { email: friendEmail },
+            data: { friendOf: { connect: { email: friendEmail } } }
+        })
+
+        // add friend to user
+        await prisma.user.update({
+            where: { email: email },
+            data: { friends: { connect: { email: friendEmail } } }
+        })
+
+        await prisma.$disconnect()
+        // return user
+        return "Friend request sent"
+    }
+
+    async usersWithoutConnectionWithUser (email: string) {
+        // check if user exists
+        const user = await CheckUserExists(email)
+
+        // if user dont exists, return null
+        if (!user) {
+            return null
+        }
+
+        // get users that are not in user.friends or user.friendOf
+        const users = await this.getAllUsers()
+
+        const filteredUsers = users.filter((userElement) => {
+            const isFriend = userElement.friends.some(person => person.email === user.email);
+            const isFriendOf = userElement.friendOf.some(person => person.email === user.email);
+            const isMe = userElement.email === user.email;
+            return !(isFriend || isFriendOf || isMe);
+        });
+
+
+        await prisma.$disconnect()
+        // return users
+        return filteredUsers
+    }
+
+    async getFriendRequests(email: string) {
+        // check if user exists
+        const user = await CheckUserExists(email)
+
+        // if user dont exists, return null
+        if (!user) {
+            return null
+        }
+
+        // return friend requests
+        return user.friendOf
+    }
+    
+
+    async acceptFriendRequest(email: string, friendEmail: string) {
+        // check if user exists
+        const user = await CheckUserExists(email)
+
+        // check if friend exists
+        const friend = await CheckUserExists(friendEmail)
+
+        // if user or friend to accept request dont exists, return null
+        if (!user || !friend) {
+            return null
+        }
+
+        // check if user is already friend
+        const isFriend = user.friends.some(friendParam => friendParam.email === friendEmail)
+
+        const isFriendRequest = user.friendOf.some(friendParam => friendParam.email === friendEmail)
+
+        // if user is already friend, return null
+        if (isFriend || isFriendRequest) {
+            return null
+        }
+
+        // accept friend request
+        await prisma.user.update({
+            where: { email: email },
+            data: { friends: { connect: { email: friendEmail } } }
+        })
+
+        await prisma.$disconnect()
+        // return user
+        return "Friend request accepted"
+    }
+
+    async rejectFriendRequest(email: string, friendEmail: string) {
+        // check if user exists
+        const user = await CheckUserExists(email)
+
+        // check if friend exists
+        const friend = await CheckUserExists(friendEmail)
+
+        // if user or friend to reject request dont exists, return null
+        if (!user || !friend) {
+            return null
+        }
+
+        // check if user is already friend
+        const isFriend = user.friends.some(friendParam => friendParam.email === friendEmail)
+
+        const isFriendRequest = user.friendOf.some(friendParam => friendParam.email === friendEmail)
+
+        // if user is already friend, return null
+        if (isFriend || isFriendRequest) {
+            return null
+        }
+
+        // reject friend request
+        await prisma.user.update({
+            where: { email: email },
+            data: { friendOf: { disconnect: { email: friendEmail } } }
+        })
+
+        await prisma.$disconnect()
+        // return user
+        return "Friend request rejected"
     }
 
     // method to delete friend
@@ -167,6 +321,7 @@ class HandleUser {
             data: { friends: { disconnect: { email: friendEmail } } }
         })
 
+        await prisma.$disconnect()
         // return updated user
         return updatedUser
     }
@@ -199,6 +354,8 @@ class HandleUser {
             where : { email : email },
             data : { theme : theme }
         })
+
+        await prisma.$disconnect()
 
         // return user
         return user        

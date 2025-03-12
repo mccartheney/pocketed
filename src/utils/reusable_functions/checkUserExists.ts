@@ -5,8 +5,9 @@ const prisma = new PrismaClient()
 
 //  check if user exists
 async function CheckUserExists(email: string) {
+
     // get user from database
-    const user = await prisma.user.findUnique({
+    const user = await prisma.user.findFirst({
         where: { email: email },
         include: {
             friends: true,
@@ -14,6 +15,8 @@ async function CheckUserExists(email: string) {
             cards: true
         }
     })
+
+    await prisma.$disconnect()
     // return user
     return user
 }
