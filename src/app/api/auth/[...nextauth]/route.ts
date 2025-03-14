@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import NextAuth, { User } from "next-auth";
+import NextAuth, { User, Account } from "next-auth";
 import Github from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 import { JWT } from "next-auth/jwt";
@@ -27,15 +27,14 @@ const handler = NextAuth({
 
     callbacks: {
         async jwt(
-
-            {token, user, account} : {token : JWT, user : User, account?:any}
+            {token, user, account} : {token : JWT, user : User, account: Account | null}
         ) {
             if (user) {
                 const userExists = await prisma.user.findUnique({
                     where : {email : user.email!}
                 })
                 
-                const authMethod = account.provider
+                const authMethod = account?.provider
                 
                 if (!userExists) {
                     await prisma.user.create({

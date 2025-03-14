@@ -1,6 +1,4 @@
-import cardType from "@/types/cardtype"
 import CheckUserExists from "../reusable_functions/checkUserExists"
-import userType from "@/types/userType"
 import HandleUser from "./handleUser"
 import { PrismaClient } from "@prisma/client"
 

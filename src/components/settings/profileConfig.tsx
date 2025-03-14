@@ -1,7 +1,6 @@
 "use client"
 import { FaEdit, FaCamera, FaTrash } from "react-icons/fa";
-import { FormEvent, useEffect, useRef, useState } from "react";
-import { useSession } from "next-auth/react";
+import { FormEvent, useRef, useState } from "react";
 import axios from "axios";
 import LoadingPage from "../LoadingPage";
 import toast from "react-hot-toast";

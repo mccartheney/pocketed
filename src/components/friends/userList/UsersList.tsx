@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, useRef, Dispatch, SetStateAction } from "react"
+import { useEffect, useState, Dispatch, SetStateAction } from "react"
 
 import userType from "@/types/userType"
 import UserItem from "./UserListItem"
@@ -41,7 +41,7 @@ const UsersList = ({
             }
         }) as EventListener)
 
-        return () => window.removeEventListener("userEvents", ((e: Event) => {}) as EventListener)
+        return () => window.removeEventListener("userEvents", (() => {}) as EventListener)
     }, []);
 
     if (isLoading) {

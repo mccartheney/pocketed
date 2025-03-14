@@ -1,5 +1,4 @@
 import HandleUser from "@/utils/handles/handleUser"
-import { PrismaClient } from "@prisma/client"
 import { NextRequest, NextResponse } from "next/server"
 import userType from "@/types/userType"
 
@@ -25,7 +24,7 @@ const GET = async (req:NextRequest) => {
             const users = await handleUser.getFriends(email)
             return NextResponse.json({ message: users })
         } catch (error) {
-            return NextResponse.json({ status: 400, message: "Error getting friends" })
+            return NextResponse.json({ status: 400, message: "Error getting friends", error })
         }
     }
 
@@ -62,11 +61,11 @@ const PUT = async (req:NextRequest) => {
 
     if(addFriend) {
         try {
-            const newFriend = await handleUser.addFriend(addFriend.userSendingRequest.email, addFriend.userReceivingRequest.email)
+            await handleUser.addFriend(addFriend.userSendingRequest.email, addFriend.userReceivingRequest.email)
             
             return NextResponse.json({status: 200, message: "Friend added"})
         } catch (error) {
-            return NextResponse.json({status: 400, message: "Error adding friend"})
+            return NextResponse.json({status: 400, message: "Error adding friend", error})
         }
     }
 
@@ -75,7 +74,7 @@ const PUT = async (req:NextRequest) => {
             const deletedFriend = await handleUser.deleteFriend(deleteFriend.userEmail, deleteFriend.friendEmail)
             return NextResponse.json({status: 200, message: "Friend deleted", deletedFriend})
         } catch (error) {
-            return NextResponse.json({status: 400, message: "Error deleting friend"})
+            return NextResponse.json({status: 400, message: "Error deleting friend", error  })
         }
     }
 

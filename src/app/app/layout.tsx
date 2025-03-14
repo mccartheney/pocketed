@@ -17,11 +17,9 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
     const [user, setUser] = useState<userType | null>(null);
     
     const [screenWidth, setScreenWidth] = useState(0);
-    const [screenHeight, setScreenHeight] = useState(0);
 
     useEffect(() => {
         setScreenWidth(window.innerWidth);
-        setScreenHeight(window.innerHeight);
     }, []);
 
     useEffect(() => {
@@ -38,7 +36,6 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
     useEffect(() => {
         const handleResize = () => {
             setScreenWidth(window.innerWidth);
-            setScreenHeight(window.innerHeight);
         }
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);

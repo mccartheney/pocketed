@@ -1,4 +1,4 @@
-import cardType, { expensesType, expenseType, monthType, timeTypeExpense, weekDayType, yearExpensesType } from "@/types/cardtype"
+import {monthType, timeTypeExpense, weekDayType, yearExpensesType } from "@/types/cardtype"
 import HandleCard from "./handleCard"
 import { PrismaClient } from "@prisma/client"
 
@@ -197,7 +197,7 @@ class HandleExpenses {
             })
 
             return updatedExpense
-        } catch (error) {
+        } catch {
             return "error updating expense"
         }
     }

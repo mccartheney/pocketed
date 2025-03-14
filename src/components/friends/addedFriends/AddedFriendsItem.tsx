@@ -32,6 +32,8 @@ const AddedFriendsItem = (
             toast.error(response.data.message)
         }
         setIsLoading(false)
+
+        return null;
     }
 
     return (

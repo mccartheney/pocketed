@@ -1,8 +1,7 @@
 "use client"
 
-import { BiDotsHorizontal } from "react-icons/bi"
 import userType from "@/types/userType"
-import { Dispatch, SetStateAction, useEffect } from "react"
+import { Dispatch, SetStateAction } from "react"
 const UsersListHeader = (
     {
         userSearchRef,

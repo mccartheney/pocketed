@@ -27,7 +27,7 @@ const AddedFriendsList = () => {
             }
         }) as EventListener)
 
-        return () => window.removeEventListener("userEvents", ((e: Event) => {}) as EventListener)
+        return () => window.removeEventListener("userEvents", (() => {}) as EventListener)
     }, [])
 
     if (isLoading) return <div className="skeleton h-[85%] w-full"></div>

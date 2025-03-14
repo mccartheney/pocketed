@@ -1,11 +1,5 @@
 "use client"
-import { useUser } from "@/context/userContext"
-import { useState, useEffect, Dispatch, SetStateAction } from "react"
-import userType from "@/types/userType"
-import axios from "axios"
-import toast from "react-hot-toast"
-import { FaTrash } from "react-icons/fa"
-import Image from "next/image"
+
 import AddedFriendsTitle from "./AddedFriendsTitle"
 import AddedFriendsList from "./AddedFriendsList"
 

@@ -3,7 +3,6 @@ import {
     FiArrowDown,
     FiArrowUp,
     FiBarChart,
-    FiChevronDown,
     FiChevronsRight,
     FiCreditCard,
     FiHome,

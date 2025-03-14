@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import CheckUserExists from "../reusable_functions/checkUserExists";
-import userType from "@/types/userType";
+
 
 //  init prisma client
 const prisma = new PrismaClient()
@@ -154,7 +154,7 @@ class HandleUser {
         })
 
         await prisma.$disconnect()
-        
+
         // return user
         return user
     }
@@ -197,7 +197,7 @@ class HandleUser {
         }
 
         // Disconnect both users from each other
-        const updatedUser = await prisma.user.update({
+        await prisma.user.update({
             where: { email: email },
             data: { 
                 friends: { disconnect: { email: friendEmail } },
@@ -205,7 +205,7 @@ class HandleUser {
             }
         });
 
-        const updatedFriend = await prisma.user.update({
+        await prisma.user.update({
             where: { email: friendEmail },
             data: {
                 friends: { disconnect: { email: email } },
