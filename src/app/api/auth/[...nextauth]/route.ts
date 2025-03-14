@@ -30,11 +30,11 @@ const handler = NextAuth({
             {token, user, account} : {token : JWT, user : User, account: Account | null}
         ) {
             if (user) {
-                const userExists = await prisma.user.findUnique({
+                const userExists = await prisma.user.findFirst({
                     where : {email : user.email!}
                 })
                 
-                const authMethod = account?.provider
+                const authMethod = account?.provider!
                 
                 if (!userExists) {
                     await prisma.user.create({
@@ -52,6 +52,8 @@ const handler = NextAuth({
 
                 }
             }
+
+            await prisma.$disconnect()
             return token;
         },
     },
