@@ -17,9 +17,16 @@ const GET = async (req:NextRequest) => {
     if (connection == "none") {
         const users = await handleUser.usersWithoutConnectionWithUser(email)
 
-        console.log(users)
-
         return NextResponse.json({ message: users })
+    }
+
+    if (connection == "friends") {
+        try {
+            const users = await handleUser.getFriends(email)
+            return NextResponse.json({ message: users })
+        } catch (error) {
+            return NextResponse.json({ status: 400, message: "Error getting friends" })
+        }
     }
 
     const user = await handleUser.getUser(email)
@@ -28,7 +35,7 @@ const GET = async (req:NextRequest) => {
 }
 
 const PUT = async (req:NextRequest) => {
-    const { updateKey, keyValue, email, addFriend} 
+    const { updateKey, keyValue, email, addFriend, deleteFriend} 
     : {
         updateKey: "name" | "email" | "imgUrl",
         keyValue: string,
@@ -36,6 +43,10 @@ const PUT = async (req:NextRequest) => {
         addFriend: {
             userSendingRequest: userType,
             userReceivingRequest: userType
+        },
+        deleteFriend: {
+            userEmail: string,
+            friendEmail: string
         }
     } = await req.json()
     if (!email) {
@@ -56,6 +67,15 @@ const PUT = async (req:NextRequest) => {
             return NextResponse.json({status: 200, message: "Friend added"})
         } catch (error) {
             return NextResponse.json({status: 400, message: "Error adding friend"})
+        }
+    }
+
+    if (deleteFriend) {
+        try {
+            const deletedFriend = await handleUser.deleteFriend(deleteFriend.userEmail, deleteFriend.friendEmail)
+            return NextResponse.json({status: 200, message: "Friend deleted", deletedFriend})
+        } catch (error) {
+            return NextResponse.json({status: 400, message: "Error deleting friend"})
         }
     }
 

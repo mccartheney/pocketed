@@ -53,7 +53,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
 
     return (
         <UserProvider value={{ user, setUser }}>
-            <div className="flex h-screen"> 
+            <div className="flex h-screen md:overflow-hidden"> 
                 {screenWidth > 768 ? <Sidebar /> : <Dock />}
                 <div className="flex flex-col flex-1">
                     <LayoutTitle/>

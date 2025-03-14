@@ -12,19 +12,40 @@ const UsersList = () => {
     const {user} = useUser()
     const [users, setUsers] = useState<userType[]>([])
 
-    console.log(user)
+    const [isLoading, setIsLoading] = useState<boolean>(true)
 
     useEffect(function getPersons() {
-        axios.get("/api/user", {params: {email: user?.email, connection: "none"}}).then((res) => {
-            setUsers(res.data.message)
-        })
-    }, [])
+        const getUsers = async () => {
+            const res = await axios.get("/api/user", {
+                params: {email: user?.email, connection: "none"}
+            });
+            setUsers(res.data.message);
+            setIsLoading(false);
+        };
+        
+        getUsers();
+
+        window.addEventListener("userEvents", ((e: Event) => {
+            const customEvent = e as CustomEvent;
+            if (customEvent.detail?.userEventType === "getUsers") {
+                getUsers();
+            }
+        }) as EventListener)
+
+        return () => window.removeEventListener("userEvents", ((e: Event) => {}) as EventListener)
+    }, []);
+
+    if (isLoading) {
+        return (
+            <div className="skeleton h-20 w-full"></div>
+        )
+    }
 
     if (users.length == 0) {
         return (
             <div className="overflow-y-auto rounded-2xl max-h-[calc(100vh-250px)]">
-                <div className=" bg-base-100 h-40 flex items-center justify-center rounded-box shadow-md ">
-                    <h4 className="text-center text-2xl font-bold">No users to add, cry !</h4>
+                <div className="flex items-center justify-center rounded-box shadow-md ">
+                    <h4 className="text-center text-2xl font-bold">No users Found 😔</h4>
                 </div>
             </div>
         )

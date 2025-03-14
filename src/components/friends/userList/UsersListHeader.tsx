@@ -9,9 +9,6 @@ const UsersListHeader = () => {
                     <h3 className="text-2xl font-bold">
                         Users
                     </h3>
-                    <button className="btn btn-primary btn-xs text-xl ml-2">
-                        <BiDotsHorizontal />
-                    </button>
                 </div>
                 <label className="floating-label mt-3 w-full md:w-auto md:ml-4">
                     <span>User name</span>
