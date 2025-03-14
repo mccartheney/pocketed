@@ -10,6 +10,7 @@ const AddedFriendsList = () => {
     const [friends, setFriends] = useState<userType[]>([])
     const [isLoading, setIsLoading] = useState(true)
 
+
     useEffect(function getFriends() {
         const fetchFriends = async () => {
             const response = await axios.get(`/api/user?email=${user?.email}&connection=friends`)
@@ -29,11 +30,16 @@ const AddedFriendsList = () => {
         return () => window.removeEventListener("userEvents", ((e: Event) => {}) as EventListener)
     }, [])
 
-    if (isLoading) return <div className="skeleton h-32 w-full"></div>
-    if (friends.length==0) return <div className="text-center text-2xl font-bold">You have no friends 😭</div>
-    
+    if (isLoading) return <div className="skeleton h-[85%] w-full"></div>
+    if (friends.length == 0) return <div className="text-center h-[85%] flex flex-col items-center justify-center">
+                                        <h4 className="text-center text-2xl font-bold">You have no friends 😭</h4>
+                                        <p className="text-center mt-2">
+                                            Try adding some friends to your list!
+                                        </p>
+                                    </div>
+
     return (
-        <ul className="list bg-base-100 rounded-box shadow-md overflow-y-scroll mt-2 h-[85%]">
+        <ul className="list bg-base-100 rounded-box shadow-md overflow-y-scroll mt-2 max-h-[85%]">
             {friends.map((friend) => (
                 <AddedFriendsItem key={friend.id} friend={friend} />
             ))}
