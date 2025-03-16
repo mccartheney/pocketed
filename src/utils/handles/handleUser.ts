@@ -227,7 +227,21 @@ class HandleUser {
             return null
         }
 
-        return user.cards
+        const cards = await prisma.card.findMany({
+            where: {
+                owners: {
+                    some: {
+                        email: email
+                    }
+                }
+            },
+            include: {
+                owners: true
+            }
+        });
+
+        await prisma.$disconnect()
+        return cards
     }
 
     // method to change theme

@@ -9,6 +9,7 @@ type cardType = {
     expenses : expensesType[]
     balance : number
     economies : economyType[]
+    createdAt : Date
 }
 
 type expensesType = {
