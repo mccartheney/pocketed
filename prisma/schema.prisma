@@ -29,24 +29,9 @@ model Card {
     creatorId   Int
     owners      User[]     @relation("CardOwners")
     balance     Int
-    expenses    Expenses[]
+    expenses    Expense[]
     economies   Economy[]
     createdAt   DateTime   @default(now())
-}
-
-model Expenses {
-    id           Int             @id @default(autoincrement())
-    card         Card            @relation(fields: [cardId], references: [id], onDelete: Cascade)
-    cardId       Int
-    yearExpenses YearExpenses[]
-}
-
-model YearExpenses {
-    id          Int        @id @default(autoincrement())
-    year        Int
-    expenses    Expenses   @relation(fields: [expensesId], references: [id], onDelete: Cascade)
-    expensesId  Int
-    AllExpenses Expense[]
 }
 
 model Expense {
@@ -58,8 +43,9 @@ model Expense {
     month           String        // Month names
     day            Int
     dayOfWeek      String        // Week day names
-    yearExpenses   YearExpenses  @relation(fields: [yearExpensesId], references: [id], onDelete: Cascade)
-    yearExpensesId Int
+    year           Int
+    card         Card            @relation(fields: [cardId], references: [id], onDelete: Cascade)
+    cardId       Int
 }
 
 model Economy {
