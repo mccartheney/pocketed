@@ -35,7 +35,7 @@ class HandleCard {
         if (userCards!.some(card => card.name === cardName && card.creatorId === user.id)) {
             return "Card already exists"
         }
-        
+
         const card  = await prisma.card.create({
             data: {
                 name: cardName,
@@ -52,6 +52,8 @@ class HandleCard {
                 economies: true
             }
         })
+        
+
         await prisma.$disconnect()    
         return card
     }
@@ -59,21 +61,13 @@ class HandleCard {
     //  method to get card
     async getCard(cardId: number) { 
         //  get card
-        const card = await prisma.card.findUnique({
+        const card = await prisma.card.findFirst({
             where: { id: cardId },
             include: {
                 creator: true,
                 owners: true,
-                expenses: {
-                    include: {
-                        yearExpenses: {
-                            include: {
-                                AllExpenses: true
-                            }
-                        }
-                    }
-                },
-                economies: true
+                economies: true,
+                expenses: true
             }
         })
         await prisma.$disconnect()    

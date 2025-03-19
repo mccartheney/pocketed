@@ -1,4 +1,4 @@
-import {monthType, timeTypeExpense, weekDayType, yearExpensesType } from "@/types/cardtype"
+import {expenseType, monthType, timeTypeExpense, weekDayType } from "@/types/cardtype"
 import HandleCard from "./handleCard"
 import { PrismaClient } from "@prisma/client"
 
@@ -7,7 +7,6 @@ const prisma = new PrismaClient()
 
 //  type expense info
 type expenseInfoType = {
-    id: number
     value : number
     visibleName : string
     name : string
@@ -33,11 +32,11 @@ class HandleExpenses {
         if (!card) return "card dont exist"
 
         //  get selected year expenses
-        const SelectedYearExpenses = card.expenses.filter((expense) => expense.yearExpenses.filter((yearExpense) => yearExpense.year === year))
+        const SelectedYearExpenses = card.expenses.filter((expense) => expense.year === year)
         if (SelectedYearExpenses.length === 0) return "no expenses in this year"
 
         //  get all expenses        
-        const yearAllExpenses = SelectedYearExpenses[0].yearExpenses[0].AllExpenses
+        const yearAllExpenses = SelectedYearExpenses
         //  get search type expenses
         const searchTypeExpenses = yearAllExpenses.filter((expense) => expense.timeTypeExpense === searchType)
         
@@ -60,11 +59,11 @@ class HandleExpenses {
         if (!card) return "card dont exist"
         
         //  get selected year expenses
-        const SelectedYearExpenses  = card.expenses.filter((expense : any) => expense.yearExpenses.filter((yearExpense : yearExpensesType) => yearExpense.year === dateValue.year))
+        const SelectedYearExpenses  = card.expenses.filter((expense) => expense.year === dateValue.year)
         if (SelectedYearExpenses.length === 0) return "no expenses in this year"
 
         //  get selected year expenses
-        const selectedYearExpenses = SelectedYearExpenses[0].yearExpenses[0].AllExpenses
+        const selectedYearExpenses = SelectedYearExpenses
 
         //  return selected year expenses
         if (dateType === "year") return selectedYearExpenses
@@ -141,7 +140,7 @@ class HandleExpenses {
     //  method to create expense
     async createExpense(
         cardId : number,
-        expenseInfo : expenseInfoType
+        expenseInfo : expenseType
     ){
         //  init handle card and get card
         const handleCard = new HandleCard()
@@ -162,8 +161,7 @@ class HandleExpenses {
         try{
             const newExpense = await prisma.expense.create({
                 data : {
-                    yearExpensesId: card.expenses[0].yearExpenses[0].id,
-                    ...expenseInfo
+                    ...expenseInfo,
                 }
             })
     

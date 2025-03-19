@@ -5,8 +5,10 @@ import { useUser } from "@/context/userContext";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import CardInfoHeader from "@/components/cards/card/cardHeader";
-import CardDeleteModel from "@/components/cards/card/cardDeletedModal";
+import CardInfoHeader from "@/components/cards/card/CardHeader";
+import CardDeleteModel from "@/components/cards/card/CardDeletedModal";
+import CardUniqueExpenses from "@/components/cards/card/unique/CardUniqueExpenses";
+
 const Page = () => {
     const { user } = useUser()
     const params = useParams();
@@ -42,6 +44,11 @@ const Page = () => {
         <div className="flex flex-col h-full px-3">
             <CardInfoHeader card={card} setCard={setCard} />
             <CardDeleteModel card={card} />
+            <div className="content flex flex-col h-full py-3">
+                <div className="top flex h-1/2 w-full">
+                    <CardUniqueExpenses card={card} />
+                </div>
+            </div>
         </div>
     )
 }

@@ -25,14 +25,15 @@ type yearExpensesType = {
 }
 
 type expenseType = {
-    id: number
-    value : number
-    visibleName : string
-    name : string
-    timeTypeExpense : timeTypeExpense
-    month : monthType
-    day : number
-    dayOfWeek : weekDayType
+    name: string;
+    value: number;
+    visibleName: string;
+    timeTypeExpense: string;
+    month: string;
+    day: number;
+    dayOfWeek: string;
+    year: number;
+    cardId: number;
 }
 
 type weekDayType = "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday" | "Sunday"
