@@ -3,10 +3,10 @@ import monthsName from "@/constants/months"
 import weekDays from "@/constants/weekDays"
 import cardType, { expenseType } from "@/types/cardtype"
 import axios from "axios"
-import { useRef } from "react"
+import { Dispatch, SetStateAction, useRef } from "react"
 import { toast } from "react-hot-toast"
 
-const CreateUniqueExpensesModal = ({card} : {card : cardType}) => {   
+const CreateUniqueExpensesModal = ({card, setExpensesByDay} : {card : cardType, setExpensesByDay : Dispatch<SetStateAction<any>>}) => {   
     const expenseNameRef = useRef<HTMLInputElement>(null)
     const expenseAmountRef = useRef<HTMLInputElement>(null)
     const expenseDateTypeRef = useRef<HTMLSelectElement>(null)
@@ -42,10 +42,31 @@ const CreateUniqueExpensesModal = ({card} : {card : cardType}) => {
 
         if (response.status === 200) {
             toast.success("Expense created successfully")
+            const date = new Date()
+            const year = date.getFullYear()
+            const month = monthsName[date.getMonth()]
+
+            const actualDay = date.getDate()
+            const actualWeek = Math.ceil(actualDay / 7)
+
+
+            const responseWeek = await axios.get(`/api/expenses`, {
+                params: {
+                    cardId: card.id,
+                    year: year,
+                    month: month,
+                    weekNumber: actualWeek,
+                }
+            })
+
+            setExpensesByDay(responseWeek.data.byDay)
         } else {
             toast.error("Error creating expense")
         }
     }
+
+ 
+
 
     return (
         <dialog id="my_modal_3" className="modal modal-bottom sm:modal-middle">

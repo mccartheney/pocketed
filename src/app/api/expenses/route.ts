@@ -80,6 +80,7 @@ const GET = async   (req: NextRequest) =>{
                     const day = expense.day
                     const dayOfWeek = expense.dayOfWeek
                 })
+                
                 return NextResponse.json({ status: 200, message: DayOfWeekExpenses })
             }
         }

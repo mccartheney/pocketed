@@ -42,7 +42,6 @@ const CardUniqueExpenses = (
         setExpenses(responseMonth.data.message)
         setExpensesByDay(responseWeek.data.byDay)
         setLoading(false)   
-
     }
 
     useEffect(function getAllMonthUniqueExpenses() {
@@ -71,7 +70,7 @@ const CardUniqueExpenses = (
         <div className="md:w-3/5 w-full h-full bg-base-200 rounded-2xl p-3 flex flex-col">
             <CardUniqueHeader expensesDurations={expensesDurations} setExpensesDurations={setExpensesDurations} card={card} />
             <CardUniqueExpensesGraph expenses={expenses} setExpenses={setExpenses} expensesDurations={expensesDurations} expensesByDay={expensesByDay} />
-            <CreateUniqueExpensesModal card={card} />
+            <CreateUniqueExpensesModal card={card} setExpensesByDay={setExpensesByDay} />
         </div>
     )
 }
