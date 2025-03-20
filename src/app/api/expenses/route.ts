@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { expenseType, monthType, weekDayType } from "@/types/cardtype"
 import HandleCard from "@/utils/handles/handleCard"
 import HandleExpense from "@/utils/handles/handleExpenses"
+
 const POST = async (req: NextRequest) => {
     const { cardId, value, visibleName, name, timeTypeExpense, month, day, dayOfWeek, year }
      :expenseType= await req.json()
@@ -139,4 +140,17 @@ const GET = async   (req: NextRequest) =>{
 
 }
 
-export { GET, POST }
+const DELETE = async (req: NextRequest) => {
+    const { expenseName, expenseCardId } = await req.json()
+
+    const handleExpense = new HandleExpense()
+    const expense = await handleExpense.deleteExpense(expenseName, expenseCardId)
+
+    if (expense == "card dont exist") return NextResponse.json({ status: 400, message: "Card not found" })
+    if (expense == "error deleting expense") return NextResponse.json({ status: 400, message: "Error deleting expense" })
+    if (expense == "expense not found") return NextResponse.json({ status: 400, message: "Expense not found" })
+
+    return NextResponse.json({ status: 200, message: "Expense deleted successfully", updatedExpenses : expense!.expenses })
+}
+
+export { GET, POST, DELETE }

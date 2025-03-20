@@ -36,6 +36,11 @@ const Page = () => {
 
     if (loading) return <div className="flex flex-col h-full px-3">
         <div className="skeleton flex flex-col  py-5 px-7 bg-base-200 h-[72px] rounded-2xl"></div>
+        <div className="content flex flex-col h-full py-3">
+            <div className="top flex h-1/2 w-full">
+                <div className="skeleton md:w-3/5 w-full h-full bg-base-200 rounded-2xl p-3 flex flex-col"></div>
+            </div>
+        </div>
     </div>
 
     if (!card) return router.push("/app/cards")

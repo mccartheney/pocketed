@@ -6,6 +6,8 @@ import CreateUniqueExpensesModal from "./CreateUniqueExpensesModal"
 import axios from "axios"   
 import weekDays from "@/constants/weekDays"
 import monthsName from "@/constants/months"
+import WeekDayExpenseModal from "./weekDayExpenseModal"
+
 const CardUniqueExpenses = (
     { card }: { card: cardType}        
 ) => {
@@ -44,6 +46,10 @@ const CardUniqueExpenses = (
         setLoading(false)   
     }
 
+    const reloadExpenses = () => {
+        getExpenses()
+    }
+
     useEffect(function getAllMonthUniqueExpenses() {
         getExpenses()
     }, [])
@@ -62,15 +68,17 @@ const CardUniqueExpenses = (
             <div className="md:w-3/5 w-full h-full bg-base-200 rounded-2xl p-3 flex flex-col">
                 <CardUniqueHeader expensesDurations={expensesDurations} setExpensesDurations={setExpensesDurations} card={card} />
                 <div className="skeleton h-full w-full mt-3"></div>
+                
             </div>
         )
     }
     
     return (
         <div className="md:w-3/5 w-full h-full bg-base-200 rounded-2xl p-3 flex flex-col">
-            <CardUniqueHeader expensesDurations={expensesDurations} setExpensesDurations={setExpensesDurations} card={card} />
+            <CardUniqueHeader expensesDurations={expensesDurations} setExpensesDurations={setExpensesDurations} card={card}  />
             <CardUniqueExpensesGraph expenses={expenses} setExpenses={setExpenses} expensesDurations={expensesDurations} expensesByDay={expensesByDay} />
-            <CreateUniqueExpensesModal card={card} setExpensesByDay={setExpensesByDay} />
+            <CreateUniqueExpensesModal card={card} setExpensesByDay={setExpensesByDay} reloadExpenses={reloadExpenses} />
+            <WeekDayExpenseModal expenses={expenses} setExpenses={setExpenses} reloadExpenses={reloadExpenses} />
         </div>
     )
 }

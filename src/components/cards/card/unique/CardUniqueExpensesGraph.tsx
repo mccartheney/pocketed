@@ -23,6 +23,12 @@ const CardUniqueExpensesGraph = (
         data : []
     })
 
+    const daysInMonth: number[] = []
+
+    for (let i = 1; i <= daysInThisMonth(); i++) {
+        daysInMonth.push(i)
+    }
+
     useEffect(() => {
         if (!expenses) return
 
@@ -34,11 +40,7 @@ const CardUniqueExpensesGraph = (
         }
 
         if (expensesDurations === "Month") {
-            const daysInMonth : number[] = []
 
-            for (let i = 1; i <= daysInThisMonth(); i++) {
-                daysInMonth.push(i)
-            }
 
             const expensesByDayArray : number[] = []
 
@@ -59,8 +61,55 @@ const CardUniqueExpensesGraph = (
         }
     },[expensesDurations, expensesByDay])
 
-    
-    return <Graph expensesGraph={expensesGraph}/>
+    const getWeekDayDate = (weekDay: string) => {
+        const today = new Date();
+        const currentDay = today.getDay(); // 0 = Domingo, 1 = Segunda, ...
+        const weekDayIndex = weekDays.indexOf(weekDay);
+        
+        // Ajusta o índice para corresponder ao padrão do JavaScript (0 = Domingo)
+        const adjustedWeekDayIndex = weekDayIndex === 0 ? 1 : weekDayIndex + 1;
+        const diff = adjustedWeekDayIndex - currentDay;
+        
+        const date = new Date(today);
+        date.setDate(today.getDate() + diff);
+        
+        return date.getDate();
+    };
+
+    const openExpensesModal = (day: number) => {
+        window.dispatchEvent(new CustomEvent("openExpensesModal", {
+            detail: { day }
+        }));
+        (document.getElementById('my_modal_6') as HTMLDialogElement)?.showModal()
+    }
+
+    return (
+        <div className="w-full h-[80%]">
+            <Graph expensesGraph={expensesGraph}/>
+            <div className="w-full overflow-x-auto flex items-center justify-between">
+                {expensesDurations === "Week" ? (
+                    weekDays.map((day) => (
+                        <button key={day}
+                            className="btn btn-xs"
+                            onClick={() => openExpensesModal(getWeekDayDate(day))}
+                        > 
+                            {day} ({getWeekDayDate(day)})
+                        </button>
+                    ))
+                ) : (
+                    daysInMonth.map((day) => (
+                        <button 
+                            key={day}
+                            className="btn btn-xs"
+                            onClick={() => openExpensesModal(day)}
+                        > 
+                                {day} 
+                        </button>
+                    ))
+                )}
+            </div>
+        </div>
+    )
 
 }
 

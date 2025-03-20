@@ -112,7 +112,7 @@ class HandleExpenses {
     }
 
     //  method to delete expense
-    async deleteExpense(expenseId : number, cardId : number ) {
+    async deleteExpense(expenseName : string, cardId : number ) {
         //  init handle card and get card
         const handleCard = new HandleCard()
         const card  = await handleCard.getCard(cardId)
@@ -121,17 +121,20 @@ class HandleExpenses {
 
         //  get expense
         const expense = await prisma.expense.findFirst({
-            where: {id: expenseId}
+            where: {name: expenseName, cardId : cardId}
         })
 
-        if (!expense) return "expense dont exist"
+        if (!expense) return "expense not found"
 
         //  delete expense
         try {
             await prisma.expense.delete({
-                where : {id : expenseId}
+                where : {id : expense.id}
             })
-            return "expense deleted"
+
+            const card = await handleCard.getCard(cardId)
+            
+            return card
         } catch (error) {
             return "error deleting expense"
         }

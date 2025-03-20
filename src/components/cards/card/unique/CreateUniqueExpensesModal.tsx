@@ -6,7 +6,7 @@ import axios from "axios"
 import { Dispatch, SetStateAction, useRef } from "react"
 import { toast } from "react-hot-toast"
 
-const CreateUniqueExpensesModal = ({card, setExpensesByDay} : {card : cardType, setExpensesByDay : Dispatch<SetStateAction<any>>}) => {   
+const CreateUniqueExpensesModal = ({card, setExpensesByDay, reloadExpenses} : {card : cardType, setExpensesByDay : Dispatch<SetStateAction<any>>, reloadExpenses : () => void}) => {   
     const expenseNameRef = useRef<HTMLInputElement>(null)
     const expenseAmountRef = useRef<HTMLInputElement>(null)
     const expenseDateTypeRef = useRef<HTMLSelectElement>(null)
@@ -60,6 +60,7 @@ const CreateUniqueExpensesModal = ({card, setExpensesByDay} : {card : cardType, 
             })
 
             setExpensesByDay(responseWeek.data.byDay)
+            reloadExpenses()
         } else {
             toast.error("Error creating expense")
         }
