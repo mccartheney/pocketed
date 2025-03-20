@@ -2,6 +2,7 @@ import { signOut } from "next-auth/react"
 import { FiLogOut, FiTrash2 } from "react-icons/fi"
 
 const ProfileActions = () => {
+    // return the profile actions
     return (
         <div className="p-3">
             <div className="flex flex-col gap-4">

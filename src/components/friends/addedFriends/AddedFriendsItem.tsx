@@ -11,12 +11,18 @@ import usersEvents from "@/customEvents/usersEvents"
 const AddedFriendsItem = (
     { friend }: { friend: userType }
 ) => {
+    // define the user
     const {user} = useUser()
 
+    // define the state
     const [isLoading, setIsLoading] = useState(false)
 
+    // method to delete the friend
     const handleDeleteFriend = async () => {
+        // start loading
         setIsLoading(true)
+
+        // delete the friend
         const response = await axios.put("/api/user", {
             email: friend.email,
             deleteFriend: {
@@ -24,18 +30,24 @@ const AddedFriendsItem = (
                 friendEmail: friend.email
             }
         })
+
+        // if the friend is deleted successfully
         if (response.status == 200) {
+            // show the success message and reload the friends and users
             toast.success(response.data.message)
             window.dispatchEvent(usersEvents("getFriends"))
             window.dispatchEvent(usersEvents("getUsers"))
         } else {
+            // show the error message
             toast.error(response.data.message)
         }
+
+        // end loading
         setIsLoading(false)
 
-        return null;
     }
 
+    // return the added friends item
     return (
         <li className="list-row">
             <div className="w-10 h-10 rounded-full">

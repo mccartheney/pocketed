@@ -16,8 +16,8 @@ async function CheckUserExists(email: string) {
         }
     })
 
+    //  disconnect prisma and return user
     await prisma.$disconnect()
-    // return user
     return user
 }
 

@@ -9,6 +9,8 @@ import {
 import { GrGroup } from "react-icons/gr";
 
 const Dock = () => {
+
+    // todo: make it functional
     return (
         <div className="dock dock-xs">
             <button>

@@ -17,15 +17,24 @@ const UserItem = (
         setUsers: Dispatch<SetStateAction<userType[]>>
     }
 ) => {
+    // get the user
     const {user} = useUser()
+
+    // define the ref
     const btnRef = useRef<HTMLButtonElement>(null)
 
+    // define the state
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
+    // method to add the friend
     const handleAddFriend = async () => {
+        // start loading
         setIsLoading(true)
+
+        // disable the button
         btnRef.current!.disabled = true;
         
+        // add the friend
         axios.put("/api/user", {
             email: user?.email,
             addFriend: {
@@ -33,11 +42,14 @@ const UserItem = (
                 userReceivingRequest: userLi
             }
         }).then((res) => {
+            // if the friend is added successfully
             if (res.status == 200) {
+                // show the success message and update the users
                 toast.success("Friend added")
                 setUsers(prev => prev.filter(userToRm => userToRm.email !== userLi.email))
                 window.dispatchEvent(usersEvents("getFriends"))
-            }else {
+            } else {
+                // show the error message
                 toast.error(res.data.message)
                 setIsLoading(false)
                 btnRef.current!.disabled = false;
@@ -46,6 +58,7 @@ const UserItem = (
     }
 
 
+    // return the user item
     return (
         <li className="list-row">
             <div className="w-10 h-10 rounded-full">

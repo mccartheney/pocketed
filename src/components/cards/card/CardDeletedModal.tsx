@@ -16,21 +16,26 @@ const CardDeleteModel = (
     // router ro redirect
     const router = useRouter()
 
-
+    // method to delete the card
     const handleCardDelete = () => {
+
+        // delete the card
         axios.delete("/api/card", {
             data: {
                 cardId: card.id,
                 email : emailUser
             }
         }).then(response => {
+            // if the card is deleted successfully
             if (response.data.status === 200) {
+                // show the success message and redirect to the cards page
                 toast.success(response.data.message)
                 router.push("/app/cards")
+            } else {
+                // show the error message
+                toast.error(response.data.message)
             }
-            else toast.error(response.data.message)
-        }
-        )
+        })
     }
 
     return (

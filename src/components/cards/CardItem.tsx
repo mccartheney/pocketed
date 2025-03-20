@@ -7,10 +7,12 @@ import userType from '@/types/userType';
 const CardItem = (
     { userName, card }: { userName: string, card: cardType }
 ) => {
+    // define the date
     const date = new Date(card.createdAt)
     const month = date.getMonth() + 1
     const year = date.getFullYear()
 
+    // return the card item
     return (
         <div className="w-full h-52 m-auto bg-base-200 rounded-xl relative shadow-2xl transition-transform transform ">
 

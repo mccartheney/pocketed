@@ -7,8 +7,10 @@ import { useState } from "react"
 import CardsList from "@/components/cards/CardsList"
 
 const Page =() => {
+    // define state
     const [cards, setCards] = useState<cardType[]>([])
 
+    // return the cards page
     return (
         <div className="h-full px-3 flex flex-col md:flex-col">
             <CardsHeader/>

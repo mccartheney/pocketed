@@ -5,31 +5,42 @@ import axios from "axios"
 import { useEffect, useState, Dispatch, SetStateAction } from "react"
 import { TbTrash } from "react-icons/tb"
 import { toast } from "react-hot-toast"
-const WeekDayExpenseModal = ({ expenses, setExpenses, reloadExpenses }: { expenses: expenseType[], setExpenses: Dispatch<SetStateAction<expenseType[] | null>>, reloadExpenses: () => void   }) => {
+const WeekDayExpenseModal = ({ expenses, setExpenses, reloadExpenses }: { expenses: expenseType[], setExpenses: Dispatch<SetStateAction<expenseType[]>>, reloadExpenses: () => void   }) => {
 
+    // define the states
     const [expensesDay, setExpensesDay] = useState<expenseType[]>([])
     const [day, setDay] = useState<number>(0)
     const [loading, setLoading] = useState<boolean>(true)
-    const [loadingDelete, setLoadingDelete] = useState<boolean>(false)
+    const [loadingDelete, setLoadingDelete] = useState<{ [key: string]: boolean }>({})
 
     useEffect(function getExpenseDayEvent() {
+        // get the expense day event
         window.addEventListener ("openExpensesModal", (event: CustomEvent) => {
+            // start loading
             setLoading(true)
-            console.log(event.detail)
+
+            // get the expenses day
             const expensesDay = expenses.filter((expense) => {
                 return expense.day === event.detail.day
             })
+
+            // update expenses, day and end loading
             setExpensesDay(expensesDay)
             setDay(event.detail.day)
             setLoading(false)
         })
     }, [expenses])
 
+    // method to delete the expense
     const handleDeleteExpense = async (expense: expenseType) => {
-        setLoadingDelete(true)
+        // start loading for this specific expense
+        setLoadingDelete(prev => ({ ...prev, [expense.name]: true }))
+
+        // get the expense name and card id
         const expenseName = expense.name
         const expenseCardId = expense.cardId
 
+        // delete the expense
         const response = await axios.delete('/api/expenses', {
             data: {
                 expenseName,
@@ -37,17 +48,24 @@ const WeekDayExpenseModal = ({ expenses, setExpenses, reloadExpenses }: { expens
             }
         })
 
+        // if the expense is deleted successfully
         if (response.status === 200) {
+            // show the success message
             toast.success(response.data.message)
+
+            // update the expenses day and reload the expenses
             setExpensesDay(oldExpenses => oldExpenses.filter(expense => expense.name !== expenseName))
             reloadExpenses()
-        }else {
+        } else {
+            // show the error message
             toast.error(response.data.message)
         }
-        setLoadingDelete(false)
+
+        // end loading for this specific expense
+        setLoadingDelete(prev => ({ ...prev, [expense.name]: false }))
     }   
 
-
+    // return the week day expense modal
     return (
         <dialog id="my_modal_6" className="modal modal-bottom sm:modal-middle">
             {loading && <div className="skeleton h-full w-full"></div>}
@@ -71,7 +89,7 @@ const WeekDayExpenseModal = ({ expenses, setExpenses, reloadExpenses }: { expens
                                     </div>
                                     <p className="text-right text-lg font-bold">{expense.value} €</p>
                                     <button className="btn btn-sm btn-error btn-outline" onClick={() => handleDeleteExpense(expense)}>
-                                        {loadingDelete ? <span className="loading loading-spinner loading-xs"></span> : <TbTrash />}
+                                        {loadingDelete[expense.name] ? <span className="loading loading-spinner loading-xs"></span> : <TbTrash />}
                                     </button>
                                 </li>
                             ))}

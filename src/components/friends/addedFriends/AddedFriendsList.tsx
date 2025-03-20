@@ -6,31 +6,52 @@ import { useState } from "react"
 import toast from "react-hot-toast"
 import AddedFriendsItem from "./AddedFriendsItem"
 const AddedFriendsList = () => {
+    // define the user
     const { user } = useUser()
+
+    // define the state
     const [friends, setFriends] = useState<userType[]>([])
     const [isLoading, setIsLoading] = useState(true)
 
-
+    // method to get the friends
     useEffect(function getFriends() {
+        // method to get the friends
         const fetchFriends = async () => {
+            // get the friends
             const response = await axios.get(`/api/user?email=${user?.email}&connection=friends`)
+
+            // if the friends are fetched successfully
+            // update the friends
             if (response.status == 200) {setFriends(response.data.message)}
+            // show the error message
             else toast.error(response.data.message)
+
+            // end loading
             setIsLoading(false)
         }
+
+        // get the friends
         fetchFriends()
 
+        // add the event listener
         window.addEventListener("userEvents", ((e: Event) => {
+            // get the custom event
             const customEvent = e as CustomEvent;
+
+            // if the event type is getFriends, get the friends
             if (customEvent.detail?.userEventType === "getFriends") {
                 fetchFriends()
             }
         }) as EventListener)
 
+        // return the event listener
         return () => window.removeEventListener("userEvents", (() => {}) as EventListener)
     }, [])
 
+    // if the friends are loading, return the loading
     if (isLoading) return <div className="skeleton h-[85%] w-full"></div>
+
+    // if the friends are empty, return the empty friends
     if (friends.length == 0) return <div className="text-center h-[85%] flex flex-col items-center justify-center">
                                         <h4 className="text-center text-2xl font-bold">You have no friends 😭</h4>
                                         <p className="text-center mt-2">
@@ -38,6 +59,7 @@ const AddedFriendsList = () => {
                                         </p>
                                     </div>
 
+    // return the added friends list
     return (
         <ul className="list bg-base-100 rounded-box shadow-md overflow-y-scroll mt-2 max-h-[85%]">
             {friends.map((friend) => (

@@ -12,18 +12,21 @@ import Dock from "@/components/dock/Dock"
 import LayoutTitle from "@/components/layoutTitle";
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
+    // get router, session and user
     const router = useRouter();
     const session = useSession()
     const [user, setUser] = useState<userType | null>(null);
-    
+
+    // get screen width for responsive design
     const [screenWidth, setScreenWidth] = useState(0);
 
+    // use Effect to get the screen width
     useEffect(() => {
         setScreenWidth(window.innerWidth);
     }, []);
 
-    useEffect(() => {
-        console.log(session)
+    useEffect(function getUserSession() {
+        // if user is authenticated, get the user
         if (session.status === "authenticated") {
             const userEmail = session.data?.user?.email
             axios.get("/api/user", {
@@ -33,7 +36,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
         }
     }, [session.status])
 
-    useEffect(() => {
+    useEffect(function handleResize() {
         const handleResize = () => {
             setScreenWidth(window.innerWidth);
         }
@@ -41,13 +44,19 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
         return () => window.removeEventListener("resize", handleResize);
     }, []);
 
+    // if user is loading, show the loading page
     if (session.status === "loading") return <LoadingPage />;
+
+    // if user is not authenticated, redirect to the home page
     if (session.status === "unauthenticated") {
         router.push("/");
         return null;
     }
+
+    // if user is not found, show the loading page
     if (!user) return <LoadingPage />;
 
+    // if user is found, show the app layout
     return (
         <UserProvider value={{ user, setUser }}>
             <div className="flex h-screen md:overflow-hidden"> 

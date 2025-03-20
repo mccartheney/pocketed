@@ -11,8 +11,9 @@ import {
 } from "chart.js";
 
 const Graph = ({expensesGraph, } : {expensesGraph : any}) => {
-
+    // define the primary color
     const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--color-primary');
+    // register the chartjs
     ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Title, Tooltip, Legend);
 
     return (

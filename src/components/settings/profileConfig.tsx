@@ -15,67 +15,83 @@ const ProfileConfig = () => {
     const [editing, setEditing] = useState <boolean>(false)
     // ref for user name input
     const userNameInputRef = useRef<HTMLInputElement | null>(null)
-    
+
+    // if the user is not loaded, return the loading page
     if (!user) return <LoadingPage/>
 
-
+    // method to delete the profile picture
     const handleDeleteProfilePic = async () => {
         try {
-            // delete profile picture
+            // delete the profile picture
             const response = await axios.put("/api/user/", {
                 email: user.email
             });
-            // if success, set user
+
+            // if the profile picture is deleted successfully
             if (response.data.status === 200) {
+                // set the user and show the success message
                 setUser(response.data.UUser);
                 toast.success(response.data.message);
             } else {
+                // show the error message
                 toast.error(response.data.message);
             }
         } catch (error) {
+            // show the error message
             console.error(error);
             toast.error("Error deleting profile picture");
         }
     };
 
+    // method to edit the user name
     const handleUserNameEdit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
         // get user name
         const userName = userNameInputRef.current?.value
 
+        // if the user name is not valid, show the error message and set the editing to false
         if (!userName) {
             toast.error("Please enter a valid name")
             setEditing(false)
+            // set the user name input value
             if (userNameInputRef.current) {
                 userNameInputRef.current.value = user.name
             }
             return
-        }
-
+        } 
+        
+        // try to update the user name
         try {
+            // update the user name
             const response = await axios.put("/api/user/", {
                 email: user.email,
                 updateKey: "name",
                 keyValue: userName
             })
 
+            // if the user name is updated successfully
             if (response.data.status === 200) {
+                // set the user and show the success message
                 setUser(response.data.UUser)
                 toast.success(response.data.message)
                 setEditing(false)
+                // set the user name input value
                 if (userNameInputRef.current) {
                     userNameInputRef.current.value = userName
                 }
             } else {
+                // show the error message
                 toast.error(response.data.message)
             }
         } catch (error) {
+            // show the error message
             console.error(error)
             toast.error("Error updating name")
         }
     }
 
+    // return the profile config
     return (
         <div className="p-3">
             <NewProfilePicModel/>

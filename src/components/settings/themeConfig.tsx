@@ -5,6 +5,7 @@ const ThemeConfig = () => {
 
     // update theme on local storage and html
     const handleThemeChange = (themeName:string) => {
+        // update the theme on local storage and html
         localStorage.setItem("pocketedTheme", themeName)
         document.querySelector("html")?.setAttribute("data-theme", themeName)
     }

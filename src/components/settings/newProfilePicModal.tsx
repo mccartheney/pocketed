@@ -6,6 +6,8 @@ import toast from "react-hot-toast";
 const NewProfilePicModel = () => {
 
     const { user, setUser } = useUser()
+
+    // define the state 
     const [selectedImage, setSelectedImage] = useState<File | null>(null);
     const [imagePreview, setImagePreview] = useState<string | null>(null);
 
@@ -30,36 +32,42 @@ const NewProfilePicModel = () => {
 
     // send base64 image to user profile 
     const handleSubmit = async () => {
+        // if the image is selected
         if (selectedImage) {
             try {
+                // convert the image to base64
                 const imageBase64 = await convertImageToBase64(selectedImage);
-                
+
+                // send the base64 image to user profile
                 const response = await axios.put("/api/user", {
                     email: user?.email!,
                     updateKey: "imgUrl",
                     keyValue: imageBase64
                 });
-
+                
+                // if the image is updated successfully
                 if (response.data.status === 200) {
+                    // show the success message and update the user
                     toast.success(response.data.message);
                     setUser(response.data.UUser);
                 } else {
+                    // show the error message
                     toast.error(response.data.message);
                 }
 
             } catch (error) {
+                // show the error message
                 console.error(error);
                 toast.error(error as string);
             }
-        } else {
+            } else {
+            // show the error message
             toast.error("No image selected Image");
         }
     };
 
+    // return the new profile pic modal
     return (
-
-
-
         <dialog id="my_modal_3" className="modal modal-bottom sm:modal-middle">
             <div className="modal-box">
                 <h3 className="font-bold text-lg">Alterar Foto de Perfil</h3>

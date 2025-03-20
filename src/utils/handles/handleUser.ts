@@ -12,11 +12,11 @@ class HandleUser {
         // check if user exists
         const userExists = await CheckUserExists(email)
 
+        //  if user exists, return null and disconnect prisma
         if (userExists) {
             await prisma.$disconnect()
             return null
         }
-
         // create user
         const user = await prisma.user.create({
             data: {
@@ -61,8 +61,8 @@ class HandleUser {
             }
         })
 
+        //  disconnect prisma and return users
         await prisma.$disconnect()
-        // return users
         return users
     }
 
@@ -82,8 +82,8 @@ class HandleUser {
             data: { [updateKey]: keyValue }
         })
 
+        //  disconnect prisma and return updated user
         await prisma.$disconnect()
-        // return updated user
         return updatedUser
     }
 
@@ -171,6 +171,7 @@ class HandleUser {
         // get users that are not in user.friends or user.friendOf
         const users = await this.getAllUsers()
 
+        //  filter users
         const filteredUsers = users.filter((userElement) => {
             const isFriend = userElement.friends.some(person => person.email === user.email);
             const isFriendOf = userElement.friendOf.some(person => person.email === user.email);
@@ -178,8 +179,8 @@ class HandleUser {
             return !(isFriend || isFriendOf || isMe);
         });
 
+        //  disconnect prisma and return filtered users
         await prisma.$disconnect()
-        // return users
         return filteredUsers
     }
 
@@ -227,6 +228,7 @@ class HandleUser {
             return null
         }
 
+        //  get cards
         const cards = await prisma.card.findMany({
             where: {
                 owners: {
@@ -240,6 +242,7 @@ class HandleUser {
             }
         });
 
+        //  disconnect prisma and return cards
         await prisma.$disconnect()
         return cards
     }
@@ -260,9 +263,8 @@ class HandleUser {
             data: { theme: theme }
         })
 
+        //  disconnect prisma and return user
         await prisma.$disconnect()
-
-        // return user
         return user        
     }
 }

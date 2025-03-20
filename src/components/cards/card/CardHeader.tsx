@@ -29,22 +29,29 @@ const CardInfoHeader = (
         }
     }, [editing])
 
-
+    // method to edit the card name
     const handleEditCardName = async (e: React.FormEvent<HTMLFormElement>) => {
+        // prevent the default behavior
         e.preventDefault()
+
+        // set the editing to false
         setEditing(false)
 
+        // edit the card name
         const response = await axios.put("/api/card", {
             email : userEmail,
             cardId : card.id,
             newName : cardToRename.current!.value
         })
 
+        // if the card name is edited successfully
         if (response.data.status === 200) {
+            // update the card, show the success message and set the editing to false
             setCard(response.data.card)
             toast.success(response.data.message)
             setEditing(false)
-        }else {
+        } else {
+            // show the error message
             toast.error(response.data.message)
         }
     }

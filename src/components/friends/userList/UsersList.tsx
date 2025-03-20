@@ -17,25 +17,37 @@ const UsersList = ({
     users: userType[]
     setConstantsUsers: Dispatch<SetStateAction<userType[]>>
 }) => {
-
+    // get the user
     const {user} = useUser()
 
+    // define the state
     const [isLoading, setIsLoading] = useState<boolean>(true)
 
     useEffect(function getPersons() {
+        // function to get the users
         const getUsers = async () => {
+            // get the users
             const res = await axios.get("/api/user", {
                 params: {email: user?.email, connection: "none"}
             });
+
+            // update the users
             setUsers(res.data.message);
             setConstantsUsers(res.data.message);
+
+            // end loading
             setIsLoading(false);
         };
-        
+
+        // get the users
         getUsers();
 
+        // add the event listener
         window.addEventListener("userEvents", ((e: Event) => {
+            // get the custom event
             const customEvent = e as CustomEvent;
+
+            // if the event type is getUsers, get the users
             if (customEvent.detail?.userEventType === "getUsers") {
                 getUsers();
             }
@@ -44,6 +56,7 @@ const UsersList = ({
         return () => window.removeEventListener("userEvents", (() => {}) as EventListener)
     }, []);
 
+    // if the users are loading, return the loading
     if (isLoading) {
         return (
             <div className="w-full h-[calc(100vh-250px)] skeleton">
@@ -51,6 +64,7 @@ const UsersList = ({
         )
     }
 
+    // if the users are empty, return the empty users
     if (users.length == 0) {
         return (
             <div className="overflow-y-auto rounded-2xl flex items-center justify-center h-[calc(100vh-250px)]">
@@ -62,6 +76,7 @@ const UsersList = ({
         )
     }
 
+    // return the users list
     return (
         <div className="overflow-y-auto max-h-[calc(100vh-250px)]">
             <ul className="list bg-base-100 rounded-box shadow-md ">

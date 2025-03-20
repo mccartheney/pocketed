@@ -10,6 +10,7 @@ const LayoutTitle = () => {
     const month = monthsName[date.getMonth()]
     const weekDay = weekDays[date.getDay()]
 
+    // return the layout title
     return (
         <div className="flex items-center font-bold md:text-xl m-3 bg-base-200 justify-between rounded-2xl p-3 h-20">
             <div className="ml-3">

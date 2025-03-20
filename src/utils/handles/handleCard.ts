@@ -7,35 +7,40 @@ const prisma = new PrismaClient()
 
 class HandleCard {
 
+    //  method to get cards
     async getCards(email : string) {
+        //  check if user exists
         const user  = await CheckUserExists(email)
 
+        //  if user dont exists, return error
         if (! user) {return "User dont exists"}
 
+        //  init handle user
         const handleUser = new HandleUser() 
+
+        //  get user cards
         const userCards = await handleUser.getCards(email)
-    
+
+        //  return user cards
         return userCards
     }
 
     //  method to create card
     async createCard (email : string, cardName : string, balance : number ) {
-        //  check if user exists
+        //  check if user exists and return error if not
         const user  = await CheckUserExists(email)
-
         if (! user) {return "User dont exists"}
 
         //  init handle user
         const handleUser = new HandleUser()
 
         //  get user cards
-        const userCards= await handleUser.getCards(email)
+        let userCards= await handleUser.getCards(email)
 
         //  check if card name already exists
-        if (userCards!.some(card => card.name === cardName && card.creatorId === user.id)) {
-            return "Card already exists"
-        }
-
+        if (userCards!.some(card => card.name === cardName && card.creatorId === user.id)) return "Card already exists"
+        
+        //  create card
         const card  = await prisma.card.create({
             data: {
                 name: cardName,
@@ -52,8 +57,8 @@ class HandleCard {
                 economies: true
             }
         })
-        
 
+        //  disconnect prisma and return card
         await prisma.$disconnect()    
         return card
     }
@@ -70,6 +75,8 @@ class HandleCard {
                 expenses: true
             }
         })
+
+        //  disconnect prisma and return card
         await prisma.$disconnect()    
         return card
     }
@@ -78,7 +85,6 @@ class HandleCard {
     async getOwners(email : string, cardId : number) {
         //  check if user exists
         const user  = await CheckUserExists(email)
-
         if (! user) {return "user dont exists"}
 
         //  get card
@@ -87,16 +93,17 @@ class HandleCard {
         //  if card dont exists, return error
         if (! card) {return "card dont exists"}
 
+        //  return card owners
         return card.owners
     }
 
     //  method to get card balance
     async getBalance(cardId : number) {
-        //  get card and return 
+        //  get card and return and error if card dont exists
         const card = await this.getCard(cardId)
-
         if (! card) {return "card does not exists"}
 
+        //  return card balance
         return card.balance
     }   
 
@@ -105,6 +112,7 @@ class HandleCard {
         //  get card
         const card = await this.getCard(cardId)
 
+        //  if card dont exists, return error
         if (! card) {return "card does not exists"}
 
         //  update card balance and return
@@ -117,20 +125,19 @@ class HandleCard {
             }
         })
 
+        //  disconnect prisma and return card
         await prisma.$disconnect()    
         return card
     }
 
     //  method to delete card
     async deleteCard(email : string, cardId : number) {
-        //  check if user exists
+        //  check if user exists and return error if not
         const user  = await CheckUserExists(email)
-
         if (! user) {return "user dont exists"}
 
-        //  get card
+        //  get card and return error if card dont exists
         const card = await this.getCard(cardId)
-
         if (! card) {return "card dont exists"}
 
         //  delete card
@@ -138,29 +145,35 @@ class HandleCard {
             where : { id : cardId }
         })
 
+        //  disconnect prisma and return message
         await prisma.$disconnect()
         return "card deleted"
     }
 
+    //  method to rename card
     async renameCard(email : string, cardId : number, newName : string) {
+        //  check if user exists and return error if not
         const user = await CheckUserExists(email)
         if (!user) return "user dont exists"
 
+        //  get card and return error if card dont exists
         const card = await this.getCard(cardId)
         if (!card) return "card dont exists"
-        
-        const userCards = await this.getCards(email)
-        if (typeof userCards === "string") return userCards
-        
-        if (userCards!.some(card => card.name === newName && card.creatorId === user.id)) {
-            return "card name already exists"
-        }
 
+        //  get user cards and return error if user dont have cards
+        const userCards = await this.getCards(email)
+        if (userCards === "User dont exists") return userCards
+        
+        //  check if card name already exists and return error if it does
+        if (userCards!.some(card => card.name === newName && card.creatorId === user.id)) return "card name already exists"
+
+        //  update card name
         const updatedCard = await prisma.card.update({
             where : { id : cardId },
             data : { name : newName }
         })
 
+        //  disconnect prisma and return card
         await prisma.$disconnect()
         return updatedCard
     }   

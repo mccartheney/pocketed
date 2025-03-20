@@ -9,30 +9,42 @@ const CardCreatorModal = (
     :   
     { setCards: Dispatch<SetStateAction<cardType[]>> }
 ) => {
+    // define the user
     const { user } = useUser()
+
+    // define the refs
     const cardNameRef = useRef<HTMLInputElement>(null)
     const cardBalanceRef = useRef<HTMLInputElement>(null)
 
+    // method to add a new card
     const addCard = async () => {
+        // get the card name and balance
         const cardName = cardNameRef.current?.value
         const cardBalance : number = parseFloat(cardBalanceRef.current?.value || "0")
+
+        // reset the card name and balance
         cardNameRef.current!.value = ""
         cardBalanceRef.current!.value = ""
 
+        // create the the card
         const response = await axios.post("/api/card", {
             email: user?.email,
             cardName,
             cardBalance
         })
 
+        // if the card is added successfully
         if (response.data.status == 200) {
+            // update the cards, show the success message and close the modal
             setCards(cards =>[...cards, response.data.message])
-        }
-        else {
+            toast.success("card created successfully")
+        } else {
+            // show the error message
             toast.error(response.data.message)
         }
     }
 
+    // return the card creator modal
     return (
         <dialog id="my_modal_1" className="modal modal-bottom sm:modal-middle">
             <div className="modal-box">

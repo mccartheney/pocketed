@@ -7,6 +7,7 @@ import ProfileActions from "@/components/settings/profileActions"
 import DeleteAccountModal from "@/components/settings/deleteAccountModal"
 
 const Page = () => {
+    // return the settings page
     return (
         <div className="">
             <NewProfilePicModel/>

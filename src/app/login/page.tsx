@@ -8,16 +8,20 @@ import LoadingPage from "@/components/LoadingPage";
 
 
 export default function Home() {
+    // get the router to redirect the user
     const router = useRouter();
+    // get the session to check if the user is authenticated
     const session = useSession();
 
-
+    // use Effect to redirect the user to the app page
     useEffect(() => {
         if (session.status === "authenticated") router.push("/app/");
     }, [session.status, router]);
 
+    // if the session is loading, show the loading page
     if (session.status === "loading") return <LoadingPage />;
 
+    // return the login page
     return (
         <div className="flex items-center justify-center min-h-screen bg-base-200">
             <motion.div

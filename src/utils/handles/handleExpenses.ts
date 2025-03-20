@@ -117,6 +117,7 @@ class HandleExpenses {
         const handleCard = new HandleCard()
         const card  = await handleCard.getCard(cardId)
 
+        //  if card dont exist, return error
         if (!card) return "card dont exist"
 
         //  get expense
@@ -124,6 +125,7 @@ class HandleExpenses {
             where: {name: expenseName, cardId : cardId}
         })
 
+        //  if expense dont exist, return error
         if (!expense) return "expense not found"
 
         //  delete expense
@@ -132,10 +134,15 @@ class HandleExpenses {
                 where : {id : expense.id}
             })
 
+            //  get card and return
             const card = await handleCard.getCard(cardId)
-            
+
+            //  disconnect prisma and return card
+            await prisma.$disconnect()
             return card
         } catch (error) {
+            //  disconnect prisma and return error
+            await prisma.$disconnect()
             return "error deleting expense"
         }
     }
@@ -149,6 +156,7 @@ class HandleExpenses {
         const handleCard = new HandleCard()
         const card  = await handleCard.getCard(cardId)
 
+        //  if card dont exist, return error
         if (!card) return "card dont exist"
 
         //  get expense with same name
@@ -157,6 +165,7 @@ class HandleExpenses {
                 name : expenseInfo.name,
             }
         })
+        
         //  if expense with same name, add number to name
         if (expenseWithSameName.length > 0) expenseInfo.visibleName = `${expenseInfo.name} (${expenseWithSameName.length + 1})`
 
@@ -167,9 +176,13 @@ class HandleExpenses {
                     ...expenseInfo,
                 }
             })
-    
+
+            //  disconnect prisma and return expense
+            await prisma.$disconnect()
             return newExpense
         } catch (error) {
+            //  disconnect prisma and return error
+            await prisma.$disconnect()
             return "error creating expense"
         } 
 
@@ -186,6 +199,7 @@ class HandleExpenses {
             where : {id : expenseId}
         })
 
+        //  if expense dont exist, return error
         if (!expense) return "expense dont exist"
         
         //  update expense
@@ -197,8 +211,12 @@ class HandleExpenses {
                 }
             })
 
+            //  disconnect prisma and return expense
+            await prisma.$disconnect()
             return updatedExpense
         } catch {
+            //  disconnect prisma and return error
+            await prisma.$disconnect()
             return "error updating expense"
         }
     }

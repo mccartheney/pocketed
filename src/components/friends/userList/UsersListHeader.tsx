@@ -13,15 +13,19 @@ const UsersListHeader = (
         constantsUsers: userType[]
     }
 ) => {
-
-
-
+    // method to handle the search
     const handleSearch = () => {
+        // get the search user value
         const searchUserValue = userSearchRef!.current?.value
+
+        // filter the users
         const filteredUsers = constantsUsers.filter((user) => user.name!.toLowerCase().includes(searchUserValue!.toLowerCase()))
+
+        // update the users
         setUsers(filteredUsers)
     }
 
+    // return the users list header
     return (
         <>
             <div className="header-container flex flex-col md:flex-row items-center justify-between">
