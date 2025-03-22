@@ -1,21 +1,18 @@
 
 import cardType, { expenseType } from "@/types/cardtype"
 import CardUniqueHeader from "./CardUniqueHeader"
-import { useEffect, useState } from "react"
+import { SetStateAction, Dispatch, useEffect, useState } from "react"
 import CardUniqueExpensesGraph from "./CardUniqueExpensesGraph"
 import CreateUniqueExpensesModal from "./CreateUniqueExpensesModal"
 import axios from "axios"   
-import weekDays from "@/constants/weekDays"
 import monthsName from "@/constants/months"
 import WeekDayExpenseModal from "./weekDayExpenseModal"
 
 const CardUniqueExpenses = (
-    { card }: { card: cardType}        
+    { card, expenses, setExpenses, loading, setLoading }: { card: cardType, expenses: expenseType[], setExpenses: Dispatch<SetStateAction<expenseType[]>>, loading: boolean, setLoading: Dispatch<SetStateAction<boolean>> }        
 ) => {
     // define states
     const [expensesDurations, setExpensesDurations] = useState<"Week" | "Month">("Week")
-    const [expenses, setExpenses] = useState<expenseType[]>([])
-    const [loading, setLoading] = useState(true)
     const [expensesByDay, setExpensesByDay] = useState<{
         Monday : number,
         Tuesday : number,
@@ -83,7 +80,7 @@ const CardUniqueExpenses = (
     // if the loading is true, show the loading page
     if (loading) {
         return (
-            <div className="md:w-3/5 w-full h-full bg-base-200 rounded-2xl p-3 flex flex-col">
+            <div className="md:w-4/5 w-full h-full bg-base-200 rounded-2xl p-3 flex flex-col">
                 <CardUniqueHeader expensesDurations={expensesDurations} setExpensesDurations={setExpensesDurations} card={card} />
                 <div className="skeleton h-full w-full mt-3"></div>
             </div>
@@ -93,7 +90,7 @@ const CardUniqueExpenses = (
     // if the expenses are not found, show the loading page
     if (!expenses) {
         return (
-            <div className="md:w-3/5 w-full h-full bg-base-200 rounded-2xl p-3 flex flex-col">
+            <div className="md:w-4/5 w-full h-full bg-base-200 rounded-2xl p-3 flex flex-col">
                 <CardUniqueHeader expensesDurations={expensesDurations} setExpensesDurations={setExpensesDurations} card={card} />
                 <div className="skeleton h-full w-full mt-3"></div>
             </div>
@@ -102,7 +99,7 @@ const CardUniqueExpenses = (
 
     // return the card unique expenses
     return (
-        <div className="md:w-3/5 w-full h-full bg-base-200 rounded-2xl p-3 flex flex-col">
+        <div className="md:w-4/5 w-full h-full bg-base-200 rounded-2xl p-3 flex flex-col">
             <CardUniqueHeader expensesDurations={expensesDurations} setExpensesDurations={setExpensesDurations} card={card}  />
             <CardUniqueExpensesGraph expenses={expenses} setExpenses={setExpenses} expensesDurations={expensesDurations} expensesByDay={expensesByDay} />
             <CreateUniqueExpensesModal card={card} setExpensesByDay={setExpensesByDay} reloadExpenses={reloadExpenses} />

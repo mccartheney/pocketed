@@ -139,17 +139,16 @@ const GET = async   (req: NextRequest) =>{
 
             // get the expenses by day
             const WeekExpenses = MonthExpenses.filter((expense) => expense.day >= initialDay && expense.day <= finalDay)
+            const uniqueWeekExpenses = WeekExpenses.filter((expense) => expense.timeTypeExpense === "unique")
 
             // sum the expenses by day
-            WeekExpenses.forEach((expense) => {
+            uniqueWeekExpenses.forEach((expense) => {
                 const dayOfWeek = expense.dayOfWeek as keyof typeof expensesByDay;
                 expensesByDay[dayOfWeek] += Number(expense.value);
             });
 
-            console.log(WeekExpenses)
-            console.log(expensesByDay)
             // return the expenses by week and by day
-            return NextResponse.json({ status: 200, message: WeekExpenses, byDay : expensesByDay })
+            return NextResponse.json({ status: 200, message: uniqueWeekExpenses, byDay : expensesByDay })
         }
     }
 

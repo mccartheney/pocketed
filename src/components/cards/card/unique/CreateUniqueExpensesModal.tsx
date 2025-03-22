@@ -10,17 +10,15 @@ const CreateUniqueExpensesModal = ({card, setExpensesByDay, reloadExpenses} : {c
     // defining the refs
     const expenseNameRef = useRef<HTMLInputElement>(null)
     const expenseAmountRef = useRef<HTMLInputElement>(null)
-    const expenseDateTypeRef = useRef<HTMLSelectElement>(null)
 
     // method to create the unique expenses
     const handleCreateUniqueExpenses = async () => {
         // get expenses values
         const expenseName = expenseNameRef.current?.value
         const expenseAmount : number = Number(expenseAmountRef.current?.value!)
-        const expenseDateType = expenseDateTypeRef.current?.value
 
         // if the expenses values are not found, show the error message
-        if (!expenseName || !expenseAmount || !expenseDateType) {
+        if (!expenseName || !expenseAmount ) {
             toast.error("Please fill in all fields")   
             return
         }
@@ -100,15 +98,6 @@ const CreateUniqueExpensesModal = ({card, setExpensesByDay, reloadExpenses} : {c
                     <legend className="fieldset-legend">Value</legend>
                     <input type="number" className="input" placeholder="10" required ref={expenseAmountRef}/>
                 </fieldset>
-
-                <fieldset className="fieldset">
-                    <legend className="fieldset-legend">Date type</legend>
-                    <select defaultValue="Weekly" className="select" ref={expenseDateTypeRef}>
-                        <option>Weekly</option>
-                        <option>Montly</option>
-                    </select>
-                </fieldset>
-
 
                 <div className="modal-action">
                     <form method="dialog">

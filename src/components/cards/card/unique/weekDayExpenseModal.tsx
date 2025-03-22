@@ -19,8 +19,10 @@ const WeekDayExpenseModal = ({ expenses, setExpenses, reloadExpenses }: { expens
             // start loading
             setLoading(true)
 
+            const uniqueExpenses = expenses.filter((expense) => expense.timeTypeExpense === "unique")
+
             // get the expenses day
-            const expensesDay = expenses.filter((expense) => {
+            const expensesDay = uniqueExpenses.filter((expense) => {
                 return expense.day === event.detail.day
             })
 

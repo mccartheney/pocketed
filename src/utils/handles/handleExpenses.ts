@@ -1,3 +1,5 @@
+"use server"
+
 import {expenseType, monthType, timeTypeExpense, weekDayType } from "@/types/cardtype"
 import HandleCard from "./handleCard"
 import { PrismaClient } from "@prisma/client"
@@ -169,6 +171,7 @@ class HandleExpenses {
         //  if expense with same name, add number to name
         if (expenseWithSameName.length > 0) expenseInfo.visibleName = `${expenseInfo.name} (${expenseWithSameName.length + 1})`
 
+        console.log(expenseInfo)
         //  create expense
         try{
             const newExpense = await prisma.expense.create({
@@ -176,9 +179,9 @@ class HandleExpenses {
                     ...expenseInfo,
                 }
             })
-
             //  disconnect prisma and return expense
             await prisma.$disconnect()
+
             return newExpense
         } catch (error) {
             //  disconnect prisma and return error
