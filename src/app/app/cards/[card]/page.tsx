@@ -53,10 +53,20 @@ const Page = () => {
     // if its loading, show the loading page
     if (loading) return <div className="flex flex-col h-full px-3">
         <div className="skeleton flex flex-col  py-5 px-7 bg-base-200 h-[72px] rounded-2xl"></div>
-        <div className="content flex flex-col h-full py-3">
+
+        <div className="content flex flex-col flex-grow py-3 overflow-hidden">
+            {/* Top Section */}
             <div className="top flex h-1/2 w-full">
                 <div className="skeleton md:w-4/5 w-full h-full bg-base-200 rounded-2xl p-3 flex flex-col"></div>
                 <div className="skeleton md:w-1/5 ml-3 w-full h-full bg-base-200 rounded-2xl p-3 flex flex-col"></div>
+
+            </div>
+
+            {/* Bottom Section */}
+            <div className="bottom flex h-1/2 my-2 w-full overflow-hidden">
+                <div className="skeleton md:w-2/6 mr-3 w-full h-full bg-base-200 rounded-2xl p-3 flex flex-col"></div>
+                <div className="skeleton md:w-4/6 mr-3 w-full h-full bg-base-200 rounded-2xl p-3 flex flex-col"></div>
+
             </div>
         </div>
     </div>

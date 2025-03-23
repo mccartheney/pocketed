@@ -44,6 +44,7 @@ const AvarageMonthly = (
         return (
             <div className="md:w-1/5 w-full h-full bg-base-200 rounded-2xl p-3 md:ml-3 flex flex-col">
                 <AvarageMonthlyHeader />
+                <div className="skeleton w-full h-full mt-2"></div>
             </div>
         )
     }
