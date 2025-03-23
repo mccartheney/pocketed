@@ -59,15 +59,20 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
     // if user is found, show the app layout
     return (
         <UserProvider value={{ user, setUser }}>
-            <div className="flex h-screen md:overflow-hidden"> 
+            {/* overflow hidden for responsive design */}
+            <div className="flex h-screen">
                 {screenWidth > 768 ? <Sidebar /> : <Dock />}
-                <div className="flex flex-col flex-1">
-                    <LayoutTitle/>
-                    <main className="md:flex-1 lg:flex-1">
+
+                <div className="flex flex-col w-full max-h-full">
+                    <LayoutTitle />
+
+                    {/* Garante que o conteúdo ocupe todo o espaço disponível */}
+                    <main className="flex-1 flex flex-col  h-[82%]">
                         {children}
                     </main>
                 </div>
             </div>
+
         </UserProvider>
     );
 }

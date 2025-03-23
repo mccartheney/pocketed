@@ -70,8 +70,32 @@ const DELETE = async (req: NextRequest) => {
 // method to rename a card
 const PUT = async (req: NextRequest) => {
     // get necessary parameters
-    const { email, cardId, newName } = await req.json()
+    const { email, cardId, newName, addOwner, removeOwner} = await req.json()
     const handleCard = new HandleCard()
+
+    // if user want to add owner to card
+    if (addOwner) {
+        // add owner to card
+        const card = await handleCard.addOwner(email, cardId, addOwner)
+        // if user dont exists, if not return 404
+        if (card === "user dont exists") return NextResponse.json({ status: 404, message: "User dont exists" })
+        // if card dont exists, if not return 404
+        else if (card === "card dont exists") return NextResponse.json({ status: 404, message: "Card not found" })
+        // if card owner added return 200
+        return NextResponse.json({ status: 200, message: "Card owner added" })
+    }
+
+    // if user want to remove owner from card
+    if (removeOwner) {
+        // remove owner from card
+        const card = await handleCard.removeOwner(email, cardId, removeOwner)
+        // if user dont exists, if not return 404
+        if (card === "user dont exists") return NextResponse.json({ status: 404, message: "User dont exists" })
+        // if card dont exists, if not return 404
+        else if (card === "card dont exists") return NextResponse.json({ status: 404, message: "Card not found" })
+        // if card owner removed return 200
+        return NextResponse.json({ status: 200, message: "Card removed" })
+    }
 
     // rename the card
     const card = await handleCard.renameCard(email, cardId, newName)

@@ -9,7 +9,7 @@ import CardInfoHeader from "@/components/cards/card/CardHeader";
 import CardDeleteModel from "@/components/cards/card/CardDeletedModal";
 import CardUniqueExpenses from "@/components/cards/card/unique/CardUniqueExpenses";
 import AvarageMonthly from "@/components/cards/card/avarageMonthly/avarageMonthly";
-
+import CardFriends from "@/components/cards/card/friends/CardFriends";
 const Page = () => {
     // get the user
     const { user } = useUser()
@@ -66,16 +66,25 @@ const Page = () => {
 
     // return the card page
     return (
-        <div className="flex flex-col h-full px-3">
+        <div className="flex flex-col h-full px-3 overflow-hidden">
             <CardInfoHeader card={card} setCard={setCard} />
             <CardDeleteModel card={card} />
-            <div className="content flex flex-col h-full py-3">
+
+            {/* Content Wrapper with max height */}
+            <div className="content flex flex-col flex-grow py-3 overflow-hidden">
+                {/* Top Section */}
                 <div className="top flex h-1/2 w-full">
                     <CardUniqueExpenses loading={loadingTop} setLoading={setLoadingTop} card={card} expenses={expenses} setExpenses={setExpenses} />
-                    <AvarageMonthly loading={loadingTop} card={card} expenses={expenses} setExpenses={setExpenses}/>
+                    <AvarageMonthly loading={loadingTop} card={card} expenses={expenses} setExpenses={setExpenses} />
+                </div>
+
+                {/* Bottom Section */}
+                <div className="bottom flex h-1/2 my-2 w-full overflow-hidden">
+                    <CardFriends card={card} />
                 </div>
             </div>
         </div>
+
     )
 }
 

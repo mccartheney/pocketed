@@ -12,7 +12,7 @@ const LayoutTitle = () => {
 
     // return the layout title
     return (
-        <div className="flex items-center font-bold md:text-xl m-3 bg-base-200 justify-between rounded-2xl p-3 h-20">
+        <div className="flex items-center font-bold md:text-xl m-3 bg-base-200 justify-between rounded-2xl p-3 h-[8%]">
             <div className="ml-3">
                 <h2>
                     {weekDay}, {monthDay} {month}

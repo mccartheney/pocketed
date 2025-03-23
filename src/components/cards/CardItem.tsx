@@ -49,11 +49,11 @@ const CardItem = (
                         </div>
                         <div className="flex flex-col items-center">
                             <p className="font-light text-xs">Owners</p>
-                            <div className="avatar-group -space-x-9 w-full flex justify-end">
+                            <div className="avatar-group -space-x-9 w-full pl-1">
                                 {card.owners.map((owner : userType) => {
                                     return (
-                                        <div className="avatar mr-3" key={owner.id}>
-                                            <div className="w-5">
+                                        <div className="avatar" key={owner.id}>
+                                            <div className="w-5 ">
                                                 <img src={owner.imgUrl!} />
                                             </div>
                                         </div>

@@ -97,6 +97,48 @@ class HandleCard {
         return card.owners
     }
 
+    //  method to add owner to card
+    async addOwner(email : string, cardId : number, addOwnerId : number) {
+        //  check if user exists
+        const user = await CheckUserExists(email)
+        if (! user) {return "user dont exists"}
+
+        //  get card
+        const card = await this.getCard(cardId)
+        if (! card) {return "card dont exists"}
+
+        //  add owner to card
+        await prisma.card.update({
+            where : { id : cardId },
+            data : { owners : { connect: { id: addOwnerId } } }
+        })
+
+        //  disconnect prisma and return card
+        await prisma.$disconnect()
+        return card
+    }
+
+    //  method to remove owner from card
+    async removeOwner(email : string, cardId : number, removeOwnerId : number) {
+        //  check if user exists
+        const user = await CheckUserExists(email)
+        if (! user) {return "user dont exists"}
+
+        //  get card
+        const card = await this.getCard(cardId)
+        if (! card) {return "card dont exists"}
+
+        //  remove owner from card
+        await prisma.card.update({
+            where : { id : cardId },
+            data : { owners : { disconnect: { id: removeOwnerId } } }
+        })
+
+        //  disconnect prisma and return card
+        await prisma.$disconnect()
+        return card
+    }   
+
     //  method to get card balance
     async getBalance(cardId : number) {
         //  get card and return and error if card dont exists
