@@ -10,6 +10,8 @@ import CardDeleteModel from "@/components/cards/card/CardDeletedModal";
 import CardUniqueExpenses from "@/components/cards/card/unique/CardUniqueExpenses";
 import AvarageMonthly from "@/components/cards/card/avarageMonthly/avarageMonthly";
 import CardFriends from "@/components/cards/card/friends/CardFriends";
+import Economies from "@/components/cards/card/economies/Economies";
+import Incomes from "@/components/cards/card/incomes/Incomes";
 const Page = () => {
     // get the user
     const { user } = useUser()
@@ -65,8 +67,8 @@ const Page = () => {
             {/* Bottom Section */}
             <div className="bottom flex h-1/2 my-2 w-full overflow-hidden">
                 <div className="skeleton md:w-2/6 mr-3 w-full h-full bg-base-200 rounded-2xl p-3 flex flex-col"></div>
-                <div className="skeleton md:w-4/6 mr-3 w-full h-full bg-base-200 rounded-2xl p-3 flex flex-col"></div>
-
+                <div className="skeleton md:w-2/6 mr-3 w-full h-full bg-base-200 rounded-2xl p-3 flex flex-col"></div>
+                <div className="skeleton md:w-2/6 mr-3 w-full h-full bg-base-200 rounded-2xl p-3 flex flex-col"></div>
             </div>
         </div>
     </div>
@@ -91,6 +93,8 @@ const Page = () => {
                 {/* Bottom Section */}
                 <div className="bottom flex h-1/2 my-2 w-full overflow-hidden">
                     <CardFriends card={card} />
+                    <Economies card={card} />
+                    <Incomes card={card} />
                 </div>
             </div>
         </div>

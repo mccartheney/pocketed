@@ -39,7 +39,7 @@ class HandleCard {
 
         //  check if card name already exists
         if (userCards!.some(card => card.name === cardName && card.creatorId === user.id)) return "Card already exists"
-        
+
         //  create card
         const card  = await prisma.card.create({
             data: {
@@ -48,13 +48,24 @@ class HandleCard {
                 owners: { connect: [{ id: user.id }] },
                 expenses: { create: [] },
                 balance: balance,
-                economies: { create: [] }
+                economies: { create: [] },
+                incomes: { create: [] }
             },
             include: {
                 creator: true,
                 owners: true,
                 expenses: true,
-                economies: true
+                economies: true,
+                incomes:true
+            }
+        })
+
+        await prisma.income.create({
+            data: {
+                name: "Initial balance",
+                value: balance,
+                cardId: card.id,
+                date: new Date()
             }
         })
 
@@ -72,7 +83,8 @@ class HandleCard {
                 creator: true,
                 owners: true,
                 economies: true,
-                expenses: true
+                expenses: true,
+                incomes: true
             }
         })
 

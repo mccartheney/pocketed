@@ -14,7 +14,7 @@ const AvarageMonthly = (
     // define state
     const [graphData, setGraphData] = useState<{ labels: string[], data: number[] }>({ labels: [], data: [] })
     const [loadingInternal, setLoadingInternal] = useState<boolean>(true)
-    
+
     useEffect(function getAvarageMonthlyExpenses() {
 
         // get the mensal and unique expenses

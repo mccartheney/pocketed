@@ -47,13 +47,13 @@ const AvarageMonthlyNewExpenseModal = (
         expenseValueRef.current!.value = ""
 
         // if the expense is created, show the success message
-        if (response.status === 200) {
+        if (response.data.status === 200) {
             toast.success("Expense created successfully")
             setExpenses(expenses => [...expenses, response.data.expense])
         }
 
         // if the expense is not created, show the error message
-        if (response.status !== 200) {
+        if (response.data.status !== 200) {
             toast.error("Error creating expense")
         }
 

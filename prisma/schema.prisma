@@ -30,6 +30,7 @@ model Card {
     owners      User[]     @relation("CardOwners")
     balance     Int
     expenses    Expense[]
+    incomes     Income[]
     economies   Economy[]
     createdAt   DateTime   @default(now())
 }
@@ -46,6 +47,15 @@ model Expense {
     year           Int
     card         Card            @relation(fields: [cardId], references: [id], onDelete: Cascade)
     cardId       Int
+}
+
+model Income {
+    id          Int        @id @default(autoincrement())
+    name        String
+    value       Int
+    card        Card       @relation(fields: [cardId], references: [id], onDelete: Cascade)
+    cardId      Int 
+    date        DateTime
 }
 
 model Economy {

@@ -10,6 +10,7 @@ const POST = async (req: NextRequest) => {
     const { cardId, value, visibleName, name, timeTypeExpense, month, day, dayOfWeek, year }
      :expenseType= await req.json()
 
+
     // create the expense
     const handleExpense = new HandleExpense()
     const expense = await handleExpense.createExpense(

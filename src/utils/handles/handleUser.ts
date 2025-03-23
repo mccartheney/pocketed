@@ -238,7 +238,8 @@ class HandleUser {
                 }
             },
             include: {
-                owners: true
+                owners: true,
+                incomes: true
             }
         });
 
