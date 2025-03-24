@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import {
     FiArrowDown,
     FiArrowUp,
-    FiBarChart,
     FiChevronsRight,
     FiCreditCard,
     FiHome,
@@ -74,13 +73,6 @@ const Sidebar = () => {
                 <Option
                     Icon={GrGroup}
                     title="Friends"
-                    selected={selected}
-                    setSelected={setSelected}
-                    open={open}
-                />
-                <Option
-                    Icon={FiBarChart}
-                    title="Analytics"
                     selected={selected}
                     setSelected={setSelected}
                     open={open}

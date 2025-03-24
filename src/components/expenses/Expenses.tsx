@@ -51,8 +51,8 @@ const Expenses = () => {
                     email: user?.email
                 }
             })
+            
             setCards(response.data.message)
-
             setLoading(false)
         }
         getAllCards()

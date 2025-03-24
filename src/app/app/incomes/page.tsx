@@ -1,7 +1,9 @@
+import Incomes from "@/components/incomes/Incomes"
+
 const Page =() => {
     return (
-        <div>
-            <h1>Incomes</h1>
+        <div className="flex flex-col h-full px-3 overflow-hidden">
+            <Incomes />
         </div>
     )
 }
