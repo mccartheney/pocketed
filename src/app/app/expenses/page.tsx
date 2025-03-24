@@ -1,7 +1,9 @@
+import Expenses from "@/components/expenses/Expenses"
+
 const Page =() => {
     return (
-        <div>
-            <h1>Expenses</h1>
+        <div className="flex flex-col h-full px-3 overflow-hidden">
+            <Expenses />
         </div>
     )
 }

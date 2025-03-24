@@ -6,7 +6,7 @@ type cardType = {
     name : string
     creator : userType
     owners : userType[]
-    expenses : expensesType[]
+    expenses : expenseType[]
     balance : number
     economies : economyType[]
     createdAt : Date

@@ -12,7 +12,7 @@ const EconomiesAddHistory = ({selectedEconomy, setHistory, setEconomies}: {selec
  
     const handleAddHistory = async () => {
         const balance = balanceInputRef!.current!.value;
-        
+         
         const response = await axios.post("/api/economies", {
             historic : {
                 value: Number(balance),
