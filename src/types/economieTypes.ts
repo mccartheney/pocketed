@@ -7,6 +7,7 @@ type economyType = {
     balance: number
     historic : historicType[]
     imgUrl : string
+    cardId : number
 }
 
 type historicType = {

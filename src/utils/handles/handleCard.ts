@@ -82,12 +82,17 @@ class HandleCard {
             include: {
                 creator: true,
                 owners: true,
-                economies: true,
+                economies: {
+                    include: {
+                        historic: true
+                    }
+                },
                 expenses: true,
-                incomes: true
+                incomes: true,
             }
         })
 
+        console.log(card);
         //  disconnect prisma and return card
         await prisma.$disconnect()    
         return card
