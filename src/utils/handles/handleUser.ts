@@ -32,8 +32,9 @@ class HandleUser {
                 cards: true
             }
         })
-        
-        // return user
+
+        //  disconnect prisma and return user
+        await prisma.$disconnect()  
         return user
     }
         
@@ -47,7 +48,8 @@ class HandleUser {
             return null
         }
 
-        // return user
+        //  disconnect prisma and return user
+        await prisma.$disconnect()
         return user
     }
 

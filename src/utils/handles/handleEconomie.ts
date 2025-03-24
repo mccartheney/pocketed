@@ -21,6 +21,8 @@ class HandleEconomie {
             }
         })
 
+        //  disconnect prisma and return economies
+        await prisma.$disconnect()  
         return economies;
     }
 
@@ -35,6 +37,8 @@ class HandleEconomie {
 
         if (!economy) return "economy not found"
 
+        //  disconnect prisma and return economy
+        await prisma.$disconnect()  
         return economy;
     }
 
@@ -65,7 +69,8 @@ class HandleEconomie {
             }
         })
 
-        // return the new economy
+        //  disconnect prisma and return new economy
+        await prisma.$disconnect()  
         return newEconomy;
     }
 
@@ -86,7 +91,8 @@ class HandleEconomie {
             }
         })
 
-        // return the new historic
+        //  disconnect prisma and return new historic
+        await prisma.$disconnect()  
         return newHistoric;
     }
 
@@ -101,7 +107,8 @@ class HandleEconomie {
         // if the historic is not found, return an error
         if (!historic) return "historic not found"
 
-        // return the historic
+        //  disconnect prisma and return historic
+        await prisma.$disconnect()  
         return historic;
     }
 
@@ -118,7 +125,8 @@ class HandleEconomie {
             }
         })
         
-        // return the deleted historic
+        //  disconnect prisma and return deleted historic
+        await prisma.$disconnect()  
         return "historic deleted";
     }
 
@@ -134,7 +142,8 @@ class HandleEconomie {
             }
         })
         
-        // return the deleted economy
+        //  disconnect prisma and return deleted economy
+        await prisma.$disconnect()  
         return "economy deleted";
     }
 }

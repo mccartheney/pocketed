@@ -33,8 +33,12 @@ class handleIncomes {
                 },
             });
 
+            //  disconnect prisma and return income
+            await prisma.$disconnect()
             return income;
         } catch (error) { // if there is an error, return the error
+            //  disconnect prisma and return error
+            await prisma.$disconnect()
             return "Error creating income";
         }
     }
@@ -57,8 +61,12 @@ class handleIncomes {
                 },
             });
 
+            //  disconnect prisma and return incomes
+            await prisma.$disconnect()
             return incomes;
         } catch (error) { // if there is an error, return the error
+            //  disconnect prisma and return error
+            await prisma.$disconnect()
             return "Error getting incomes";
         }
     }
@@ -98,8 +106,12 @@ class handleIncomes {
                 },
             });
 
+            //  disconnect prisma and return success message
+            await prisma.$disconnect()
             return "Income deleted";
         } catch (error) { // if there is an error, return the error
+            //  disconnect prisma and return error
+            await prisma.$disconnect()
             return "Error deleting income";
         }
     }

@@ -39,7 +39,7 @@ const Economies = (
             <EconomiesHeader card={card} economies={economies} setEconomies={setEconomies} selectedEconomy={selectedEconomy} setSelectedEconomy={setSelectedEconomy} />
             <EconomiesGraph  history={history} />
             <NewEconomiesModal card={card} setEconomies={setEconomies}/>
-            <EconomiesAddHistory  setHistory={setHistory} selectedEconomy={selectedEconomy}/>
+            <EconomiesAddHistory  setHistory={setHistory} selectedEconomy={selectedEconomy} setEconomies={setEconomies}/>
         </div>
     )
 }

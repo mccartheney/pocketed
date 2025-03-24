@@ -5,7 +5,7 @@ import { Dispatch, useRef, useState } from "react";
 import { SetStateAction } from "react";
 import { toast } from "react-hot-toast";
 
-const EconomiesAddHistory = ({selectedEconomy, setHistory}: {selectedEconomy: economyType | null | undefined, setHistory: Dispatch<SetStateAction<historicType[]>>}) => {
+const EconomiesAddHistory = ({selectedEconomy, setHistory, setEconomies}: {selectedEconomy: economyType | null | undefined, setHistory: Dispatch<SetStateAction<historicType[]>>, setEconomies: Dispatch<SetStateAction<economyType[]>>}) => {
     
     const {user} = useUser();   
     const balanceInputRef = useRef<HTMLInputElement>(null);
@@ -24,6 +24,11 @@ const EconomiesAddHistory = ({selectedEconomy, setHistory}: {selectedEconomy: ec
 
         if (response.data.status === 200) {
             setHistory(oldHistory => [...oldHistory, response.data.newHistoric]);
+            const economyToUpdate = selectedEconomy;
+            if (economyToUpdate) {
+                economyToUpdate.historic.push(response.data.newHistoric);
+                setEconomies(oldEconomies => [...oldEconomies.map(economy => economy.id === selectedEconomy?.id ? economyToUpdate : economy)]);
+            }
             toast.success(response.data.message);
         }else {
             toast.error(response.data.message);
