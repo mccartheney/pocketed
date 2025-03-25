@@ -3,7 +3,9 @@ import { useRef } from "react";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import economyType from "@/types/economieTypes";
-const handleNewEconomiesModal = ({card, setEconomies}: {card: cardType, setEconomies: (economies: economyType[]) => void}) => {
+const NewEconomiesModal = ({card, setEconomies}: {card: cardType, setEconomies: (economies: economyType[]) => void}) => {
+
+    console.log("teste")
 
     // define refs
     const economyNameRef = useRef<HTMLInputElement>(null);
@@ -71,4 +73,4 @@ const handleNewEconomiesModal = ({card, setEconomies}: {card: cardType, setEcono
     )
 }
 
-export default handleNewEconomiesModal;
+export default NewEconomiesModal;

@@ -29,7 +29,7 @@ class HandleEconomie {
     // get a specific economy
     async getEconomie(economieId: number) {
         // get the economy, if not found return an error
-        const economy = await prisma.economy.findUnique({
+        const economy = await prisma.economy.findFirst({
             where: {
                 id: economieId
             }

@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation"
 import cardType from "@/types/cardtype"
 import axios from "axios"
 import toast from "react-hot-toast"
-
+import { motion } from "framer-motion"  
 const CardInfoHeader = (
     { card, setCard }: { card: cardType, setCard: Dispatch<SetStateAction<cardType | undefined>> }
 ) => {
@@ -62,36 +62,50 @@ const CardInfoHeader = (
 
                 {
                     !editing ?
-                        <h3 className="text-2xl">
+                        <motion.h3 
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 1 }}
+                            className="text-2xl"
+                        >
                             {card.name}
-                        </h3>
+                        </motion.h3>
                         : <form onSubmit={(e) => { handleEditCardName(e) }}>
-                            <input type="text" defaultValue={card.name} ref={cardToRename} className="bg-base-100 outline-none  text-start text-2xl" />
+                            <input type="text" defaultValue={card.name} ref={cardToRename} className="outline-none  text-start text-2xl" />
                         </form>
                 }
 
 
                 <div className="">
-                    <button
+                    <motion.button
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 1 }}
                         className="btn btn-sm btn-primary"
 
                         onClick={() => setEditing(true)}
                     >
                         <FaEdit />
-                    </button>
-                    <button
+                    </motion.button>
+                    <motion.button
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 1 }}
                         className="btn btn-sm btn-primary mx-3"
 
                         onClick={() => router.push("/app/cards")}
                     >
                         <FaAngleLeft />
-                    </button>
-                    <button
+                    </motion.button>
+                    <motion.button
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 1 }}
                         className="btn btn-sm btn-error"
                         onClick={() => (document.getElementById('my_modal_2') as HTMLDialogElement)?.showModal()}
                     >
                         <FaTrash />
-                    </button>
+                    </motion.button>
                 </div>
             </div>
         </div>

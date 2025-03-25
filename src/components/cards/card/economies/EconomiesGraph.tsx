@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { Chart } from "chart.js";
 import { Line } from "react-chartjs-2";
+import { motion } from "framer-motion";
 
 const EconomiesGraph = ({history}: {history: historicType[]}) => {
     const [graphData, setGraphData] = useState<{date: number[], value: number[]}>({
@@ -21,10 +22,10 @@ const EconomiesGraph = ({history}: {history: historicType[]}) => {
     const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--color-primary');
 
     if (graphData.value.length === 0) return (
-        <div className="w-full h-full flex flex-col items-center justify-center mt-2">
-            <p className="text-center text-2xl font-bold">No money added on this economy</p>
-            <p className="text-center text-sm text-primary">Add money to this economy to see the graph, pls 🥺</p>
-        </div>
+        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="w-full h-full flex flex-col items-center justify-center mt-2">
+            <motion.p className="text-center text-2xl font-bold">No money added on this economy</motion.p>
+            <motion.p className="text-center text-sm text-primary">Add money to this economy to see the graph, pls 🥺</motion.p>
+        </motion.div>
     );
 
     else {

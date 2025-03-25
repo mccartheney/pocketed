@@ -4,7 +4,7 @@ import UsersListHeader from "@/components/friends/userList/UsersListHeader"
 import UsersList from "@/components/friends/userList/UsersList"
 import { useRef, useState } from "react"
 import userType from "@/types/userType"
-
+import CardsFriends from "@/components/friends/cardsFriends/CardsFriends"
 const Page = () => {
     // define state
     const userSearchRef = useRef<HTMLInputElement>(null) as React.RefObject<HTMLInputElement>;

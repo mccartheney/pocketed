@@ -6,6 +6,7 @@ import LoadingPage from "../LoadingPage";
 import toast from "react-hot-toast";
 import NewProfilePicModel from "./newProfilePicModal";
 import {useUser} from "@/context/userContext"
+import { motion } from "framer-motion"
 
 const ProfileConfig = () => {
     // get user and set user
@@ -99,43 +100,66 @@ const ProfileConfig = () => {
 
                 <div className="profileImage flex items-center mb-8">
                     <div className="avatar relative">
-                        <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-text-primary shadow-lg">
-                            <img src={user.imgUrl!} alt="Profile" />
-                        </div>
-                        <button
+                        <motion.div
+                            transition={{ duration: 1 }}
+                            className="w-32 h-32 rounded-full overflow-hidden border-4 border-text-primary shadow-lg flex justify-center items-center"
+                        >
+                            <img
+                                src={user.imgUrl!} 
+                                alt="Profile" 
+                            />
+                        </motion.div>
+                        <motion.button
                             onClick={() => (document.getElementById('my_modal_3') as HTMLDialogElement)?.showModal()}
                             className="btn btn-xs btn-warning bottom-0 right-0 absolute h-min w-min p-2 rounded-full"
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 1 }}
                         >
                             <FaCamera size={16} />
-                        </button>
-                        <button
+                        </motion.button>
+                        <motion.button
                             onClick={() => {handleDeleteProfilePic()}}
                             className="btn btn-xs btn-error bottom-0 left-0 absolute h-min w-min p-2 rounded-full"
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 1 }}
                         >
                             <FaTrash size={16} />
-                        </button>
+                        </motion.button>
                     </div>
                 </div>
 
-                <div className="p-6 rounded-lg shadow-md bg-base-200">
+                <motion.div 
+                    transition={{ duration: 1 }}
+                    className="p-6 rounded-lg shadow-md bg-base-200"
+                >
                     <div className="mb-6">
-                        <h2 className="text-xl font-semibold  mb-2">
+                        <motion.h2 
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 1 }}
+                            className="text-xl font-semibold relative  mb-2"
+                        >
                             User Name
-                        </h2>
+                        </motion.h2>
                         <div className="flex items-center">
                             {editing ? 
                                 <form className="mr-3" onSubmit={(e) => {handleUserNameEdit(e)}}>
-                                    <input
+                                    <motion.input
                                         type="text"
                                         placeholder="User name"
                                         defaultValue={user.name}
                                         ref = {userNameInputRef}
                                         className="input input-bordered input-primary w-full max-w-xs"
                                     />
-                                    <button hidden type="submit"/>
+                                    < button hidden type="submit"/>
                                 </form>
                                     :
-                                <input
+                                <motion.input
+                                    initial={{ opacity: 0, x: 20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ duration: 1 }}
                                     type="text"
                                     placeholder="User name"
                                     defaultValue={user.name}
@@ -144,17 +168,31 @@ const ProfileConfig = () => {
                                 />
                             }
 
-                            <button className="btn btn-warning btn-sm" onClick={() => setEditing(true)}>
+                            <motion.button 
+                                className="btn btn-warning btn-sm" 
+                                onClick={() => setEditing(true)}
+                                initial={{ opacity: 0, x: 20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ duration: 1 }}
+                            >
                                 <FaEdit size={14} />
-                            </button>
+                            </motion.button>
                         </div>
                     </div>
 
                     <div className="mb-6">
-                        <h2 className="text-xl font-semibold  mb-2">
+                        <motion.h2 
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 1 }}
+                            className="text-xl font-semibold  mb-2"
+                        >
                             Email
-                        </h2>
-                        <input
+                        </motion.h2>
+                        <motion.input
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 1 }}
                             type="text"
                             defaultValue={user.email}
                             disabled
@@ -163,20 +201,33 @@ const ProfileConfig = () => {
                     </div>
 
                     <div className="mb-6">
-                        <h2 className="text-xl font-semibold  mb-2">
+                        <motion.h2 
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 1 }}
+                            className="text-xl font-semibold  mb-2"
+                        >
                             Auth Method
-                        </h2>
-                        <input
+                        </motion.h2>
+                        <motion.input
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 1 }}
                             type="text"
                             defaultValue={user.authMethod}
                             disabled
                             className="input input-bordered input-primary w-full max-w-xs"
                         />
                     </div>
-                </div>
+                </motion.div>
 
             </div>
-            <div className="divider"></div>
+            <motion.div 
+                initial={{ width: "0%" }}
+                animate={{ width: "100%" }}
+                transition={{ duration: 1 }}
+                className="divider my-0"
+            />
             
         </div>
     );

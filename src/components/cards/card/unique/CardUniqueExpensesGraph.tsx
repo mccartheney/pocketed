@@ -6,6 +6,7 @@ import { expenseType } from "@/types/cardtype"
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import daysInThisMonth from "@/utils/reusable_functions/daysInMonth"
 import Graph from "./graph"
+import { motion } from "framer-motion"
 
 const CardUniqueExpensesGraph = (
     { expenses, setExpenses, expensesDurations, expensesByDay, }: 
@@ -105,22 +106,38 @@ const CardUniqueExpensesGraph = (
             <div className="w-full overflow-x-auto flex items-center justify-between">
                 {expensesDurations === "Week" ? (
                     weekDays.map((day) => (
-                        <button key={day}
+                        <motion.button
+                            key={day}
                             className="btn btn-xs"
                             onClick={() => openExpensesModal(getWeekDayDate(day))}
-                        > 
-                            {day} ({getWeekDayDate(day)})
-                        </button>
+                            initial={{ rotate: 10 }}
+                            animate={{ rotate: 0 }}
+                            transition={{
+                                type: "spring",
+                                stiffness: 100,
+                                damping: 10
+                            }}
+                        >
+                            {day}
+                        </motion.button>
+
                     ))
                 ) : (
                     daysInMonth.map((day) => (
-                        <button 
+                        <motion.button 
                             key={day}
                             className="btn btn-xs"
                             onClick={() => openExpensesModal(day)}
+                            initial={{ rotate: 10 }}
+                            animate={{ rotate: 0 }}
+                            transition={{
+                                type: "spring",
+                                stiffness: 100,
+                                damping: 10
+                            }}
                         > 
-                                {day} 
-                        </button>
+                            {day} 
+                        </motion.button>
                     ))
                 )}
             </div>

@@ -4,6 +4,7 @@ import CreateIncomesModal from "./createIncomesModal";
 import AllIncomesModal from "./allIncomesModal";
 import { useEffect, useState } from "react";
 import IncomesGraph from "./incomesGraph";      
+import { motion } from "framer-motion";
 const Incomes = ({card}: {card: cardType}) => {
 
     // define states
@@ -19,10 +20,15 @@ const Incomes = ({card}: {card: cardType}) => {
             <CreateIncomesModal card={card} setIncomes={setIncomes} />
             <AllIncomesModal incomes={incomes} setIncomes={setIncomes} card={card}/>
             {incomes.length > 0 && <IncomesGraph incomes={incomes}/>}
-            {incomes.length === 0 && <div className="w-full h-full flex flex-col items-center justify-center">
+            {incomes.length === 0 && <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1 }}
+                className="w-full h-full flex flex-col items-center justify-center"
+            >
                 <h1 className="text-2xl font-bold">No incomes found </h1>
                 <p className="text-sm text-primary">Please create an income to start tracking your incomes</p>
-            </div>}
+            </motion.div>}
         </div>
     )
 }

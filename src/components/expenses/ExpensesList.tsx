@@ -26,7 +26,10 @@ const ExpensesList = ({expenses} : {expenses:expenseType[]}) => {
 
     return (
         <div className="flex flex-col w-full h-full p-3">
-            <h1 className="text-xl font-bold">Expenses List</h1>
+            <div className="relative">
+                <h1 className="text-xl font-bold">Expenses List</h1>
+                <div className="absolute bg-base-200 w-full h-full top-0 left-0"></div>
+            </div>
             <label className="floating-label my-3">
                 <span>Expense Name</span>
                 <input type="text" placeholder="Shopping" className="input input-md" onChange={() => handleSearch()} ref={expenseSearch}/>

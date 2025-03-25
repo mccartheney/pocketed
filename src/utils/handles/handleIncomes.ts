@@ -74,7 +74,7 @@ class handleIncomes {
     // delete an income
     async deleteIncome(incomeId: number) {
         // check if income exists, if not return an error
-        const income = await prisma.income.findUnique({
+        const income = await prisma.income.findFirst({
             where: {
                 id: incomeId,
             },

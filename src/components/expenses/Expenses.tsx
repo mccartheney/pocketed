@@ -88,6 +88,13 @@ const Expenses = () => {
     }, [cards])
 
 
+    const ListDivAnimations = {
+        initial: { width: "100%", height: "100%" },
+        close: { width: "0%", height: "0%" },
+    };
+
+    const [actualAnimation, setActualAnimation] = useState<"initial" | "close">("initial")
+    
     if (loading) {
         return (
             <div className="flex flex-col w-full h-full pb-3">

@@ -12,7 +12,7 @@ import NoFriends from "./noFriends"
 import SharedFriends from "./sharedFriends"
 import UnconnectedFriends from "./unconnectedFriends"
 import NoHaveMoreFriends from "./noHaveMoreFriends"
-
+import { motion } from "framer-motion"
 type connectedFriendExtructure = {
     name : string,
     imgUrl : string,
@@ -185,7 +185,12 @@ const CardFriends = ({ card }: { card: cardType }) => {
                     <FriendsHeaderFriend />
                 )}
             </div>
-            <div className="divider mb-0 mt-2"></div>
+            <motion.div
+                className="divider mb-0 mt-2"
+                initial={{ width: "0%" }}
+                animate={{ width: "100%" }}
+                transition={{ duration: 0.5 }}
+            />
 
             {friends.length === 0 && (
                 <NoFriends />

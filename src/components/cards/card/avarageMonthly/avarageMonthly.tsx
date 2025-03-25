@@ -5,6 +5,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import AvarageMonthlyHeader from "./avarageMonthlyHeader"
 import AvarageMonthlyNewExpenseModal from "./avarageMonthlyNewExpenseModal"
 import AvarageMonthlyModal from "./avarageMonthlyModal"
+import { motion } from "framer-motion"
 Chart.register(...registerables)
 
 const AvarageMonthly = (
@@ -65,20 +66,28 @@ const AvarageMonthly = (
                                 backgroundColor: randomColors(graphData.labels.length)  
                             }]
                         }} />
-                        <div className="absolute top-0 mt-7 left-0 w-full h-full flex justify-center items-center">
-                            <p className="text-center text-lg font-bold">
+                        <div className="absolute top-0 mt-5 left-0 w-full h-full flex justify-center items-center">
+                            <motion.p className="text-center text-lg font-bold"
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 1 }}
+                            >
                                 {expenses.filter((expense: expenseType) => expense.timeTypeExpense === "mensal").reduce((acc: number, expense: expenseType) => acc + expense.value, 0)} €
-                            </p>
+                            </motion.p>
                         </div>
                     </div>
                 )
             }
             {
                 graphData.labels.length === 0 && graphData.data.length === 0 && (
-                    <div className="w-full h-100 flex flex-col justify-center items-center">
+                    <motion.div className="w-full h-100 flex flex-col justify-center items-center"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 1 }}
+                    >
                         <p className="text-center text-lg font-bold">You did not added any mensal expenses here</p>
                         <p className="text-center text-sm opacity-60">Add it now! 😡</p>
-                    </div>
+                    </motion.div>
                 )
             }
         </div>

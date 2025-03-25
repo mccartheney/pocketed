@@ -1,7 +1,7 @@
 import { IconType } from "react-icons";
 import Link from "next/link";
 import { motion } from "framer-motion";
-
+import linkEvent from "@/customEvents/linkEvent";
 const Option = ({ Icon, title, selected, setSelected, open, notifs }: {
     Icon: IconType;
     title: string;
@@ -11,8 +11,11 @@ const Option = ({ Icon, title, selected, setSelected, open, notifs }: {
     notifs?: number;
 }) => {
 
+    
     let linkUrl = title
     linkUrl = linkUrl[0].toLowerCase() + linkUrl.slice(1)
+
+
     return (
         <Link href={`/${linkUrl == "home" ? "app" : "app/" + linkUrl}`}>
 

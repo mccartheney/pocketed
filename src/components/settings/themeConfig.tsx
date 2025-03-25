@@ -1,6 +1,6 @@
 "use client"
 import themeNames from "@/constants/themeNames"     
-
+import { motion } from "framer-motion"
 const ThemeConfig = () => {
 
     // update theme on local storage and html
@@ -11,22 +11,38 @@ const ThemeConfig = () => {
     }
 
     return (
-        <div className ="p-3">
+        <div className ="px-3">
             <div className="flex justify-between items-center px-2">
-                <h1 className="text-2xl font-bold">
+                <motion.h1 
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1 }}
+                    className="text-2xl font-bold"
+                >
                     Theme
-                </h1>
+                </motion.h1>
 
-                <select className="select select-primary select-sm w-full max-w-xs" defaultValue={localStorage.getItem("pocketedTheme")!}>
+                <motion.select 
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1 }}
+                    className="select select-primary select-sm w-full max-w-xs" 
+                    defaultValue={localStorage.getItem("pocketedTheme")!}
+                >
                     {
                         themeNames.map((themeName : string, index : number) => {
                             return <option key={index} onClick={() => {handleThemeChange(themeName)}} >{themeName}</option>
                         })
                     }
-                </select>
+                </motion.select>
             </div>
             
-            <div className="divider"></div>
+            <motion.div 
+                initial={{ width: "0%" }}
+                animate={{ width: "100%" }}
+                transition={{ duration: 1 }}
+                className="divider my-3"
+            />
         </div>
     )
 }

@@ -7,7 +7,8 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import { SetStateAction } from "react";
 import { Dispatch } from "react";
-
+import NewEconomiesModal from "./NewEconomiesModal";
+import { motion } from "framer-motion";
 const EconomiesHeader = (
     {card, selectedEconomy, setSelectedEconomy, economies, setEconomies}: 
     {card: cardType, selectedEconomy: economyType | null | undefined, setSelectedEconomy: Dispatch<SetStateAction<economyType | null | undefined>>, economies: economyType[], setEconomies: Dispatch<SetStateAction<economyType[]>>}
@@ -59,9 +60,10 @@ const EconomiesHeader = (
 
     return (
         <div className="">
+            <NewEconomiesModal card={card} setEconomies={setEconomies}/>
             <div className="flex flex-row justify-between items-center mb-1">
                 <div className="flex items-center">
-                    <h3 className="text-lg font-bold mr-2">Economies</h3>
+                    <motion.h3 initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }} className="text-lg font-bold mr-2">Economies</motion.h3>
 
                     {economies.length == 1 && (
                         <>
@@ -73,39 +75,39 @@ const EconomiesHeader = (
 
                     {economies.length > 1 && (
                         <>
-                            <button className="btn btn-ghost btn-sm text-xl mr-2" onClick={() => handlePreviousEconomy()}><FaChevronLeft/></button>
-                            <button className="btn btn-primary btn-xs text-xl mr-2" onClick={() => {
+                            <motion.button initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }} className="btn btn-ghost btn-sm text-xl mr-2" onClick={() => handlePreviousEconomy()}><FaChevronLeft/></motion.button>
+                            <motion.button initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="btn btn-primary btn-xs text-xl mr-2" onClick={() => {
                                 (document.getElementById("my_modal_12") as HTMLDialogElement).showModal();
-                            }}><BiPlus/></button>
-                            <button className="btn btn-ghost btn-sm text-xl mr-2" onClick={() => handleNextEconomy()}><FaChevronRight/></button>
+                            }}><BiPlus/></motion.button>
+                            <motion.button initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }} className="btn btn-ghost btn-sm text-xl mr-2" onClick={() => handleNextEconomy()}><FaChevronRight/></motion.button>
                         </>
                     )}
                 </div>
 
                 <div className="">
                     {economies.length > 0 && (
-                        <p className="text-sm text-primary">
+                        <motion.p className="text-sm text-primary" initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
                             {selectedEconomy?.description}
-                        </p>
+                        </motion.p>
                     )}
                 </div>
 
                 <div className="">
-                    <button className="btn btn-primary btn-sm text-xl mr-2" onClick={() => {
+                    <motion.button initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }} className="btn btn-primary btn-xs text-xl mr-2" onClick={() => {
                         (document.getElementById("my_modal_11") as HTMLDialogElement).showModal();
                         
                     }}>
                         <PiPlus/>
-                    </button>
+                    </motion.button>
                     
                     {card.economies.length > 0 && (
-                        <button className="btn btn-error btn-sm text-xl" onClick={() => handleDeleteEconomy()}>
+                        <motion.button initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }} className="btn btn-error btn-xs text-xl" onClick={() => handleDeleteEconomy()}>
                             <BiTrash/>
-                        </button>
+                        </motion.button>
                     )}
                 </div>
             </div>
-            <div className="divider my-0"></div>
+            <motion.div initial={{ width:"0px" }} animate={{ width:"100%" }} transition={{ duration: 0.5 }} className="divider my-0"></motion.div>
         </div>
     )
 }
