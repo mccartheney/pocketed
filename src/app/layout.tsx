@@ -22,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
 
-  const [theme, setTheme] = useState(localStorage?.getItem("pocketedTheme"))
+  const [theme, setTheme] = useState("")
 
   useEffect(() => {
     const storedTheme = localStorage.getItem("pocketedTheme");
@@ -30,6 +30,7 @@ export default function RootLayout({
       setTheme(storedTheme);
     } else {
       localStorage.setItem("pocketedTheme", "dark");
+      setTheme("dark");
     }
   }, []);
 
