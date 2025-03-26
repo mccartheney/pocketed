@@ -33,7 +33,6 @@ const Page = () => {
                     setSelectedCard(response.data.message[0]);
                 }
             } catch (err) {
-                console.error("Failed to fetch cards:", err);
                 setError("Failed to load cards. Please try again later.");
             } finally {
                 setLoading(false);
@@ -120,7 +119,7 @@ const Page = () => {
             <div className="h-full flex items-center justify-center">
                 <div className="text-center">
                     <h2 className="text-xl font-bold mb-2">No cards found</h2>
-                    <p className="text-gray-500">You don't have any cards yet. Add one to get started!</p>
+                    <p className="text-base-content">You don't have any cards yet. Add one to get started!</p>
                 </div>
             </div>
         );

@@ -3,16 +3,15 @@ import { useRef } from "react";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import economyType from "@/types/economieTypes";
-const NewEconomiesModal = ({card, setEconomies}: {card: cardType, setEconomies: (economies: economyType[]) => void}) => {
+import { Dispatch, SetStateAction } from "react";
 
-    console.log("teste")
+const NewEconomiesModal = ({card, setEconomies}: {card: cardType, setEconomies: Dispatch<SetStateAction<economyType[]>>}) => {
 
     // define refs
     const economyNameRef = useRef<HTMLInputElement>(null);
     const economyGoalRef = useRef<HTMLInputElement>(null);
 
     const handleCreateEconomy = async () => {
-
         // get the economy name and goal
         const economyName = economyNameRef.current?.value;
         const economyGoal = economyGoalRef.current?.value;
@@ -21,7 +20,7 @@ const NewEconomiesModal = ({card, setEconomies}: {card: cardType, setEconomies: 
         if (!economyName || !economyGoal) {
             toast.error("Please fill in all the fields");
             return;
-        }   
+        }
 
         // create the economy
         const response = await axios.post("/api/economies", {
@@ -39,8 +38,9 @@ const NewEconomiesModal = ({card, setEconomies}: {card: cardType, setEconomies: 
             toast.success("Economy created successfully");
             const newEconomy = response.data.newEconomy;
             newEconomy.historic = [];
-            setEconomies([...card.economies, newEconomy]);
-        }else {
+            // Fixed: Use functional update to ensure we have latest state
+            setEconomies((prevEconomies : economyType[] )=> [...prevEconomies, newEconomy]);
+        } else {
             toast.error(response.data.message);
         }
     }

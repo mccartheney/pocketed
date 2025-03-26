@@ -57,7 +57,6 @@ const NewProfilePicModel = () => {
 
             } catch (error) {
                 // show the error message
-                console.error(error);
                 toast.error(error as string);
             }
             } else {

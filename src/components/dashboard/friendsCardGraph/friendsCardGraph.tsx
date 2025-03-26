@@ -11,7 +11,6 @@ const FriendsCardGraph = ({allCards}: {allCards: cardType[]}) => {
 
     const { user } = useUser();
 
-    console.log(user?.friends.map((friend) => friend))
     if (allCards.length === 0) {
         return (
             <div className="w-full lg:w-2/4 mt-3 lg:mt-0 lg:mr-3 h-full bg-base-200 rounded-2xl p-3">

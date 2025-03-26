@@ -39,7 +39,6 @@ const ProfileConfig = () => {
             }
         } catch (error) {
             // show the error message
-            console.error(error);
             toast.error("Error deleting profile picture");
         }
     };
@@ -87,7 +86,6 @@ const ProfileConfig = () => {
             }
         } catch (error) {
             // show the error message
-            console.error(error)
             toast.error("Error updating name")
         }
     }

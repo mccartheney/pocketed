@@ -92,7 +92,6 @@ class HandleCard {
             }
         })
 
-        console.log(card);
         //  disconnect prisma and return card
         await prisma.$disconnect()    
         return card

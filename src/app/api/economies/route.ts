@@ -34,14 +34,12 @@ const POST = async ( req: NextRequest ) => {
     const body = await req.json();
     const { historic, economy, economyId } : { historic: historicType, economy: economyType, economyId: number } = body;
 
-    console.log(historic, economy);
 
     const handleEconomie = new HandleEconomie();
 
     if (!historic && !economy) return NextResponse.json({ message: "Historic or economy are required", status: 400 });
 
     if (historic) {
-        console.log("historic");
         // create a new historic
         const newHistoric = await handleEconomie.addHistoric(economyId, historic);
 

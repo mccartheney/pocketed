@@ -180,7 +180,6 @@ class HandleExpenses {
         //  if expense with same name, add number to name
         if (expenseWithSameName.length > 0) expenseInfo.visibleName = `${expenseInfo.name} (${expenseWithSameName.length + 1})`
 
-        console.log(expenseInfo)
         //  create expense
         try{
             const newExpense = await prisma.expense.create({
