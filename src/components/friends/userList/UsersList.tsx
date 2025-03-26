@@ -79,7 +79,7 @@ const UsersList = ({
     // return the users list
     return (
         <div className="overflow-y-auto max-h-[calc(100vh-250px)]">
-            <ul className="list bg-base-100 rounded-box shadow-md ">
+            <ul className="list bg-base-100 rounded-box shadow-md">
                 {
                     users.map((user) => (
                         <UserItem key={user.email} userLi={user} setUsers={setUsers} />

@@ -60,14 +60,14 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
     return (
         <UserProvider value={{ user, setUser }}>
             {/* overflow hidden for responsive design */}
-            <div className="flex h-screen">
+            <div className="flex min-h-screen">
                 {screenWidth > 768 ? <Sidebar /> : <Dock />}
 
-                <div className="flex flex-col w-full max-h-full">
+                <div className="flex flex-col w-full md:max-h-full">
                     <LayoutTitle />
 
                     {/* Garante que o conteúdo ocupe todo o espaço disponível */}
-                    <main className="flex-1 flex flex-col  h-[82%]">
+                    <main className="flex-1 flex flex-col pb-10 md:pb-0 md:h-[82%] md:overflow-y-auto">
                         {children}
                     </main>
                 </div>

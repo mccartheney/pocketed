@@ -174,7 +174,7 @@ const CardFriends = ({ card }: { card: cardType }) => {
     }
     
     return (
-        <div className="w-2/6 h-full bg-base-200 rounded-2xl p-3 flex flex-col">
+        <div className="lg:w-2/6 w-full mb-3 lg:mb-0 h-full bg-base-200 rounded-2xl p-3 flex flex-col">
             {/* header */}
             <div className="flex flex-row items-center justify-between mt-2">
                 {(user?.email === card.creator.email ) && (

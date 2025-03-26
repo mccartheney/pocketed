@@ -2,7 +2,7 @@ import { incomeType } from "@/types/cardtype"
 import { useEffect } from "react"
 import { useRef } from "react"
 import { useState } from "react"
-
+import { motion } from "framer-motion"
 const IncomesList = (
     {
         incomes
@@ -31,15 +31,29 @@ const IncomesList = (
     
     return (    
         <div className="flex flex-col w-full h-full p-3">
-            <h1 className="text-xl font-bold">Incomes List</h1>
-            <label className="floating-label my-3">
+            <motion.h1 className="text-xl font-bold"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 1 }}
+            >
+                Incomes List
+            </motion.h1>
+            <motion.label className="floating-label my-3"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 1 }}
+            >
                 <span>Income Name</span>
                 <input type="text" placeholder="Salary" className="input input-md" onChange={() => handleSearch()} ref={incomeSearch}/>
-            </label>
+            </motion.label>
 
-            <div className="divider my-0"></div>
+            <motion.div className="divider my-0"
+                initial={{ width: "0%" }}
+                animate={{ width: "100%" }}
+                transition={{ duration: 1 }}
+            ></motion.div>
 
-            <ul className="list mt-3 bg-base-100 rounded-box shadow-md overflow-y-auto h-[600px]">
+            <ul className="list mt-3 bg-base-100 rounded-box shadow-md overflow-y-auto h-[560px]">
                 {searchIncomes.map((income: incomeType) => (
                     <li className="list-row">
                         <div>
@@ -55,10 +69,14 @@ const IncomesList = (
                     </li>
                 ))}
 
-                {searchIncomes.length === 0 && <div className="flex flex-col w-full h-full justify-center items-center">
+                {searchIncomes.length === 0 && <motion.div className="flex flex-col w-full h-full justify-center items-center"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1 }}
+                >
                     <h1 className="text-2xl font-bold">No incomes found 😠</h1>
                     <p className="text-sm text-primary">Add an income to see it here</p>
-                </div>}
+                </motion.div>}
 
             </ul>
         </div>

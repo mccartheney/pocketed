@@ -80,7 +80,7 @@ const CardUniqueExpenses = (
     // if the loading is true, show the loading page
     if (loading) {
         return (
-            <div className="md:w-4/5 w-full h-full bg-base-200 rounded-2xl p-3 flex flex-col">
+            <div className="md:w-4/5  w-full h-full bg-base-200 rounded-2xl p-3 flex flex-col">
                 <CardUniqueHeader expensesDurations={expensesDurations} setExpensesDurations={setExpensesDurations} card={card} />
                 <div className="skeleton h-full w-full mt-3"></div>
             </div>
@@ -99,7 +99,7 @@ const CardUniqueExpenses = (
 
     // return the card unique expenses
     return (
-        <div className="md:w-4/5 w-full h-full bg-base-200 rounded-2xl p-3 flex flex-col">
+        <div className="  lg:w-4/5 w-full h-full bg-base-200 rounded-2xl p-3 flex flex-col lg:mb-0 mb-3">
             <CardUniqueHeader expensesDurations={expensesDurations} setExpensesDurations={setExpensesDurations} card={card}  />
             <CardUniqueExpensesGraph expenses={expenses} setExpenses={setExpenses} expensesDurations={expensesDurations} expensesByDay={expensesByDay} />
             <CreateUniqueExpensesModal card={card} setExpensesByDay={setExpensesByDay} reloadExpenses={reloadExpenses} />

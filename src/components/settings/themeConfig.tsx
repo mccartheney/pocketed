@@ -12,12 +12,12 @@ const ThemeConfig = () => {
 
     return (
         <div className ="px-3">
-            <div className="flex justify-between items-center px-2">
+            <div className="flex flex-col md:flex-row justify-between mditems-center px-2">
                 <motion.h1 
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1 }}
-                    className="text-2xl font-bold"
+                    className="text-2xl font-bold mb-3 md:mb-0"
                 >
                     Theme
                 </motion.h1>

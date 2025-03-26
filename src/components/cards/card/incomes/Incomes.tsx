@@ -15,7 +15,7 @@ const Incomes = ({card}: {card: cardType}) => {
     }, []);
 
     return (
-        <div className="w-2/6 h-full ml-3 bg-base-200 rounded-2xl p-3 flex flex-col">
+        <div className="lg:w-2/6 w-full mb-3 lg:mb-0 ml-0 h-full lg:ml-3 bg-base-200 rounded-2xl p-3 flex flex-col">
             <IncomesHeader />
             <CreateIncomesModal card={card} setIncomes={setIncomes} />
             <AllIncomesModal incomes={incomes} setIncomes={setIncomes} card={card}/>

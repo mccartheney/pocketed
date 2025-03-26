@@ -6,6 +6,7 @@ import axios from "axios";
 import { useUser } from "@/context/userContext";
 import ExpensesGraph from "./ExpensesGraph";
 import ExpensesList from "./ExpensesList";
+import { motion } from "framer-motion";
 
 type graphData = {
     labels: string[],
@@ -87,23 +88,15 @@ const Expenses = () => {
         })    
     }, [cards])
 
-
-    const ListDivAnimations = {
-        initial: { width: "100%", height: "100%" },
-        close: { width: "0%", height: "0%" },
-    };
-
-    const [actualAnimation, setActualAnimation] = useState<"initial" | "close">("initial")
-    
     if (loading) {
         return (
             <div className="flex flex-col w-full h-full pb-3">
                 <ExpensesHeader />
-                <div className="w-full flex flex-grow mt-3 ">
-                    <div className="graph skeleton w-3/4 h-full bg-base-200 rounded-lg">
+                <div className="w-full flex flex-col lg:flex-row flex-grow mt-3 gap-3 ">
+                    <div className="graph skeleton w-full lg:w-3/4 h-[400px] lg:h-full bg-base-200 rounded-lg">
                         
                     </div>
-                    <div className="graph skeleton w-1/4 h-full bg-base-200 ml-3 rounded-lg">
+                    <div className="graph skeleton w-full lg:w-1/4 h-[200px] lg:h-full bg-base-200 rounded-lg">
                     </div>
                 </div>
             </div>
@@ -113,19 +106,28 @@ const Expenses = () => {
     return (
         <div className="flex flex-col w-full h-full pb-3">
             <ExpensesHeader />
-            <div className="w-full flex flex-grow mt-3 ">
-                <div className="graph w-3/4 h-full bg-base-200 rounded-lg">
+            <div className="w-full flex flex-col lg:flex-row flex-grow mt-3 gap-3">
+                {/* Main Graph Section */}
+                <div className="graph w-full lg:w-3/4 h-[400px]  lg:h-full bg-base-200 rounded-lg">
                     {cards.length > 0 && <ExpensesGraph graphData={graphData} />}
-                    {cards.length === 0 && <div className="flex flex-col w-full h-full justify-center items-center">
-                        <h1 className="text-2xl font-bold">No cards found 😠</h1>
-                        <p className="text-sm text-primary">Add a card to see your expenses</p>
-                    </div>}
+                    {cards.length === 0 && (
+                        <motion.div 
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 1 }}
+                            className="flex flex-col w-full h-full justify-center items-center">
+                            <h1 className="text-2xl font-bold">No cards found 😠</h1>
+                            <p className="text-sm text-primary">Add a card to see your expenses</p>
+                        </motion.div>
+                    )}
                 </div>
+
+                {/* Expenses List Section */}
                 {loadingExpenses ? (
-                    <div className="graph skeleton w-1/4 h-full bg-base-200 ml-3 rounded-lg">
+                    <div className="graph skeleton w-full lg:w-1/4 h-[200px] mt-3 lg:mt-0 lg:h-full bg-base-200 rounded-lg">
                     </div>
                 ) : (
-                    <div className="graph w-1/4 h-full bg-base-200 ml-3 rounded-lg">
+                    <div className="graph w-full lg:w-1/4 h-[200px] lg:h-full mt-3 lg:mt-0 bg-base-200 rounded-lg">
                         <ExpensesList expenses={expenses} />
                     </div>
                 )}

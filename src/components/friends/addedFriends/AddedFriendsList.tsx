@@ -52,7 +52,7 @@ const AddedFriendsList = () => {
     if (isLoading) return <div className="skeleton h-[85%] w-full"></div>
 
     // if the friends are empty, return the empty friends
-    if (friends.length == 0) return <div className="text-center h-[85%] flex flex-col items-center justify-center">
+    if (friends.length == 0) return <div className="overflow-y-auto rounded-2xl flex items-center flex-col justify-center h-[calc(100vh-250px)]">
                                         <h4 className="text-center text-2xl font-bold">You have no friends 😭</h4>
                                         <p className="text-center mt-2">
                                             Try adding some friends to your list!
