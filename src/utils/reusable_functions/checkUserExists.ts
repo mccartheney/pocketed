@@ -10,7 +10,11 @@ async function CheckUserExists(email: string) {
     const user = await prisma.user.findFirst({
         where: { email: email },
         include: {
-            friends: true,
+            friends: {
+                include: {
+                    cards: true
+                }
+            },
             friendOf: true,
             cards: true
         }

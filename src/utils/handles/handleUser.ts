@@ -242,7 +242,8 @@ class HandleUser {
             include: {
                 owners: true,
                 incomes: true,
-                expenses: true
+                expenses: true,
+                creator: true
             }
         });
 
