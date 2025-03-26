@@ -53,25 +53,28 @@ const Page = () => {
     }, [])
 
     // if its loading, show the loading page
-    if (loading) return <div className="flex flex-col h-full px-3">
-        <div className="skeleton flex flex-col  py-5 px-7 bg-base-200 h-[72px] rounded-2xl"></div>
+    if (loading) return (
+        <div className="flex flex-col h-full px-3 ">
+            {/* Header */}
+            <div className="skeleton h-16 w-full rounded-2xl mb-4"></div>
 
-        <div className="content flex flex-col flex-grow py-3 overflow-hidden">
+            {/* Content */}
+            <div className="flex flex-col flex-grow gap-4">
+                {/* Top Section */}
+                <div className="flex flex-col lg:flex-row gap-4 h-1/2">
+                    <div className="skeleton flex-grow h-full rounded-2xl"></div>
+                    <div className="skeleton lg:w-1/5 h-full rounded-2xl"></div>
+                </div>
 
-            <div className="top flex flex-col lg:flex-row lg:h-1/2 w-full">
-                <div className="skeleton lg:w-4/5 h-[300px] w-full bg-base-200 rounded-2xl p-3 flex flex-col"></div>
-                <div className="skeleton lg:w-1/5 h-[300px] lg:ml-3 w-full bg-base-200 rounded-2xl p-3 flex flex-col"></div>
-
-            </div>
-
-            <div className="bottom flex flex-col lg:flex-row lg:h-1/2 my-2 w-full overflow-hidden">
-                <div className="skeleton lg:w-2/6 mr-3 h-[300px] w-full lg:h-full bg-base-200 rounded-2xl p-3 flex flex-col"></div>
-                <div className="skeleton lg:w-2/6 mr-3 h-[300px] w-full lg:h-full bg-base-200 rounded-2xl p-3 flex flex-col"></div>
-                <div className="skeleton lg:w-2/6 mr-3 h-[300px] w-full lg:h-full bg-base-200 rounded-2xl p-3 flex flex-col"></div>
+                {/* Bottom Section */}
+                <div className="flex flex-col lg:flex-row gap-4 h-1/2">
+                    {[...Array(3)].map((_, i) => (
+                        <div key={i} className="skeleton lg:w-2/6 h-full rounded-2xl"></div>
+                    ))}
+                </div>
             </div>
         </div>
-    </div>
-
+    )
     // if the card is not found, redirect the user to the cards page
     if (!card) return router.push("/app/cards")
 

@@ -43,13 +43,12 @@ const AvarageMonthly = (
     
     if (loadingInternal || loading) {
         return (
-            <div className="md:w-1/5 w-full h-full bg-base-200 rounded-2xl p-3 md:ml-3 flex flex-col">
-                <AvarageMonthlyHeader />
-                <div className="skeleton w-full h-full mt-2"></div>
+            <div className="lg:w-1/5 w-full h-full bg-base-200 rounded-2xl p-3 lg:ml-3 flex flex-col">
+                <div className="skeleton h-8 w-full mb-4"></div>
+                <div className="skeleton aspect-square w-full rounded-full"></div>
             </div>
         )
     }
-
 
     return (
         <div className="lg:w-1/5 w-full h-full bg-base-200 rounded-2xl p-3 lg:ml-3 flex flex-col">

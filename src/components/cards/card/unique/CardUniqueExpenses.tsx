@@ -80,9 +80,18 @@ const CardUniqueExpenses = (
     // if the loading is true, show the loading page
     if (loading) {
         return (
-            <div className="md:w-4/5  w-full h-full bg-base-200 rounded-2xl p-3 flex flex-col">
-                <CardUniqueHeader expensesDurations={expensesDurations} setExpensesDurations={setExpensesDurations} card={card} />
-                <div className="skeleton h-full w-full mt-3"></div>
+            <div className="lg:w-4/5 w-full h-full bg-base-200 rounded-2xl p-3 flex flex-col">
+                <div className="skeleton h-8 w-1/3 mb-4"></div>
+                <div className="skeleton flex-grow rounded-xl"></div>
+                <div className="flex justify-between mt-4">
+                    <div className="skeleton h-10 w-24"></div>
+                    <div className="skeleton h-10 w-24"></div>
+                    <div className="skeleton h-10 w-24"></div>
+                    <div className="skeleton h-10 w-24"></div>
+                    <div className="skeleton h-10 w-24"></div>
+                    <div className="skeleton h-10 w-24"></div>
+                    <div className="skeleton h-10 w-24"></div>
+                </div>
             </div>
         )
     }

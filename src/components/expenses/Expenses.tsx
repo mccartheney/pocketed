@@ -90,13 +90,40 @@ const Expenses = () => {
 
     if (loading) {
         return (
-            <div className="flex flex-col w-full h-full pb-3">
+            <div className="flex flex-col w-full h-full pb-3 animate-pulse">
+                {/* Header Skeleton */}
                 <ExpensesHeader />
-                <div className="w-full flex flex-col lg:flex-row flex-grow mt-3 gap-3 ">
-                    <div className="graph skeleton w-full lg:w-3/4 h-[400px] lg:h-full bg-base-200 rounded-lg">
-                        
+
+                {/* Content Skeleton */}
+                <div className="w-full flex flex-col lg:flex-row flex-grow gap-3 mt-2">
+                    {/* Main Graph Area */}
+                    <div className="w-full lg:w-3/4 h-[400px] lg:h-full bg-base-200 rounded-lg p-4">
+                        {/* Graph Controls */}
+                        <div className="flex justify-center items-center  w-full mb-4">
+                            <div className="flex items-center justify-center gap-2">
+                                <div className="skeleton h-8 w-20 rounded"></div>
+                                <div className="skeleton h-8 w-20 rounded"></div>
+                            </div>
+                        </div>
+
+                        {/* Graph Placeholder */}
+                        <div className="skeleton w-full h-[calc(100%-40px)] rounded"></div>
                     </div>
-                    <div className="graph skeleton w-full lg:w-1/4 h-[200px] lg:h-full bg-base-200 rounded-lg">
+
+                    {/* Sidebar */}
+                    <div className="w-full lg:w-1/4 h-[200px] lg:h-full bg-base-200 rounded-lg p-4">
+                        {/* Summary Section */}
+                        <div className="skeleton h-6 w-1/3 mb-4 rounded"></div>
+                        <div className="skeleton h-8 w-full mb-4 rounded"></div>
+                        <div className="divider"></div>
+                        <div className="space-y-3">
+                            {[...Array(4)].map((_, i) => (
+                                <div key={i} className="flex justify-between items-center">
+                                    <div className="skeleton h-10 w-full rounded"></div>
+                                </div>
+                            ))}
+                        </div>
+
                     </div>
                 </div>
             </div>

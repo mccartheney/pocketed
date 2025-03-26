@@ -167,9 +167,7 @@ const CardFriends = ({ card }: { card: cardType }) => {
 
     if (loading) {
         return (
-            <>
-                <LoadingFriends />
-            </>
+            <LoadingFriends />
         )
     }
     

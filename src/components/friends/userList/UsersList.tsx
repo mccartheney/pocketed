@@ -59,7 +59,17 @@ const UsersList = ({
     // if the users are loading, return the loading
     if (isLoading) {
         return (
-            <div className="w-full h-[calc(100vh-250px)] skeleton">
+            <div className="flex skeleton flex-col gap-3  rounded-2xl p-3">
+                {[...Array(3)].map((_, i) => (
+                    <div key={i} className="flex items-center justify-between gap-3 p-3">
+                        <div className="flex flex-row items-center ">
+                            <div className="animate-pulse bg-base-200 w-10 h-10 rounded-full"></div>
+                            <div className="animate-pulse bg-base-200 w-[200px] h-6 flex-grow ml-2"></div>
+                        </div>
+                        <div className="animate-pulse bg-base-200 w-8 h-8 rounded-xl">
+                        </div>
+                    </div>
+                ))}
             </div>
         )
     }
