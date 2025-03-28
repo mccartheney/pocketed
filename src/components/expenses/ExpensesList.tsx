@@ -55,7 +55,7 @@ const ExpensesList = ({expenses} : {expenses:expenseType[]}) => {
             <ul className="list mt-3 bg-base-100 rounded-box shadow-md overflow-y-auto h-[560px]">
 
                 {searchExpenses.map((expense : expenseType) => (
-                    <li className="list-row">
+                    <li className="list-row" key={expense.visibleName}>
                         <div>
                             <div>{expense.name}</div>
                             <div className="text-xs uppercase font-semibold opacity-60">{expense.day}/{expense.month}/{expense.year}</div>

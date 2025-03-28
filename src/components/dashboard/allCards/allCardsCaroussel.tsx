@@ -12,7 +12,7 @@ const AllCardsCaroussel = (
         <div className="carousel w-full ">
             <ul className=" w-full list bg-base-100 rounded-box shadow-md h-full overflow-y-auto">
                 { allCards.map((card) => (
-                    <li className="list-row">
+                    <li className="list-row" key={card.id}>
                         <div><img className="size-10 rounded-box" src={card.creator.imgUrl!} /></div>
                         <div>
                             <div className="font-bold">{card.name}</div>

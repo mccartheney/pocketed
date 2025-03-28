@@ -55,7 +55,7 @@ const IncomesList = (
 
             <ul className="list mt-3 bg-base-100 rounded-box shadow-md overflow-y-auto h-[560px]">
                 {searchIncomes.map((income: incomeType) => (
-                    <li className="list-row">
+                    <li className="list-row" key={income.id}>
                         <div>
                             <div>{income.name}</div>
                             <div className="text-xs uppercase font-semibold opacity-60">

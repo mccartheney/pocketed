@@ -35,7 +35,7 @@ const FriendsList = ({allCards}: {allCards: cardType[]}) => {
                 user?.friends.length! > 0 && (
                     <ul className="list bg-base-100 rounded-box shadow-md max-h-[300px] overflow-y-auto">
                         {user?.friends.map((friend) => (
-                            <li className="list-row">
+                            <li className="list-row" key={friend.id}>
                                 <div><img className="size-10 rounded-box" src={friend.imgUrl!} /></div>
                                 <div>{friend.name}</div>
                             </li>
