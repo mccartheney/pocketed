@@ -5,19 +5,19 @@ const testimonials = [
         name: "Sarah Johnson",
         role: "Freelancer",
         content: "Pocketed helped me organize my finances like never before. I finally know where my money is going!",
-        avatar: "/avatar1.jpg"
+        avatar: "https://picsum.photos/200"
     },
     {
         name: "Michael Chen",
         role: "Small Business Owner",
         content: "As a business owner, managing personal and business expenses was challenging. Pocketed made it simple.",
-        avatar: "/avatar2.jpg"
+        avatar: "https://picsum.photos/200"
     },
     {
         name: "Emily Rodriguez",
         role: "Student",
         content: "I finally saved enough for my dream vacation thanks to Pocketed's goal tracking features!",
-        avatar: "/avatar3.jpg"
+        avatar: "https://picsum.photos/200"
     }
 ];
 

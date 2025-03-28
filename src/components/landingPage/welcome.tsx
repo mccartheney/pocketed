@@ -1,6 +1,6 @@
 import { FaWallet, FaArrowDown } from "react-icons/fa";
 import { motion } from "framer-motion";
-
+import Link from "next/link";
 const Welcome = () => {
     return (
         <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/10 to-base-100 overflow-hidden">
@@ -39,12 +39,12 @@ const Welcome = () => {
                     </p>
 
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <button className="btn btn-primary btn-lg">
+                        <Link href="/login" className="btn btn-primary btn-lg">
                             start free
-                        </button>
-                        <button className="btn btn-outline btn-lg">
+                        </Link>
+                        <Link href="/about" className="btn btn-outline btn-lg">
                             know more
-                        </button>
+                        </Link>
                     </div>
                 </motion.div>
             </div>

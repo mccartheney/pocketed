@@ -36,9 +36,9 @@ const Header = () => {
             </div>
 
             <div className="navbar-center hidden lg:flex">
-                <Link href="/features" className="hover:text-primary">Home</Link>
+                <Link href="/" className="hover:text-primary">Home</Link>
                 <div className="divider divider-horizontal transform rotate-35 mx-2"></div>
-                <Link href="/pricing" className="hover:text-primary">Prices</Link>
+                <Link href="/#pricing" className="hover:text-primary">Prices</Link>
                 <div className="divider divider-horizontal transform rotate-35 mx-2"></div>
                 <Link href="/about" className="hover:text-primary">About</Link>
             </div>

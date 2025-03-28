@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-
+import Link from "next/link";
 const plans = [
     {
         name: "Basic",
@@ -46,7 +46,7 @@ const plans = [
 
 const Pricing = () => {
     return (
-        <section className="py-20 bg-base-100">
+        <section id="pricing" className="py-20 bg-base-100">
             <div className="container mx-auto px-6">
                 <motion.div
                     className="text-center mb-16"
@@ -94,9 +94,9 @@ const Pricing = () => {
                                     ))}
                                 </ul>
 
-                                <button className={`btn ${plan.popular ? 'btn-primary' : 'btn-outline'} mt-auto`}>
+                                <Link href="/login" className={`btn ${plan.popular ? 'btn-primary' : 'btn-outline'} mt-auto`}>
                                     {plan.cta}
-                                </button>
+                                </Link>
                             </div>
                         </motion.div>
                     ))}

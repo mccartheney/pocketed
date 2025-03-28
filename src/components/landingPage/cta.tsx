@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const CTA = () => {
     return (
@@ -15,12 +16,16 @@ const CTA = () => {
                         Start today and gain total control over your money in minutes.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <button className="btn btn-secondary btn-lg">
-                            Try for free
-                        </button>
-                        <button className="btn btn-outline btn-lg btn-primary-content">
-                            Talk to our team
-                        </button>
+                        <Link href="/login" className="btn btn-secondary btn-lg">
+                            <button className="btn btn-secondary btn-lg">
+                                Try for free
+                            </button>
+                        </Link>
+                        <Link href="https://github.com/mccartheney">
+                            <button className="btn btn-outline btn-lg btn-primary-content">
+                                Talk to our team
+                            </button>
+                        </Link>
                     </div>
                 </motion.div>
             </div>

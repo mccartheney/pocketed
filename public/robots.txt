@@ -1,0 +1,4 @@
+// public/robots.txt
+User-agent: *
+Allow: /
+Sitemap: https://pocketed.vercel.app/sitemap.xml
