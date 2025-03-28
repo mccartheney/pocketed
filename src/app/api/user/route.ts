@@ -46,7 +46,7 @@ const PUT = async (req:NextRequest) => {
     // get necessary parameters
     const { updateKey, keyValue, email, addFriend, deleteFriend} 
     : {
-        updateKey: "name" | "email" | "imgUrl",
+        updateKey: "name" | "email" | "imgUrl" | "theme",
         keyValue: string,
         email: string,
         addFriend: {

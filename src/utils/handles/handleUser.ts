@@ -69,7 +69,7 @@ class HandleUser {
     }
 
     // method to update user
-    async updateUser(email: string, updateKey: "name" | "email" | "imgUrl", keyValue: string) {
+    async updateUser(email: string, updateKey: "name" | "email" | "imgUrl" | "theme", keyValue: string) {
         // check if user exists
         const user = await CheckUserExists(email)
 
@@ -81,9 +81,22 @@ class HandleUser {
         // update user
         const updatedUser = await prisma.user.update({
             where: { email: email },
-            data: { [updateKey]: keyValue }
+            data: { [updateKey]: keyValue },
+            include: {
+                friends: {
+                    include: {
+                        cards: true
+                    }
+                },
+                friendOf: {
+                    include: {
+                        cards: true
+                    }
+                },
+                cards: true
+            }
         })
-
+            
         //  disconnect prisma and return updated user
         await prisma.$disconnect()
         return updatedUser

@@ -6,11 +6,10 @@ import { useEffect, useState } from "react"
 import { UserProvider } from "@/context/userContext"
 import userType from "@/types/userType"
 import axios from "axios"
-import LoadingPage from "@/components/LoadingPage"
 import Sidebar from "@/components/sideBar/Sidebar"
 import Dock from "@/components/dock/Dock"
 import LayoutTitle from "@/components/layoutTitle";
-
+import LoadingInternalPage from "@/components/LoadingInternalPage";
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
     // get router, session and user
     const router = useRouter();
@@ -45,7 +44,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
     }, []);
 
     // if user is loading, show the loading page
-    if (session.status === "loading") return <LoadingPage />;
+    if (session.status === "loading") return <LoadingInternalPage  />;
 
     // if user is not authenticated, redirect to the home page
     if (session.status === "unauthenticated") {
@@ -54,13 +53,13 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
     }
 
     // if user is not found, show the loading page
-    if (!user) return <LoadingPage />;
+    if (user === null) return <LoadingInternalPage />;
 
     // if user is found, show the app layout
     return (
         <UserProvider value={{ user, setUser }}>
             {/* overflow hidden for responsive design */}
-            <div className="flex min-h-screen lg:h-screen">
+            <div className="flex min-h-screen lg:h-screen" data-theme={user?.theme}>
                 {screenWidth > 768 ? <Sidebar /> : <Dock />}
 
                 <div className="flex flex-col w-full md:max-h-full">

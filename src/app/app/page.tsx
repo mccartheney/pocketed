@@ -9,6 +9,7 @@ import cardType from "@/types/cardtype"
 import { useEffect, useState } from "react"
 import { useUser } from "@/context/userContext"
 import axios from "axios"
+import Link from "next/link"
 
 const Page = () => {
     const { user } = useUser();
@@ -120,6 +121,11 @@ const Page = () => {
                 <div className="text-center">
                     <h2 className="text-xl font-bold mb-2">No cards found</h2>
                     <p className="text-base-content">You don't have any cards yet. Add one to get started!</p>
+                    <Link href="/app/cards">
+                        <button className="btn btn-primary mt-4">
+                            Go to cards page
+                        </button>
+                    </Link>
                 </div>
             </div>
         );
