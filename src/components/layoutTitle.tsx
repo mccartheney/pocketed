@@ -19,7 +19,6 @@ const LayoutTitle = () => {
                 </h2>
             </div>
             <div className="mr-3">
-                <IoIosNotificationsOutline />
             </div>
         </div>
     )
