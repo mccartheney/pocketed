@@ -16,7 +16,7 @@ const Credits = () => {
                         Developed as part of the Web Development course at ETIC Algarve
                     </p>
                     <p className="text-xs mt-4 opacity-60">
-                        © {new Date().getFullYear()} - Student Name (Your Name)
+                        © {new Date().getFullYear()} - Mccartheney Mendes
                     </p>
                 </motion.div>
             </div>

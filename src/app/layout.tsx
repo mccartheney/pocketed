@@ -1,22 +1,67 @@
-// app/layout.tsx (Server Component)
-import type { Metadata } from 'next'
-import ClientLayout from '@/components/clientLayout/clientLayout'
+"use client"
 import "./globals.css"
-import pocketedMetadata from './metadata'
+import { SessionProvider } from "next-auth/react";
+import { Toaster } from "react-hot-toast";
+import { useEffect, useState } from "react";
+import LoadingPage from "@/components/LoadingPage";
 
-export const metadata : Metadata = pocketedMetadata
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode
-}) {
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
 
 
-  return (
-    <html lang="en" suppressHydrationWarning>
-      <body>
-        <ClientLayout>{children}</ClientLayout>
+  const [theme, setTheme] = useState("")
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const storedTheme = localStorage.getItem("pocketedTheme");
+    console.log(storedTheme)
+    if (storedTheme) {
+      setTheme(storedTheme);
+    } else {
+      localStorage.setItem("pocketedTheme", "dark");
+      setTheme("dark");
+    }
+  }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  }, []);
+
+  if (theme === "") {
+    return <html lang="en" data-theme={theme} suppressHydrationWarning>
+      <body
+        className={`antialiased`}
+      >
       </body>
     </html>
-  )
+  }
+
+  if (isLoading) {
+
+    return <html lang="en" data-theme={theme} suppressHydrationWarning>
+      <body
+        className={` antialiased`}
+      >
+        <LoadingPage />
+      </body>
+    </html>
+  }
+
+  return (
+    <html lang="en" data-theme={theme} suppressHydrationWarning>
+      <body
+        className={` antialiased`}
+      >
+        <SessionProvider>
+          {children}
+          <Toaster />
+        </SessionProvider>
+      </body>
+    </html>
+  );
 }
